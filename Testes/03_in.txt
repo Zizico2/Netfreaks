@@ -1,0 +1,20 @@
+register
+Alice
+alice@gmail.com
+pass1234
+alice-iPhone
+register
+Bob
+bob@gmail.com
+bob0000
+bob-iPad
+logout
+logout
+register
+Mary
+alice@gmail.com
+0000mary
+my laptop
+logout
+disconnect
+exit

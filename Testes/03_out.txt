@@ -1,0 +1,15 @@
+Welcome Alice (alice-iPhone).
+
+Another client is logged in.
+
+Goodbye Alice (alice-iPhone still connected).
+
+No client is logged in.
+
+There is another account with email alice@gmail.com.
+
+No client is logged in.
+
+No client is logged in.
+
+Exiting...

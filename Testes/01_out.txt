@@ -1,0 +1,17 @@
+Database was updated:
+A Quiet Place; John Krasinski; 90; 16+; 2018; Horror; Emily Blunt; John Krasinski; Millicent Simmonds.
+Doctor Strange; Scott Derrickson; 115; 12+; 2016; Fantasy; Benedict Cumberbatch; Chiwetel Ejiofor; Rachel McAdams.
+Elysion; Neill Blomkamp; 109; 16+; 2013; Science Fiction; Matt Damon; Jodie Foster; Sharlto Copley.
+IT Crowd; Graham Linehan; 4; 6; 16+; 2006; Comedy; Chris O’Dowd; Richard Ayoade; Katherine Parkinson.
+Locke; Steven Knight; 145; 12+; 2014; Drama; Tom Hardy.
+Monsters, Inc.; Pete Docter; 92; 6+; 2001; Animation; John Goodman; Billy Crystal; Pete Docter.
+Paddington 2; Paul King; 103; 6+; 2017; Animation; Hugh Bonneville; Sally Hawkins; Brendan Gleeson.
+Peaky Blinders; Steven Knight; 5; 6; 16+; 2013; Drama; Cillian Murphy; Paul Anderson; Helen McCrory.
+Sherlock; Mark Gatiss; 4; 4; 16+; 2010; Crime; Benedict Cumberbatch; Martin Freeman; Una Stubbs.
+Star Wars: The Last Jedi; Rian Johnson; 152; 7+; 2016; Science Fiction; Mark Hamill; Carrie Fisher; Daisy Ridley.
+Stranger Things; The Duffer Brothers; 2; 8; 16+; 2016; Horror; Winona Ryder; David Harbour; Millie Bobby Brown.
+The Death of Stalin; Armando Iannucci; 107; 12+; 2017; Comedy; Steve Buscemi; Simon Russell Beale; Jeffrey Tambor.
+The Office; Greg Daniels; 9; 24; 12+; 2005; Comedy; Steve Carell; Jenna Fischer; John Krasinski.
+Zootopia; Byron Howard; 108; 7+; 2016; Animation; Ginnifer Goodwin; Jason Bateman; Idris Elba.
+
+Exiting...

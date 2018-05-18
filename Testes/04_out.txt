@@ -1,0 +1,17 @@
+Welcome Alice (alice-iPhone).
+
+Goodbye Alice (alice-iPhone still connected).
+
+Welcome Bob (bob-iPad).
+
+Goodbye Bob (bob-iPad was disconnected).
+
+Welcome Alice (alice-iPhone).
+
+Goodbye Alice (alice-iPhone was disconnected).
+
+Welcome Alice (laptop).
+
+Goodbye Alice (laptop still connected).
+
+Exiting...

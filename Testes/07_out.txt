@@ -1,0 +1,75 @@
+No client is logged in.
+
+No client is logged in.
+
+No client is logged in.
+
+Welcome Alice (alice-iPhone).
+
+No membership plan change.
+
+Membership plan was changed from Basic to Premium.
+
+Goodbye Alice (alice-iPhone still connected).
+
+Welcome Alice (my cable tv).
+
+Cannot downgrade membership plan at the moment.
+
+Membership plan was changed from Premium to Standard.
+
+Goodbye Alice (my cable tv still connected).
+
+Not possible to connect more devices.
+
+Welcome Alice (alice-iPhone).
+
+New profile added.
+
+There is already a profile alice.
+
+Welcome alice.
+
+Profile does not exist.
+
+New profile added.
+
+New profile added.
+
+New profile added.
+
+New profile added.
+
+Not possible to add more profiles.
+
+Not possible to add more profiles.
+
+Goodbye Alice (alice-iPhone still connected).
+
+Welcome Bob (bob-laptop).
+
+New profile added.
+
+New profile added.
+
+Welcome anna.
+
+Welcome my profile.
+
+Not possible to add more profiles.
+
+Goodbye Bob (bob-laptop still connected).
+
+Not possible to connect more devices.
+
+No client is logged in.
+
+Not possible to connect more devices.
+
+No client is logged in.
+
+Welcome Bob (bob-laptop).
+
+Goodbye Bob (bob-laptop was disconnected).
+
+Exiting...

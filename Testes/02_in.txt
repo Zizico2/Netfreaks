@@ -1,0 +1,19 @@
+register
+Alice
+alice@gmail.com
+pass1234
+alice-iPhone
+logout
+register
+Bob
+bob@gmail.com
+bob0000
+bob-iPad
+disconnect
+register
+Alice
+alice@fct.unl.pt
+alice1234
+my laptop
+logout
+EXIT

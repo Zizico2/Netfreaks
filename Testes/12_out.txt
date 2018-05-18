@@ -1,0 +1,213 @@
+Database was updated:
+A Quiet Place; John Krasinski; 90; 16+; 2018; Horror; Emily Blunt; John Krasinski; Millicent Simmonds.
+Doctor Strange; Scott Derrickson; 115; 12+; 2016; Fantasy; Benedict Cumberbatch; Chiwetel Ejiofor; Rachel McAdams.
+Elysion; Neill Blomkamp; 109; 16+; 2013; Science Fiction; Matt Damon; Jodie Foster; Sharlto Copley.
+IT Crowd; Graham Linehan; 4; 6; 16+; 2006; Comedy; Chris O’Dowd; Richard Ayoade; Katherine Parkinson.
+Locke; Steven Knight; 145; 12+; 2014; Drama; Tom Hardy.
+Monsters, Inc.; Pete Docter; 92; 6+; 2001; Animation; John Goodman; Billy Crystal; Pete Docter.
+Paddington 2; Paul King; 103; 6+; 2017; Animation; Hugh Bonneville; Sally Hawkins; Brendan Gleeson.
+Peaky Blinders; Steven Knight; 5; 6; 16+; 2013; Drama; Cillian Murphy; Paul Anderson; Helen McCrory.
+Sherlock; Mark Gatiss; 4; 4; 16+; 2010; Crime; Benedict Cumberbatch; Martin Freeman; Una Stubbs.
+Star Wars: The Last Jedi; Rian Johnson; 152; 7+; 2016; Science Fiction; Mark Hamill; Carrie Fisher; Daisy Ridley.
+Stranger Things; The Duffer Brothers; 2; 8; 16+; 2016; Horror; Winona Ryder; David Harbour; Millie Bobby Brown.
+The Death of Stalin; Armando Iannucci; 107; 12+; 2017; Comedy; Steve Buscemi; Simon Russell Beale; Jeffrey Tambor.
+The Office; Greg Daniels; 9; 24; 12+; 2005; Comedy; Steve Carell; Jenna Fischer; John Krasinski.
+Zootopia; Byron Howard; 108; 7+; 2016; Animation; Ginnifer Goodwin; Jason Bateman; Idris Elba.
+
+Welcome Alice (cable tv).
+
+New profile added.
+
+New profile added.
+
+Welcome alice.
+
+Loading Stranger Things...
+
+Loading Elysion...
+
+Loading Paddington 2...
+
+Loading Zootopia...
+
+Loading Monsters, Inc....
+
+Loading Locke...
+
+Loading Peaky Blinders...
+
+Loading Sherlock...
+
+Loading Star Wars: The Last Jedi...
+
+Loading IT Crowd...
+
+Alice:
+Basic (cable tv).
+Profile: alice
+IT Crowd; Star Wars: The Last Jedi; Sherlock; Peaky Blinders; Locke; Monsters, Inc.; Zootopia; Paddington 2; Elysion; Stranger Things.
+Profile: eve (12)
+Empty list of recently seen shows.
+
+Loading Doctor Strange...
+
+Loading Stranger Things...
+
+Alice:
+Basic (cable tv).
+Profile: alice
+Stranger Things; Doctor Strange; IT Crowd; Star Wars: The Last Jedi; Sherlock; Peaky Blinders; Locke; Monsters, Inc.; Zootopia; Paddington 2.
+Profile: eve (12)
+Empty list of recently seen shows.
+
+Welcome eve.
+
+Loading Zootopia...
+
+Thank you for rating Zootopia.
+
+Loading Star Wars: The Last Jedi...
+
+Thank you for rating Star Wars: The Last Jedi.
+
+Loading Doctor Strange...
+
+Thank you for rating Doctor Strange.
+
+Alice:
+Basic (cable tv).
+Profile: alice
+Stranger Things; Doctor Strange; IT Crowd; Star Wars: The Last Jedi; Sherlock; Peaky Blinders; Locke; Monsters, Inc.; Zootopia; Paddington 2.
+Profile: eve (12)
+Doctor Strange; Star Wars: The Last Jedi; Zootopia.
+Zootopia (5); Star Wars: The Last Jedi (4); Doctor Strange (3).
+
+Goodbye Alice (cable tv was disconnected).
+
+Welcome Alice (iPad).
+
+Welcome alice.
+
+Thank you for rating Stranger Things.
+
+Thank you for rating Paddington 2.
+
+Thank you for rating Zootopia.
+
+Thank you for rating Monsters, Inc..
+
+Thank you for rating Locke.
+
+Thank you for rating Peaky Blinders.
+
+Thank you for rating Sherlock.
+
+Alice:
+Basic (iPad).
+Profile: alice
+Stranger Things; Doctor Strange; IT Crowd; Star Wars: The Last Jedi; Sherlock; Peaky Blinders; Locke; Monsters, Inc.; Zootopia; Paddington 2.
+Stranger Things (4); Paddington 2 (5); Zootopia (3); Monsters, Inc. (5); Locke (5); Peaky Blinders (4); Sherlock (4).
+Profile: eve (12)
+Doctor Strange; Star Wars: The Last Jedi; Zootopia.
+Zootopia (5); Star Wars: The Last Jedi (4); Doctor Strange (3).
+
+Thank you for rating Star Wars: The Last Jedi.
+
+Thank you for rating IT Crowd.
+
+Thank you for rating Doctor Strange.
+
+Alice:
+Basic (iPad).
+Profile: alice
+Stranger Things; Doctor Strange; IT Crowd; Star Wars: The Last Jedi; Sherlock; Peaky Blinders; Locke; Monsters, Inc.; Zootopia; Paddington 2.
+Stranger Things (4); Paddington 2 (5); Zootopia (3); Monsters, Inc. (5); Locke (5); Peaky Blinders (4); Sherlock (4); Star Wars: The Last Jedi (4); IT Crowd (3); Doctor Strange (2).
+Profile: eve (12)
+Doctor Strange; Star Wars: The Last Jedi; Zootopia.
+Zootopia (5); Star Wars: The Last Jedi (4); Doctor Strange (3).
+
+Locke; Steven Knight; 145; 12+; 2014; Drama; Tom Hardy. [5.0]
+Monsters, Inc.; Pete Docter; 92; 6+; 2001; Animation; John Goodman; Billy Crystal; Pete Docter; Mary Gibbs; Steve Buscemi. [5.0]
+Paddington 2; Paul King; 103; 6+; 2017; Animation; Hugh Bonneville; Sally Hawkins; Brendan Gleeson; Julie Walters; Jim Broadbent; Peter Capaldi; Hugh Grant. [5.0]
+Peaky Blinders; Steven Knight; 5; 6; 16+; 2013; Drama; Cillian Murphy; Paul Anderson; Helen McCrory; Sam Neill; Annabelle Wallis; Joe Cole; Tom Hardy. [4.0]
+Sherlock; Mark Gatiss; 4; 4; 16+; 2010; Crime; Benedict Cumberbatch; Martin Freeman; Una Stubbs; Louise Brealey. [4.0]
+Star Wars: The Last Jedi; Rian Johnson; 152; 7+; 2016; Science Fiction; Mark Hamill; Carrie Fisher; Daisy Ridley; John Boyega. [4.0]
+Stranger Things; The Duffer Brothers; 2; 8; 16+; 2016; Horror; Winona Ryder; David Harbour; Millie Bobby Brown. [4.0]
+Zootopia; Byron Howard; 108; 7+; 2016; Animation; Ginnifer Goodwin; Jason Bateman; Idris Elba; Jenny Slate. [4.0]
+
+Welcome eve.
+
+Locke; Steven Knight; 145; 12+; 2014; Drama; Tom Hardy. [5.0]
+Monsters, Inc.; Pete Docter; 92; 6+; 2001; Animation; John Goodman; Billy Crystal; Pete Docter; Mary Gibbs; Steve Buscemi. [5.0]
+Paddington 2; Paul King; 103; 6+; 2017; Animation; Hugh Bonneville; Sally Hawkins; Brendan Gleeson; Julie Walters; Jim Broadbent; Peter Capaldi; Hugh Grant. [5.0]
+Star Wars: The Last Jedi; Rian Johnson; 152; 7+; 2016; Science Fiction; Mark Hamill; Carrie Fisher; Daisy Ridley; John Boyega. [4.0]
+Zootopia; Byron Howard; 108; 7+; 2016; Animation; Ginnifer Goodwin; Jason Bateman; Idris Elba; Jenny Slate. [4.0]
+
+Goodbye Alice (iPad still connected).
+
+Welcome Bob (cable tv).
+
+New profile added.
+
+Welcome bob.
+
+Loading A Quiet Place...
+
+Thank you for rating A Quiet Place.
+
+Loading The Death of Stalin...
+
+Thank you for rating The Death of Stalin.
+
+Loading Zootopia...
+
+Thank you for rating Zootopia.
+
+Loading Locke...
+
+Thank you for rating Locke.
+
+Loading Elysion...
+
+Thank you for rating Elysion.
+
+Loading Star Wars: The Last Jedi...
+
+Thank you for rating Star Wars: The Last Jedi.
+
+Loading Doctor Strange...
+
+Thank you for rating Doctor Strange.
+
+A Quiet Place; John Krasinski; 90; 16+; 2018; Horror; Emily Blunt; John Krasinski; Millicent Simmonds; Noah Jupe; Cade Woodward. [5.0]
+Locke; Steven Knight; 145; 12+; 2014; Drama; Tom Hardy. [5.0]
+Monsters, Inc.; Pete Docter; 92; 6+; 2001; Animation; John Goodman; Billy Crystal; Pete Docter; Mary Gibbs; Steve Buscemi. [5.0]
+Paddington 2; Paul King; 103; 6+; 2017; Animation; Hugh Bonneville; Sally Hawkins; Brendan Gleeson; Julie Walters; Jim Broadbent; Peter Capaldi; Hugh Grant. [5.0]
+Star Wars: The Last Jedi; Rian Johnson; 152; 7+; 2016; Science Fiction; Mark Hamill; Carrie Fisher; Daisy Ridley; John Boyega. [4.3]
+Peaky Blinders; Steven Knight; 5; 6; 16+; 2013; Drama; Cillian Murphy; Paul Anderson; Helen McCrory; Sam Neill; Annabelle Wallis; Joe Cole; Tom Hardy. [4.0]
+Sherlock; Mark Gatiss; 4; 4; 16+; 2010; Crime; Benedict Cumberbatch; Martin Freeman; Una Stubbs; Louise Brealey. [4.0]
+Stranger Things; The Duffer Brothers; 2; 8; 16+; 2016; Horror; Winona Ryder; David Harbour; Millie Bobby Brown. [4.0]
+Zootopia; Byron Howard; 108; 7+; 2016; Animation; Ginnifer Goodwin; Jason Bateman; Idris Elba; Jenny Slate. [4.0]
+IT Crowd; Graham Linehan; 4; 6; 16+; 2006; Comedy; Chris O’Dowd; Richard Ayoade; Katherine Parkinson; Matt Berry. [3.0]
+The Death of Stalin; Armando Iannucci; 107; 12+; 2017; Comedy; Steve Buscemi; Simon Russell Beale; Jeffrey Tambor; Olga Kurylenko. [3.0]
+Doctor Strange; Scott Derrickson; 115; 12+; 2016; Fantasy; Benedict Cumberbatch; Chiwetel Ejiofor; Rachel McAdams; Benedict Wong. [2.3]
+Elysion; Neill Blomkamp; 109; 16+; 2013; Science Fiction; Matt Damon; Jodie Foster; Sharlto Copley; Alice Braga; Diego Luna. [2.0]
+
+New profile added.
+
+Welcome mary.
+
+Locke; Steven Knight; 145; 12+; 2014; Drama; Tom Hardy. [5.0]
+Monsters, Inc.; Pete Docter; 92; 6+; 2001; Animation; John Goodman; Billy Crystal; Pete Docter; Mary Gibbs; Steve Buscemi. [5.0]
+Paddington 2; Paul King; 103; 6+; 2017; Animation; Hugh Bonneville; Sally Hawkins; Brendan Gleeson; Julie Walters; Jim Broadbent; Peter Capaldi; Hugh Grant. [5.0]
+Star Wars: The Last Jedi; Rian Johnson; 152; 7+; 2016; Science Fiction; Mark Hamill; Carrie Fisher; Daisy Ridley; John Boyega. [4.3]
+Zootopia; Byron Howard; 108; 7+; 2016; Animation; Ginnifer Goodwin; Jason Bateman; Idris Elba; Jenny Slate. [4.0]
+The Death of Stalin; Armando Iannucci; 107; 12+; 2017; Comedy; Steve Buscemi; Simon Russell Beale; Jeffrey Tambor; Olga Kurylenko. [3.0]
+
+Welcome mary.
+
+Locke; Steven Knight; 145; 12+; 2014; Drama; Tom Hardy. [5.0]
+Monsters, Inc.; Pete Docter; 92; 6+; 2001; Animation; John Goodman; Billy Crystal; Pete Docter; Mary Gibbs; Steve Buscemi. [5.0]
+Paddington 2; Paul King; 103; 6+; 2017; Animation; Hugh Bonneville; Sally Hawkins; Brendan Gleeson; Julie Walters; Jim Broadbent; Peter Capaldi; Hugh Grant. [5.0]
+
+Exiting...

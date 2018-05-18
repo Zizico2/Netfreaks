@@ -1,0 +1,23 @@
+Welcome Alice (alice-iPhone).
+
+Goodbye Alice (alice-iPhone still connected).
+
+Welcome Alice (alice-iPhone).
+
+Client already logged in.
+
+Another client is logged in.
+
+Goodbye Alice (alice-iPhone still connected).
+
+Account does not exist.
+
+Wrong password.
+
+Welcome Alice (alice-iPhone).
+
+Goodbye Alice (alice-iPhone still connected).
+
+Not possible to connect more devices.
+
+Exiting...

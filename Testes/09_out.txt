@@ -1,0 +1,127 @@
+Database was updated:
+A Quiet Place; John Krasinski; 90; 16+; 2018; Horror; Emily Blunt; John Krasinski; Millicent Simmonds.
+Doctor Strange; Scott Derrickson; 115; 12+; 2016; Fantasy; Benedict Cumberbatch; Chiwetel Ejiofor; Rachel McAdams.
+Elysion; Neill Blomkamp; 109; 16+; 2013; Science Fiction; Matt Damon; Jodie Foster; Sharlto Copley.
+IT Crowd; Graham Linehan; 4; 6; 16+; 2006; Comedy; Chris O’Dowd; Richard Ayoade; Katherine Parkinson.
+Locke; Steven Knight; 145; 12+; 2014; Drama; Tom Hardy.
+Monsters, Inc.; Pete Docter; 92; 6+; 2001; Animation; John Goodman; Billy Crystal; Pete Docter.
+Paddington 2; Paul King; 103; 6+; 2017; Animation; Hugh Bonneville; Sally Hawkins; Brendan Gleeson.
+Peaky Blinders; Steven Knight; 5; 6; 16+; 2013; Drama; Cillian Murphy; Paul Anderson; Helen McCrory.
+Sherlock; Mark Gatiss; 4; 4; 16+; 2010; Crime; Benedict Cumberbatch; Martin Freeman; Una Stubbs.
+Star Wars: The Last Jedi; Rian Johnson; 152; 7+; 2016; Science Fiction; Mark Hamill; Carrie Fisher; Daisy Ridley.
+Stranger Things; The Duffer Brothers; 2; 8; 16+; 2016; Horror; Winona Ryder; David Harbour; Millie Bobby Brown.
+The Death of Stalin; Armando Iannucci; 107; 12+; 2017; Comedy; Steve Buscemi; Simon Russell Beale; Jeffrey Tambor.
+The Office; Greg Daniels; 9; 24; 12+; 2005; Comedy; Steve Carell; Jenna Fischer; John Krasinski.
+Zootopia; Byron Howard; 108; 7+; 2016; Animation; Ginnifer Goodwin; Jason Bateman; Idris Elba.
+
+No client is logged in.
+
+No client is logged in.
+
+No client is logged in.
+
+No client is logged in.
+
+Welcome Alice (cable tv).
+
+Alice:
+Basic (cable tv).
+No profiles defined.
+
+No profile is selected.
+
+No profile is selected.
+
+New profile added.
+
+New profile added.
+
+Alice:
+Basic (cable tv).
+Profile: alice
+Empty list of recently seen shows.
+Profile: eve (12)
+Empty list of recently seen shows.
+
+Welcome eve.
+
+Show does not exist.
+
+Show not available.
+
+Welcome alice.
+
+Show does not exist.
+
+Loading Stranger Things...
+
+Can only rate recently seen shows.
+
+Loading Elysion...
+
+Thank you for rating Elysion.
+
+Show already rated.
+
+Loading Paddington 2...
+
+Loading Zootopia...
+
+Loading Monsters, Inc....
+
+Loading Locke...
+
+Loading Peaky Blinders...
+
+Loading Sherlock...
+
+Loading Star Wars: The Last Jedi...
+
+Loading IT Crowd...
+
+Alice:
+Basic (cable tv).
+Profile: alice
+IT Crowd; Star Wars: The Last Jedi; Sherlock; Peaky Blinders; Locke; Monsters, Inc.; Zootopia; Paddington 2; Elysion; Stranger Things.
+Elysion (3).
+Profile: eve (12)
+Empty list of recently seen shows.
+
+Loading Doctor Strange...
+
+Loading Stranger Things...
+
+Can only rate recently seen shows.
+
+Alice:
+Basic (cable tv).
+Profile: alice
+Stranger Things; Doctor Strange; IT Crowd; Star Wars: The Last Jedi; Sherlock; Peaky Blinders; Locke; Monsters, Inc.; Zootopia; Paddington 2.
+Elysion (3).
+Profile: eve (12)
+Empty list of recently seen shows.
+
+Welcome eve.
+
+Loading Zootopia...
+
+Can only rate recently seen shows.
+
+Loading Star Wars: The Last Jedi...
+
+Thank you for rating Star Wars: The Last Jedi.
+
+Show already rated.
+
+Alice:
+Basic (cable tv).
+Profile: alice
+Stranger Things; Doctor Strange; IT Crowd; Star Wars: The Last Jedi; Sherlock; Peaky Blinders; Locke; Monsters, Inc.; Zootopia; Paddington 2.
+Elysion (3).
+Profile: eve (12)
+Star Wars: The Last Jedi; Zootopia.
+Star Wars: The Last Jedi (4).
+
+Goodbye Alice (cable tv was disconnected).
+
+Exiting...

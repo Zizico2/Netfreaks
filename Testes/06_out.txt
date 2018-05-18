@@ -1,0 +1,73 @@
+Welcome Alice (alice-iPhone).
+
+New profile added.
+
+New profile added.
+
+Welcome alice.
+
+Welcome eve.
+
+Membership plan was changed from Basic to Premium.
+
+Goodbye Alice (alice-iPhone still connected).
+
+Welcome Bob (bob-laptop).
+
+New profile added.
+
+New profile added.
+
+Welcome anna.
+
+Welcome my profile.
+
+Goodbye Bob (bob-laptop still connected).
+
+Welcome Bob (bob-laptop).
+
+Membership plan was changed from Basic to Standard.
+
+Membership plan was changed from Standard to Premium.
+
+Membership plan was changed from Premium to Basic.
+
+Goodbye Bob (bob-laptop was disconnected).
+
+Welcome Bob (cable tv).
+
+Goodbye Bob (cable tv still connected).
+
+Welcome Alice (alice-laptop).
+
+New profile added.
+
+Welcome john.
+
+New profile added.
+
+Welcome mary.
+
+New profile added.
+
+Welcome lucy.
+
+Membership plan was changed from Premium to Standard.
+
+Goodbye Alice (alice-laptop still connected).
+
+Welcome Alice (alice-laptop).
+
+Membership plan was changed from Standard to Premium.
+
+Goodbye Alice (alice-laptop still connected).
+
+Welcome Alice (another laptop).
+
+Goodbye Alice (another laptop still connected).
+
+Welcome Alice (cable tv).
+
+Goodbye Alice (cable tv still connected).
+
+Exiting...
