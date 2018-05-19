@@ -11,7 +11,7 @@ public class Main {
         NO_MESSAGES_WITH_EMAIL("Nao existem mensagens trocadas com esse email."),
         NO_MESSAGES_WITH_TOPIC(NO_MESSAGES_WITH_EMAIL.msg.replace("email", "assunto")),
         EXITING("A terminar."),
-        UNKNOWN("UNKNOWN");
+        UNKNOWN("Unknown command.");
 
         private final String msg;
 
@@ -38,16 +38,11 @@ public class Main {
         EXIT(),
 
         Command() {
-
-        }
+            }
     }
 
 
     public static void main(String[] args) {
-        Double a = 3.15;
-        System.out.println(a.toString().substring(0,3));
-
-
         Netfreaks netfreaks = new NetfreaksClass();
         Scanner in = new Scanner(System.in);
         executeCommand(in, netfreaks);
@@ -60,8 +55,9 @@ public class Main {
 
     private static void executeCommand(Scanner in, Netfreaks netfreaks) {
         Command cmd;
-        try {
+
             do {
+                try {
                 cmd = getCommand(in);
                 switch (cmd) {
                     case UPLOAD:
@@ -86,6 +82,10 @@ public class Main {
 
                     case MEMBERSHIP:
                         processMembership(in, netfreaks);
+                        break;
+
+                    case PROFILE:
+                        processProfile(in, netfreaks);
                         break;
 
                     case SELECT:
@@ -122,11 +122,18 @@ public class Main {
                             in.close();
 
                 }
+                } catch (IllegalArgumentException e) {
+                    System.out.println(Message.UNKNOWN.msg);
+                    cmd = Command.Command;
+                }
             } while (!cmd.equals(Command.EXIT));
 
-        } catch (IllegalArgumentException e) {
-            System.out.println(Message.UNKNOWN.msg);
-        }
+
+    }
+
+    private static void processProfile(Scanner in, Netfreaks netfreaks) {
+
+
     }
 
     private static void processSearchByRate(Netfreaks netfreaks) {
