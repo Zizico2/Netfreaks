@@ -1,4 +1,7 @@
 import Netfreaks.*;
+import Netfreaks.Product.FilmClass;
+import Netfreaks.Product.Product;
+import Netfreaks.Product.SeriesClass;
 
 import java.util.Scanner;
 
@@ -6,11 +9,11 @@ public class Main {
 
     private enum Message {
 
-        MESSAGE_REGISTERED("Mensagem registada."),
+        UPLOAD_SUCCESS("Database was updated:\n"),
         DUPLICATE_MESSAGE("Mensagem duplicada."),
         NO_MESSAGES_WITH_EMAIL("Nao existem mensagens trocadas com esse email."),
         NO_MESSAGES_WITH_TOPIC(NO_MESSAGES_WITH_EMAIL.msg.replace("email", "assunto")),
-        EXITING("A terminar."),
+        EXITING("Exiting..."),
         UNKNOWN("Unknown command.");
 
         private final String msg;
@@ -38,7 +41,7 @@ public class Main {
         EXIT(),
 
         Command() {
-            }
+        }
     }
 
 
@@ -55,7 +58,6 @@ public class Main {
 
     private static void executeCommand(Scanner in, Netfreaks netfreaks) {
         Command cmd;
-
             do {
                 try {
                 cmd = getCommand(in);
@@ -113,7 +115,6 @@ public class Main {
                         break;
 
                     case SEARCHBYRATE:
-
                         processSearchByRate(netfreaks);
                         break;
 
@@ -127,12 +128,9 @@ public class Main {
                     cmd = Command.Command;
                 }
             } while (!cmd.equals(Command.EXIT));
-
-
     }
 
     private static void processProfile(Scanner in, Netfreaks netfreaks) {
-
 
     }
 
@@ -185,5 +183,53 @@ public class Main {
     }
 
     private static void processUpload(Scanner in, Netfreaks netfreaks) {
+        int nMovies = in.nextInt();
+        in.nextLine();
+        Product[] movies = new Product[nMovies];
+        int movieCounter = 0;
+        while(movieCounter < nMovies){
+            String title = in.nextLine();
+            String directorName = in.nextLine();
+            int duration = in.nextInt();
+            in.nextLine();
+            String ageRestriction = in.nextLine();
+            int yearOfRelease = in.nextInt();
+            in.nextLine();
+            String genre  = in.nextLine();
+            int nCast = in.nextInt();
+            in.nextLine();
+            String[] cast = new String[nCast];
+            int castCounter = 0;
+            while(castCounter < nCast)
+                cast[castCounter++] = in.nextLine();
+            movies[movieCounter++] = new FilmClass(title,directorName,duration,ageRestriction,yearOfRelease,genre,cast,nCast);
+        }
+        int nSeries = in.nextInt();
+        in.nextLine();
+        Product[] series = new Product[nMovies];
+        int seriesCounter = 0;
+        while(seriesCounter < nSeries){
+            String title = in.nextLine();
+            String creatorName = in.nextLine();
+            int nSeasons = in.nextInt();
+            in.nextLine();
+            int nEpisodesPerSeason = in.nextInt();
+            in.nextLine();
+            String ageRestriction = in.nextLine();
+            int yearOfRelease = in.nextInt();
+            in.nextLine();
+            String genre  = in.nextLine();
+            int nCast = in.nextInt();
+            in.nextLine();
+            String[] cast = new String[nCast];
+            int castCounter = 0;
+            while(castCounter < nCast)
+                cast[castCounter++] = in.nextLine();
+            series[seriesCounter++] = new SeriesClass(title,creatorName,nSeasons,nEpisodesPerSeason,ageRestriction,yearOfRelease,genre,cast,nCast);
+        }
+        Product[] products = new Product[nMovies + nSeries];
+        System.arraycopy(movies,0,products,0,nMovies);
+        System.arraycopy(series,0,products,nMovies,nSeries);
+        System.out.println(Message.UPLOAD_SUCCESS.msg + netfreaks.upload(products));
     }
 }
