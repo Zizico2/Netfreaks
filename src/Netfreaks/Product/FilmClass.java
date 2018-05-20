@@ -1,6 +1,6 @@
 package Netfreaks.Product;
 
-public class FilmClass extends AbstractProductClass implements Film{
+public final class FilmClass extends AbstractProductClass implements Film{
 
     private String directorName;
     private int duration;

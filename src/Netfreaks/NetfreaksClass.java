@@ -3,13 +3,14 @@ package Netfreaks;
 import Netfreaks.Product.Film;
 import Netfreaks.Product.Product;
 import Netfreaks.Product.Series;
-
 import java.util.SortedMap;
 import java.util.TreeMap;
 
 public class NetfreaksClass implements Netfreaks {
 
+    private String currentDevice;
     private SortedMap<String,Product> products;
+
 
     public NetfreaksClass(){
         products = new TreeMap<>();

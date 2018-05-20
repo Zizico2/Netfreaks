@@ -179,7 +179,10 @@ public class Main {
     }
 
     private static void processRegister(Scanner in, Netfreaks netfreaks) {
-
+        String name = in.nextLine();
+        String email = in.nextLine();
+        String password = in.nextLine();
+        String deviceName = in.nextLine();
     }
 
     private static void processUpload(Scanner in, Netfreaks netfreaks) {

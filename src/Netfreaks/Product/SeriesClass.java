@@ -1,6 +1,6 @@
 package Netfreaks.Product;
 
-public class SeriesClass extends AbstractProductClass implements Series {
+public final class SeriesClass extends AbstractProductClass implements Series {
 
     private String creatorName;
     private int nSeasons;
