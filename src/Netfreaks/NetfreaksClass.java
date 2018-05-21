@@ -1,5 +1,7 @@
 package Netfreaks;
 
+import Netfreaks.Account.Account;
+import Netfreaks.Account.BasicClass;
 import Netfreaks.Product.Film;
 import Netfreaks.Product.Product;
 import Netfreaks.Product.Series;
@@ -10,14 +12,18 @@ import java.util.TreeMap;
 public class NetfreaksClass implements Netfreaks {
 
     private SortedMap<String,Product> products;
+    private SortedMap<String,Account> accounts;
+    private String currentAccount;
+
 
     public NetfreaksClass(){
         products = new TreeMap<>();
+        accounts = new TreeMap<>();
+        currentAccount = "";
     }
 
     @Override
     public String upload(Product[] products) {
-
         for (Product product:products) {
             this.products.put(product.getTitle(),product);
         }
@@ -40,35 +46,37 @@ public class NetfreaksClass implements Netfreaks {
                 msg += series.getCreatorName() + separator +  series.getNSeasons() + separator + series.getNEpisodesPerSeason() + separator;
             }
             msg += ageRestriction + "+" + separator + yearOfRelease + separator + genre + separator;
-            if(cast.length < 4)
-            for (String name : cast)
-                msg += name + separator;
-            else
-                for(int i = 0; i < 3; i++)
+                for(int i = 0; i < 3 && i < cast.length; i++)
                     msg += cast[i] + separator;
-            msg = msg.substring(0,msg.lastIndexOf(separator)) + ".";
-            msg += "\n";
+            msg = msg.substring(0,msg.lastIndexOf(separator)) + "." + "\n";
         }
         return msg;
     }
 
+
     @Override
-    public void register(String[] accountInfo) {
+    public void register(String name, String email, String password, String device) {
+        accounts.put(email, new BasicClass(email, name, password, device));
+        login(email);
+
 
     }
 
     @Override
-    public void login(String email, String password, String device) {
-
+    public void login(String email) {
+        currentAccount = email;
     }
 
     @Override
     public void disconnect() {
-
+        accounts.get(currentAccount).disconnect();
+        logout();
     }
 
     @Override
     public void logout() {
+        accounts.get(currentAccount).logout();
+        currentAccount = "";
 
     }
 
@@ -115,5 +123,39 @@ public class NetfreaksClass implements Netfreaks {
     @Override
     public String searchByRate(int rate) {
         return null;
+    }
+
+    @Override
+    public boolean isAClientLoggedIn() {
+        return !isClientLoggedIn("");
+    }
+
+    @Override
+    public boolean isEmailUsed(String email) {
+        return accounts.get(email) != null;
+    }
+
+    @Override
+    public String getActiveProfile() {
+        return accounts.get(currentAccount).getActiveProfile();
+    }
+
+    public String getActiveDevice(){
+        return accounts.get(currentAccount).getActiveDevice();
+    }
+
+    @Override
+    public boolean isClientLoggedIn(String email) {
+        return currentAccount.equals(email);
+    }
+
+    @Override
+    public boolean isPasswordRight(String email, String password) {
+        return accounts.get(email).getPassword().equals(password);
+    }
+
+    @Override
+    public boolean deviceNumberExceeded(String email, String device) {
+        return accounts.get(email).isDeviceListFull();
     }
 }

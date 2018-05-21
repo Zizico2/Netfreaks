@@ -6,9 +6,9 @@ public interface Netfreaks {
 
     String upload(Product[] products);
 
-    void register(String[] accountInfo);
+    void register(String name, String email, String password, String device );
 
-    void login(String email, String password, String device);
+    void login(String email);
 
     void disconnect();
 
@@ -31,4 +31,20 @@ public interface Netfreaks {
     String searchByName(String participantsName);
 
     String searchByRate(int rate);
+
+    boolean isAClientLoggedIn();
+
+    boolean isEmailUsed(String email);
+
+    String getActiveProfile();
+
+    String getActiveDevice();
+
+    boolean isClientLoggedIn(String email);
+
+    boolean isPasswordRight(String email, String password);
+
+    boolean deviceNumberExceeded(String email, String device);
+
+
 }

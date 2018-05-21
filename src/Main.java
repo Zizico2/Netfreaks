@@ -1,3 +1,4 @@
+import Exceptions.*;
 import Netfreaks.*;
 import Netfreaks.Product.FilmClass;
 import Netfreaks.Product.Product;
@@ -71,7 +72,7 @@ public class Main {
                         break;
 
                     case LOGIN:
-                        processLogin(netfreaks);
+                        processLogin(in,netfreaks);
                         break;
 
                     case DISCONNECT:
@@ -79,7 +80,7 @@ public class Main {
                         break;
 
                     case LOGOUT:
-                        processLogout(in, netfreaks);
+                        processLogout(netfreaks);
                         break;
 
                     case MEMBERSHIP:
@@ -166,19 +167,100 @@ public class Main {
 
     }
 
-    private static void processLogout(Scanner in, Netfreaks netfreaks) {
+    private static void processLogout(Netfreaks netfreaks) {
+        try{
+            logout(netfreaks);
+        } catch(NoAccountLoggedInException e){
+            System.out.println("No client is logged in.\n");
+        }
+    }
 
+    private static void logout(Netfreaks netfreaks) {
+        if(!netfreaks.isAClientLoggedIn())
+            throw new NoAccountLoggedInException();
+        System.out.println("Goodbye " + netfreaks.getActiveProfile() + " (" + netfreaks.getActiveDevice() + " still connected).\n");
+        netfreaks.logout();
     }
 
     private static void processDisconnect(Netfreaks netfreaks) {
-
+        try{
+            disconnect(netfreaks);
+        } catch(NoAccountLoggedInException e){
+            System.out.println("No client is logged in.\n");
+        }
     }
 
-    private static void processLogin(Netfreaks netfreaks) {
+    private static void disconnect(Netfreaks netfreaks) {
+        if(!netfreaks.isAClientLoggedIn())
+            throw new NoAccountLoggedInException();
+        System.out.println("Goodbye " + netfreaks.getActiveProfile() + " (" + netfreaks.getActiveDevice() + " was disconnected).\n");
+        netfreaks.disconnect();
+    }
 
+    private static void processLogin(Scanner in, Netfreaks netfreaks) {
+        String email = in.nextLine();
+        String password = in.nextLine();
+        String device = in.nextLine();
+
+        try{
+            login(email, password, device, netfreaks);
+        } catch (AlreadyLoggedInException e){
+            System.out.println("Client already logged in.\n");
+        }
+        catch (NetfreaksAppOccupiedException e){
+            System.out.println("Another client is logged in.\n");
+        } catch (InexistantAccountException e){
+            System.out.println("Account does not exist.\n");
+        } catch (WrongPasswordException e){
+            System.out.println("Wrong password.\n");
+        } catch (DeviceNumberExceededException e){
+            System.out.println("Not possible to connect to more devices.\n");
+        }
+    }
+
+    private static void login(String email, String password, String device, Netfreaks netfreaks) throws AlreadyLoggedInException, NetfreaksAppOccupiedException,
+                                                                                                        InexistantAccountException, WrongPasswordException, DeviceNumberExceededException{
+        if(netfreaks.isClientLoggedIn(email))
+            throw new AlreadyLoggedInException();
+        if(netfreaks.isAClientLoggedIn())
+            throw new NetfreaksAppOccupiedException();
+        if(!netfreaks.isEmailUsed(email))
+            throw new InexistantAccountException();
+        if(netfreaks.isPasswordRight(email,password))
+            throw new WrongPasswordException();
+        if(netfreaks.deviceNumberExceeded(email,device))
+            throw new DeviceNumberExceededException();
+
+        netfreaks.login(email);
+        System.out.println("Welcome " + netfreaks.getActiveProfile() + " (" +  device + ").\n");
     }
 
     private static void processRegister(Scanner in, Netfreaks netfreaks) {
+        String name = in.nextLine();
+        String email = in.nextLine();
+        String password = in.nextLine();
+        String device = in.nextLine();
+
+        try{
+           register(name, email, password, device, netfreaks);
+        } catch (NetfreaksAppOccupiedException e){
+            System.out.println("Another client is logged in.\n");
+        } catch (SameEmailExceptiopn e){
+            System.out.println("There is another account with email " + email + ".\n");
+        }
+
+    }
+
+    private static void register(String name, String email, String password, String device, Netfreaks netfreaks) throws NetfreaksAppOccupiedException, SameEmailExceptiopn {
+        if(netfreaks.isAClientLoggedIn())
+            throw new NetfreaksAppOccupiedException();
+        else if (netfreaks.isEmailUsed(email))
+            throw new SameEmailExceptiopn();
+
+        netfreaks.register(name, email, password, device);
+
+        System.out.println("Welcome " + name + " (" + device + ").\n");
+
 
     }
 
