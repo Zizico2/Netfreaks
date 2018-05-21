@@ -229,8 +229,11 @@ public class Main {
             throw new InexistantAccountException();
         if(!netfreaks.isPasswordRight(email,password))
             throw new WrongPasswordException();
-        if(netfreaks.deviceNumberExceeded(email,device))
-            throw new DeviceNumberExceededException();
+        if (netfreaks.needToRegisterDevice(email, device)) {
+            if (netfreaks.deviceNumberExceeded(email, device))
+                throw new DeviceNumberExceededException();
+            netfreaks.registerDevice(email, device);
+        }
 
         netfreaks.login(email, device);
         System.out.println("Welcome " + netfreaks.getActiveProfile() + " (" +  device + ").\n");

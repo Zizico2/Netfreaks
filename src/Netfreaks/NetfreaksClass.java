@@ -160,4 +160,15 @@ public class NetfreaksClass implements Netfreaks {
     public boolean deviceNumberExceeded(String email, String device) {
         return accounts.get(email).isDeviceListFull();
     }
+
+    @Override
+    public boolean needToRegisterDevice(String email, String device) {
+        return accounts.get(currentAccount).needToRegisterDevice(device);
+
+    }
+
+    @Override
+    public void registerDevice(String email, String device) {
+        accounts.get(currentAccount).registerDevice(device);
+    }
 }

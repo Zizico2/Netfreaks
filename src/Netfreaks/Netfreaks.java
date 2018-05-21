@@ -47,4 +47,7 @@ public interface Netfreaks {
     boolean deviceNumberExceeded(String email, String device);
 
 
+    boolean needToRegisterDevice(String email, String device);
+
+    void registerDevice(String email, String device);
 }

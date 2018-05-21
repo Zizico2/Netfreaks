@@ -17,4 +17,8 @@ public interface Account {
     String getActiveDevice();
 
     void login(String device);
+
+    boolean needToRegisterDevice(String device);
+
+    void registerDevice(String device);
 }

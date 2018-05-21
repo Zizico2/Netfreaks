@@ -35,6 +35,16 @@ abstract class AbstractAccountClass implements Account {
         currentDevice = device;
     }
 
+    @Override
+    public boolean needToRegisterDevice(String device) {
+        return !devices.contains(device);
+    }
+
+    @Override
+    public void registerDevice(String device) {
+        devices.add("device");
+    }
+
     public void logout(){
         currentDevice = "";
     }
