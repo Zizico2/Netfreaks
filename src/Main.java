@@ -219,6 +219,7 @@ public class Main {
     }
 
     private static void login(String email, String password, String device, Netfreaks netfreaks) throws AlreadyLoggedInException, NetfreaksAppOccupiedException,
+
                                                                                                         InexistantAccountException, WrongPasswordException, DeviceNumberExceededException{
         if(netfreaks.isClientLoggedIn(email))
             throw new AlreadyLoggedInException();
@@ -226,7 +227,7 @@ public class Main {
             throw new NetfreaksAppOccupiedException();
         if(!netfreaks.isEmailUsed(email))
             throw new InexistantAccountException();
-        if(netfreaks.isPasswordRight(email,password))
+        if(!netfreaks.isPasswordRight(email,password))
             throw new WrongPasswordException();
         if(netfreaks.deviceNumberExceeded(email,device))
             throw new DeviceNumberExceededException();

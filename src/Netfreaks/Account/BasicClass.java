@@ -8,7 +8,7 @@ public class BasicClass extends AbstractAccountClass implements Netfreaks.Accoun
 
     @Override
     public boolean isDeviceListFull() {
-        return getNDevices() >= MAXIMUM_DEVICES;
+        return getNDevices() == MAXIMUM_DEVICES;
     }
 
 }
