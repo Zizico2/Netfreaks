@@ -8,7 +8,7 @@ public interface Netfreaks {
 
     void register(String name, String email, String password, String device );
 
-    void login(String email);
+    void login(String email, String device);
 
     void disconnect();
 

@@ -7,6 +7,6 @@ public class PremiumClass extends AbstractAccountClass implements Netfreaks.Acco
 
     @Override
     public boolean isDeviceListFull() {
-        return getNDevices() >= MAXIMUM_DEVICES;
+        return getNDevices() > MAXIMUM_DEVICES;
     }
 }

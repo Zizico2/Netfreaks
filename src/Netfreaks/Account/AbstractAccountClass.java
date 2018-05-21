@@ -31,6 +31,10 @@ abstract class AbstractAccountClass implements Account {
         devices.remove(currentDevice);
     }
 
+    public void login(String device){
+        currentDevice = device;
+    }
+
     public void logout(){
         currentDevice = "";
     }

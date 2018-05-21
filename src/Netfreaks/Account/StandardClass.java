@@ -8,7 +8,7 @@ public class StandardClass extends AbstractAccountClass implements Netfreaks.Acc
 
     @Override
     public boolean isDeviceListFull() {
-        return getNDevices() >= MAXIMUM_DEVICES;
+        return getNDevices() > MAXIMUM_DEVICES;
     }
 
 }

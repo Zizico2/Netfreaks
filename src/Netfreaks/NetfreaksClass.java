@@ -57,14 +57,16 @@ public class NetfreaksClass implements Netfreaks {
     @Override
     public void register(String name, String email, String password, String device) {
         accounts.put(email, new BasicClass(email, name, password, device));
-        login(email);
+        login(email, device);
 
 
     }
 
     @Override
-    public void login(String email) {
+    public void login(String email, String device) {
         currentAccount = email;
+        accounts.get(currentAccount).login(device);
+
     }
 
     @Override

@@ -232,7 +232,7 @@ public class Main {
         if(netfreaks.deviceNumberExceeded(email,device))
             throw new DeviceNumberExceededException();
 
-        netfreaks.login(email);
+        netfreaks.login(email, device);
         System.out.println("Welcome " + netfreaks.getActiveProfile() + " (" +  device + ").\n");
     }
 

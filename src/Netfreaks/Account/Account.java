@@ -15,4 +15,6 @@ public interface Account {
     boolean isDeviceListFull();
 
     String getActiveDevice();
+
+    void login(String device);
 }
