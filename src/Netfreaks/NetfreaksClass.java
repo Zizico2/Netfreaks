@@ -163,12 +163,12 @@ public class NetfreaksClass implements Netfreaks {
 
     @Override
     public boolean needToRegisterDevice(String email, String device) {
-        return accounts.get(currentAccount).needToRegisterDevice(device);
+        return accounts.get(email).needToRegisterDevice(device);
 
     }
 
     @Override
     public void registerDevice(String email, String device) {
-        accounts.get(currentAccount).registerDevice(device);
+        accounts.get(email).registerDevice(device);
     }
 }

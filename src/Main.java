@@ -214,7 +214,7 @@ public class Main {
         } catch (WrongPasswordException e){
             System.out.println("Wrong password.\n");
         } catch (DeviceNumberExceededException e){
-            System.out.println("Not possible to connect to more devices.\n");
+            System.out.println("Not possible to connect more devices.\n");
         }
     }
 
