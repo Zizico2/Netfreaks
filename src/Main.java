@@ -92,15 +92,15 @@ public class Main {
                         break;
 
                     case SELECT:
-                        processSelect(netfreaks);
+                        processSelect(in,netfreaks);
                         break;
 
                     case WATCH:
-                        processWatch(netfreaks);
+                        processWatch(in,netfreaks);
                         break;
 
                     case RATE:
-                        processRate(netfreaks);
+                        processRate(in,netfreaks);
                         break;
 
                     case INFOACCOUNT:
@@ -151,15 +151,15 @@ public class Main {
 
     }
 
-    private static void processRate(Netfreaks netfreaks) {
+    private static void processRate(Scanner in, Netfreaks netfreaks) {
 
     }
 
-    private static void processWatch(Netfreaks netfreaks) {
+    private static void processWatch(Scanner in, Netfreaks netfreaks) {
 
     }
 
-    private static void processSelect(Netfreaks netfreaks) {
+    private static void processSelect(Scanner in, Netfreaks netfreaks) {
 
     }
 
