@@ -42,7 +42,7 @@ abstract class AbstractAccountClass implements Account {
 
     @Override
     public void registerDevice(String device) {
-        devices.add("device");
+        devices.add(device);
     }
 
     public void logout(){
