@@ -8,7 +8,7 @@ public interface Netfreaks {
 
     void register(String name, String email, String password, String device );
 
-    void login(String email);
+    void login(String email, String device);
 
     void disconnect();
 
@@ -47,4 +47,7 @@ public interface Netfreaks {
     boolean deviceNumberExceeded(String email, String device);
 
 
+    boolean needToRegisterDevice(String email, String device);
+
+    void registerDevice(String email, String device);
 }

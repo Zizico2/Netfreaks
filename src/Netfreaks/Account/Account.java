@@ -15,4 +15,10 @@ public interface Account {
     boolean isDeviceListFull();
 
     String getActiveDevice();
+
+    void login(String device);
+
+    boolean needToRegisterDevice(String device);
+
+    void registerDevice(String device);
 }

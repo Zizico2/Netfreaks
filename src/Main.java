@@ -92,15 +92,15 @@ public class Main {
                         break;
 
                     case SELECT:
-                        processSelect(netfreaks);
+                        processSelect(in,netfreaks);
                         break;
 
                     case WATCH:
-                        processWatch(netfreaks);
+                        processWatch(in,netfreaks);
                         break;
 
                     case RATE:
-                        processRate(netfreaks);
+                        processRate(in,netfreaks);
                         break;
 
                     case INFOACCOUNT:
@@ -151,15 +151,15 @@ public class Main {
 
     }
 
-    private static void processRate(Netfreaks netfreaks) {
+    private static void processRate(Scanner in, Netfreaks netfreaks) {
 
     }
 
-    private static void processWatch(Netfreaks netfreaks) {
+    private static void processWatch(Scanner in, Netfreaks netfreaks) {
 
     }
 
-    private static void processSelect(Netfreaks netfreaks) {
+    private static void processSelect(Scanner in, Netfreaks netfreaks) {
 
     }
 
@@ -214,11 +214,12 @@ public class Main {
         } catch (WrongPasswordException e){
             System.out.println("Wrong password.\n");
         } catch (DeviceNumberExceededException e){
-            System.out.println("Not possible to connect to more devices.\n");
+            System.out.println("Not possible to connect more devices.\n");
         }
     }
 
     private static void login(String email, String password, String device, Netfreaks netfreaks) throws AlreadyLoggedInException, NetfreaksAppOccupiedException,
+
                                                                                                         InexistantAccountException, WrongPasswordException, DeviceNumberExceededException{
         if(netfreaks.isClientLoggedIn(email))
             throw new AlreadyLoggedInException();
@@ -226,12 +227,15 @@ public class Main {
             throw new NetfreaksAppOccupiedException();
         if(!netfreaks.isEmailUsed(email))
             throw new InexistantAccountException();
-        if(netfreaks.isPasswordRight(email,password))
+        if(!netfreaks.isPasswordRight(email,password))
             throw new WrongPasswordException();
-        if(netfreaks.deviceNumberExceeded(email,device))
-            throw new DeviceNumberExceededException();
+        if (netfreaks.needToRegisterDevice(email, device)) {
+            if (netfreaks.deviceNumberExceeded(email, device))
+                throw new DeviceNumberExceededException();
+            netfreaks.registerDevice(email, device);
+        }
 
-        netfreaks.login(email);
+        netfreaks.login(email, device);
         System.out.println("Welcome " + netfreaks.getActiveProfile() + " (" +  device + ").\n");
     }
 
