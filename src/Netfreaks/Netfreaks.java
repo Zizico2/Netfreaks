@@ -50,4 +50,16 @@ public interface Netfreaks {
     boolean needToRegisterDevice(String email, String device);
 
     void registerDevice(String email, String device);
+
+    String getActiveProfilePlan();
+
+    boolean SameMembership(String membershipName);
+
+    boolean isDowngradePossible(String membershipName);
+
+    boolean isItDowngrade(String membershipName);
+
+    boolean isSameProfile(String profileName);
+
+    boolean profileNumberExceeded();
 }

@@ -131,10 +131,6 @@ public class Main {
             } while (!cmd.equals(Command.EXIT));
     }
 
-    private static void processProfile(Scanner in, Netfreaks netfreaks) {
-
-    }
-
     private static void processSearchByRate(Netfreaks netfreaks) {
 
     }
@@ -163,8 +159,66 @@ public class Main {
 
     }
 
-    private static void processMembership(Scanner in, Netfreaks netfreaks) {
+    private static void processProfile(Scanner in, Netfreaks netfreaks) {
+        int ageRestriction = 18;
+        String profileName = in.nextLine();
+        String profileType = in.nextLine();
+        if(profileType.equalsIgnoreCase("CHILDREN")) {
+            ageRestriction = in.nextInt();
+            in.nextLine();
+        }
+        try{
+            profile(profileName,profileType,ageRestriction,netfreaks);
+        } catch(NoAccountLoggedInException e){
+            System.out.println("No client is logged in.\n");
+        }
+        catch(SameProfileNameExceptiopn e){
+            System.out.println("There is already a profile " + profileName + "\n");
+        }
+        catch(ProfileNumberExceededException e){
+            System.out.println("Not possible to add more profiles.\n");
+        }
+    }
 
+    private static void profile(String profileName, String profileType, int ageRestriction, Netfreaks netfreaks) throws NoAccountLoggedInException, SameProfileNameExceptiopn, ProfileNumberExceededException{
+
+        if(!netfreaks.isAClientLoggedIn())
+            throw new NoAccountLoggedInException();
+        if(netfreaks.isSameProfile(profileName))
+            throw new SameProfileNameExceptiopn();
+        if(netfreaks.profileNumberExceeded())
+            throw new ProfileNumberExceededException();
+
+        netfreaks.profile(profileName,profileType.equalsIgnoreCase("NORMAL"),ageRestriction);
+        System.out.println("New profile added.\n");
+    }
+
+    private static void processMembership(Scanner in, Netfreaks netfreaks) {
+        String membershipName = in.nextLine();
+        try{
+            membership(membershipName,netfreaks);
+        } catch(NoAccountLoggedInException e){
+            System.out.println("No client is logged in.\n");
+        }
+        catch(SameMembershipException e){
+            System.out.println("No membership plan change.\n");
+        }
+        catch(DowngradeUnavaliableException e){
+            System.out.println("Cannot downgrade membership plan at the moment.\n");
+        }
+    }
+
+    private static void membership(String membershipName, Netfreaks netfreaks) throws NoAccountLoggedInException,SameMembershipException,DowngradeUnavaliableException{
+        if(!netfreaks.isAClientLoggedIn())
+            throw new NoAccountLoggedInException();
+        if(netfreaks.SameMembership(membershipName))
+            throw new SameMembershipException();
+        if(netfreaks.isItDowngrade(membershipName))
+            if(!netfreaks.isDowngradePossible(membershipName))
+                throw new DowngradeUnavaliableException();
+
+        netfreaks.membership(membershipName);
+        System.out.println("Membership plan was changed from " + netfreaks.getActiveProfilePlan() + " to " + membershipName + ".");
     }
 
     private static void processLogout(Netfreaks netfreaks) {

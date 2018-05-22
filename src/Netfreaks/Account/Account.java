@@ -21,4 +21,6 @@ public interface Account {
     boolean needToRegisterDevice(String device);
 
     void registerDevice(String device);
+
+    int getNDevices();
 }

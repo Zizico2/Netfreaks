@@ -66,7 +66,8 @@ abstract class AbstractAccountClass implements Account {
         return currentDevice;
     }
 
-    int getNDevices(){
+    @Override
+    public int getNDevices(){
         return devices.size();
     }
 

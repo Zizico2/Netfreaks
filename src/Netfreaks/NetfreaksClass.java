@@ -2,6 +2,10 @@ package Netfreaks;
 
 import Netfreaks.Account.Account;
 import Netfreaks.Account.BasicClass;
+import Netfreaks.Account.Profile.ProfileType;
+import Netfreaks.Account.Tags.Basic;
+import Netfreaks.Account.Tags.Premium;
+import Netfreaks.Account.Tags.Standard;
 import Netfreaks.Product.Film;
 import Netfreaks.Product.Product;
 import Netfreaks.Product.Series;
@@ -84,7 +88,22 @@ public class NetfreaksClass implements Netfreaks {
 
     @Override
     public void membership(String planName) {
-
+        Account account = accounts.get(currentAccount);
+        accounts.remove(currentAccount);
+        ProfileType type =ProfileType.valueOf(planName.toUpperCase());
+        switch(type){
+            case NORMAL:
+                Basic bAcc = (Basic) account;
+                accounts.put(currentAccount,(Account)bAcc);
+                break;
+            case STANDARD:
+                Standard sAcc = (Standard) account;
+                accounts.put(currentAccount,(Account)sAcc);
+                break;
+            case PREMIUM:
+                Premium pAcc = (Premium) account;
+                accounts.put(currentAccount,(Account)pAcc);
+        }
     }
 
     @Override
@@ -170,5 +189,53 @@ public class NetfreaksClass implements Netfreaks {
     @Override
     public void registerDevice(String email, String device) {
         accounts.get(email).registerDevice(device);
+    }
+
+    private String getPlan(Account account){
+        if(account == null)
+            return null;
+        if(account instanceof Basic)
+            return "Basic";
+        if(account instanceof Standard)
+            return "Standard";
+
+        return "Premium";
+    }
+    @Override
+    public String getActiveProfilePlan() {
+        return getPlan(accounts.get(currentAccount));
+    }
+
+    @Override
+    public boolean SameMembership(String membershipName) {
+        return getPlan(accounts.get(currentAccount)).equals(membershipName);
+    }
+
+    @Override
+    public boolean isDowngradePossible(String membershipName) {
+        int nDevices = accounts.get(currentAccount).getNDevices();
+        if(membershipName.equals("Basic"))
+            return nDevices <= Basic.MAXIMUM_DEVICES;
+        else
+            return nDevices <= Standard.MAXIMUM_DEVICES;
+    }
+
+    @Override
+    public boolean isItDowngrade(String membershipName) {
+        if(membershipName.equals("Basic"))
+            return true;
+        if(membershipName.equals("Premium"))
+            return false;
+        return getPlan(accounts.get(currentAccount)).equals("Basic");
+    }
+
+    @Override
+    public boolean isSameProfile(String profileName) {
+        return false;
+    }
+
+    @Override
+    public boolean profileNumberExceeded() {
+        return false;
     }
 }
