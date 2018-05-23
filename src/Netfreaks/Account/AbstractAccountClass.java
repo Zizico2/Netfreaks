@@ -9,7 +9,9 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 abstract class AbstractAccountClass implements Account {
+
     private SortedMap<String,Profile> profiles;
+    private String name;
     private String activeProfile;
     private String email;
     private String password;
@@ -19,7 +21,7 @@ abstract class AbstractAccountClass implements Account {
     AbstractAccountClass(String email, String name, String password, String device) {
         profiles = new TreeMap<>();
         profiles.put(name, new ProfileClass(name));
-        activeProfile = name;
+        this.name = name;
         this.email = email;
         this.password = password;
         devices = new ArrayList<>();
@@ -29,6 +31,10 @@ abstract class AbstractAccountClass implements Account {
 
     public void disconnect(){
         devices.remove(currentDevice);
+    }
+
+    public String getName(){
+        return name;
     }
 
     public void login(String device){
@@ -47,6 +53,7 @@ abstract class AbstractAccountClass implements Account {
 
     public void logout(){
         currentDevice = "";
+        activeProfile = "";
     }
 
     public String getActiveProfile(){
@@ -69,6 +76,32 @@ abstract class AbstractAccountClass implements Account {
     @Override
     public int getNDevices(){
         return devices.size();
+    }
+
+    @Override
+    public void addProfile(String profileName, boolean type, int ageRestriction) {
+        Profile profile;
+        if(type == NORMAL)
+            profile = new ProfileClass(profileName);
+        else
+            profile = new ProfileClass(profileName,ageRestriction);
+
+        profiles.put(profileName,profile);
+    }
+
+    @Override
+    public boolean hasProfile(String profileName) {
+        return profiles.containsKey(profileName);
+    }
+
+    @Override
+    public int getNProfiles() {
+        return profiles.size();
+    }
+
+    @Override
+    public void changeProfileTo(String profileName) {
+        activeProfile = profileName;
     }
 
 }

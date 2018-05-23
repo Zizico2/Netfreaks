@@ -1,10 +1,9 @@
 import Exceptions.*;
 import Netfreaks.*;
-import Netfreaks.Product.FilmClass;
-import Netfreaks.Product.Product;
-import Netfreaks.Product.SeriesClass;
+import Netfreaks.Product.*;
 
 import java.util.Scanner;
+import java.util.SortedMap;
 
 public class Main {
 
@@ -15,7 +14,7 @@ public class Main {
         NO_MESSAGES_WITH_EMAIL("Nao existem mensagens trocadas com esse email."),
         NO_MESSAGES_WITH_TOPIC(NO_MESSAGES_WITH_EMAIL.msg.replace("email", "assunto")),
         EXITING("Exiting..."),
-        UNKNOWN("Unknown command.");
+        UNKNOWN("Unknown command.\n");
 
         private final String msg;
 
@@ -54,7 +53,10 @@ public class Main {
 
 
     private static Command getCommand(Scanner in) {
-        return Command.valueOf(in.nextLine().toUpperCase());
+
+        String cmd = in.nextLine();
+
+        return Command.valueOf(cmd.toUpperCase());
     }
 
     private static void executeCommand(Scanner in, Netfreaks netfreaks) {
@@ -156,7 +158,25 @@ public class Main {
     }
 
     private static void processSelect(Scanner in, Netfreaks netfreaks) {
+        String profile = in.nextLine();
+        try{
+            select(profile,netfreaks);
+        } catch(NoAccountLoggedInException e){
+            System.out.println("No client is logged in.\n");
+        }
+        catch(InexistantProfileException e){
+            System.out.println("Profile does not exist.\n");
+        }
 
+    }
+
+    private static void select(String profile, Netfreaks netfreaks) throws NoAccountLoggedInException,InexistantProfileException{
+        if(!netfreaks.isAClientLoggedIn())
+            throw new NoAccountLoggedInException();
+        if(netfreaks.hasProfile(profile))
+            throw new InexistantProfileException();
+        netfreaks.select(profile);
+        System.out.println("Welcome " + profile + ".\n");
     }
 
     private static void processProfile(Scanner in, Netfreaks netfreaks) {
@@ -189,7 +209,7 @@ public class Main {
         if(netfreaks.profileNumberExceeded())
             throw new ProfileNumberExceededException();
 
-        netfreaks.profile(profileName,profileType.equalsIgnoreCase("NORMAL"),ageRestriction);
+        netfreaks.profile(profileName,profileType.equalsIgnoreCase("BASIC"),ageRestriction);
         System.out.println("New profile added.\n");
     }
 
@@ -218,7 +238,9 @@ public class Main {
                 throw new DowngradeUnavaliableException();
 
         netfreaks.membership(membershipName);
-        System.out.println("Membership plan was changed from " + netfreaks.getActiveProfilePlan() + " to " + membershipName + ".");
+        String smthn = netfreaks.getActiveProfilePlan().getOutput();
+        System.out.println("Membership plan was changed from " + netfreaks.getActiveProfilePlan().getOutput() + " to " + membershipName + ".");
+
     }
 
     private static void processLogout(Netfreaks netfreaks) {
@@ -232,7 +254,7 @@ public class Main {
     private static void logout(Netfreaks netfreaks) {
         if(!netfreaks.isAClientLoggedIn())
             throw new NoAccountLoggedInException();
-        System.out.println("Goodbye " + netfreaks.getActiveProfile() + " (" + netfreaks.getActiveDevice() + " still connected).\n");
+        System.out.println("Goodbye " + netfreaks.getActiveAccountName() + " (" + netfreaks.getActiveDevice() + " still connected).\n");
         netfreaks.logout();
     }
 
@@ -247,7 +269,7 @@ public class Main {
     private static void disconnect(Netfreaks netfreaks) {
         if(!netfreaks.isAClientLoggedIn())
             throw new NoAccountLoggedInException();
-        System.out.println("Goodbye " + netfreaks.getActiveProfile() + " (" + netfreaks.getActiveDevice() + " was disconnected).\n");
+        System.out.println("Goodbye " + netfreaks.getActiveAccountName() + " (" + netfreaks.getActiveDevice() + " was disconnected).\n");
         netfreaks.disconnect();
     }
 
@@ -290,7 +312,7 @@ public class Main {
         }
 
         netfreaks.login(email, device);
-        System.out.println("Welcome " + netfreaks.getActiveProfile() + " (" +  device + ").\n");
+        System.out.println("Welcome " + netfreaks.getActiveAccountName() + " (" +  device + ").\n");
     }
 
     private static void processRegister(Scanner in, Netfreaks netfreaks) {
@@ -323,6 +345,40 @@ public class Main {
     }
 
     private static void processUpload(Scanner in, Netfreaks netfreaks) {
+        Product[] products = getUploadInput(in);
+        SortedMap<String, Product> IteratableProducts = netfreaks.upload(products);
+
+
+        System.out.println(Message.UPLOAD_SUCCESS.msg + getUploadOutput(IteratableProducts));
+    }
+
+    private static String getUploadOutput(SortedMap<String, Product> IteratableProducts) {
+        String msg = "";
+        String separator = "; ";
+        for (Product product:IteratableProducts.values()) {
+            String title = product.getTitle();
+            String genre = product.getGenre();
+            String[] cast = product.getCast();
+            int ageRestriction = product.getAgeRestriction();
+            int yearOfRelease = product.getYearOfRelease();
+            msg += title + separator ;
+            if(product instanceof Film) {
+                Film film = (Film) product;
+                msg += film.getDirector() + separator +  film.getDuration() + separator;
+            }
+            else{
+                Series iteratableSeries = (Series) product;
+                msg += iteratableSeries.getCreatorName() + separator +  iteratableSeries.getNSeasons() + separator + iteratableSeries.getNEpisodesPerSeason() + separator;
+            }
+            msg += ageRestriction + "+" + separator + yearOfRelease + separator + genre + separator;
+            for(int i = 0; i < 3 && i < cast.length; i++)
+                msg += cast[i] + separator;
+            msg = msg.substring(0,msg.lastIndexOf(separator)) + "." + "\n";
+        }
+        return msg;
+    }
+
+    private static Product[] getUploadInput(Scanner in) {
         int nMovies = in.nextInt();
         in.nextLine();
         Product[] movies = new Product[nMovies];
@@ -370,6 +426,7 @@ public class Main {
         Product[] products = new Product[nMovies + nSeries];
         System.arraycopy(movies,0,products,0,nMovies);
         System.arraycopy(series,0,products,nMovies,nSeries);
-        System.out.println(Message.UPLOAD_SUCCESS.msg + netfreaks.upload(products));
+
+        return products;
     }
 }
