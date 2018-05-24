@@ -1,6 +1,6 @@
 package Netfreaks.Product;
 
-class AbstractProductClass implements Product {
+abstract class AbstractProductClass implements Product {
 
     private String title;
     private int yearOfRelease;
