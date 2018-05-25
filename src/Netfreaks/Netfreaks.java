@@ -1,6 +1,6 @@
 package Netfreaks;
 
-import Netfreaks.Account.Profile.ProfileType;
+import Netfreaks.Account.PlanType;
 import Netfreaks.Product.Product;
 
 import java.util.SortedMap;
@@ -54,7 +54,7 @@ public interface Netfreaks {
 
     void registerDevice(String email, String device);
 
-    ProfileType getActiveProfilePlan();
+    PlanType getActiveProfilePlan();
 
     boolean SameMembership(String membershipName);
 

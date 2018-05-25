@@ -1,14 +1,13 @@
 package Netfreaks;
 
+import Netfreaks.Account.AccountClass;
 import Netfreaks.Account.Account;
-import Netfreaks.Account.BasicClass;
-import Netfreaks.Account.Profile.ProfileType;
+import Netfreaks.Account.PlanType;
 import Netfreaks.Account.Tags.Basic;
 import Netfreaks.Account.Tags.Premium;
 import Netfreaks.Account.Tags.Standard;
 import Netfreaks.Product.Product;
 
-import java.util.AbstractCollection;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -36,7 +35,7 @@ public class NetfreaksClass implements Netfreaks {
 
     @Override
     public void register(String name, String email, String password, String device) {
-        accounts.put(email, new BasicClass(email, name, password, device));
+        accounts.put(email, new AccountClass(email, name, password, device));
         login(email, device);
 
 
@@ -64,22 +63,7 @@ public class NetfreaksClass implements Netfreaks {
 
     @Override
     public void membership(String planName) {
-        Account account = accounts.get(currentAccount);
-        accounts.remove(currentAccount);
-        ProfileType type = ProfileType.valueOf(planName.toUpperCase());
-        switch(type){
-            case BASIC:
-                Basic bAcc = (Basic) account;
-                accounts.put(currentAccount,(Account)bAcc);
-                break;
-            case STANDARD:
-                Standard sAcc = (Standard) account;
-                accounts.put(currentAccount,(Account)sAcc);
-                break;
-            case PREMIUM:
-                Premium pAcc = (Premium) account;
-                accounts.put(currentAccount,(Account)pAcc);
-        }
+        accounts.get(currentAccount).setPlanType(PlanType.valueOf(planName.toUpperCase()));
     }
 
     @Override
@@ -89,7 +73,7 @@ public class NetfreaksClass implements Netfreaks {
 
     @Override
     public void select(String profileName) {
-        accounts.get(currentAccount).changeProfileTo(profileName);
+        accounts.get(currentAccount).selectProfile(profileName);
     }
 
     @Override
@@ -167,43 +151,34 @@ public class NetfreaksClass implements Netfreaks {
         accounts.get(email).registerDevice(device);
     }
 
-    private ProfileType getPlan(Account account){
-        if(account == null)
-            return null;
-        if(account instanceof Basic)
-            return ProfileType.BASIC;
-        if(account instanceof Standard)
-            return ProfileType.STANDARD;
-
-        return ProfileType.BASIC;
-    }
     @Override
-    public ProfileType getActiveProfilePlan() {
-        return getPlan(accounts.get(currentAccount));
+    public PlanType getActiveProfilePlan() {
+        return accounts.get(currentAccount).getPlanType();
     }
 
     @Override
     public boolean SameMembership(String membershipName) {
-        return getPlan(accounts.get(currentAccount)).equals(ProfileType.valueOf(membershipName.toUpperCase()));
+        return accounts.get(currentAccount).getPlanType().equals(PlanType.valueOf(membershipName.toUpperCase()));
     }
 
     @Override
     public boolean isDowngradePossible(String membershipName) {
-        int nDevices = accounts.get(currentAccount).getNDevices();
-        if(ProfileType.valueOf(membershipName.toUpperCase()).equals(ProfileType.BASIC))
-            return nDevices <= ProfileType.BASIC.getMaxNProfiles();
-        else
-            return nDevices <= ProfileType.PREMIUM.getMaxNProfiles();
+
+        PlanType type = PlanType.valueOf(membershipName.toUpperCase());
+        Account account = accounts.get(currentAccount);
+
+        return account.getNDevices() <= type.getMaxNDevices() &&account.getNProfiles() <= type.getMaxNProfiles();
+
     }
 
     @Override
     public boolean isItDowngrade(String membershipName) {
-        ProfileType type = ProfileType.valueOf(membershipName.toUpperCase());
-        if(type.equals(ProfileType.BASIC))
+        PlanType type = PlanType.valueOf(membershipName.toUpperCase());
+        if(type.equals(PlanType.BASIC))
             return true;
-        if(type.equals(ProfileType.PREMIUM))
+        if(type.equals(PlanType.PREMIUM))
             return false;
-        return !getPlan(accounts.get(currentAccount)).equals(ProfileType.BASIC);
+        return !accounts.get(currentAccount).getPlanType().equals(PlanType.BASIC);
     }
 
     @Override
@@ -214,12 +189,12 @@ public class NetfreaksClass implements Netfreaks {
     @Override
     public boolean profileNumberExceeded() {
         Account account = accounts.get(currentAccount);
-        switch(getPlan(account)){
+        switch(account.getPlanType()){
              case BASIC:
-                 return account.getNProfiles() == ProfileType.BASIC.getMaxNProfiles();
+                 return account.getNProfiles() == PlanType.BASIC.getMaxNProfiles();
 
              default:
-                return account.getNProfiles() == ProfileType.PREMIUM.getMaxNProfiles();
+                return account.getNProfiles() == PlanType.PREMIUM.getMaxNProfiles();
          }
     }
 

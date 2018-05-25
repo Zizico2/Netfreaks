@@ -173,7 +173,7 @@ public class Main {
     private static void select(String profile, Netfreaks netfreaks) throws NoAccountLoggedInException,InexistantProfileException{
         if(!netfreaks.isAClientLoggedIn())
             throw new NoAccountLoggedInException();
-        if(netfreaks.hasProfile(profile))
+        if(!netfreaks.hasProfile(profile))
             throw new InexistantProfileException();
         netfreaks.select(profile);
         System.out.println("Welcome " + profile + ".\n");
@@ -193,7 +193,7 @@ public class Main {
             System.out.println("No client is logged in.\n");
         }
         catch(SameProfileNameExceptiopn e){
-            System.out.println("There is already a profile " + profileName + "\n");
+            System.out.println("There is already a profile " + profileName + ".\n");
         }
         catch(ProfileNumberExceededException e){
             System.out.println("Not possible to add more profiles.\n");
@@ -236,11 +236,8 @@ public class Main {
         if(netfreaks.isItDowngrade(membershipName))
             if(!netfreaks.isDowngradePossible(membershipName))
                 throw new DowngradeUnavaliableException();
-
+        System.out.println("Membership plan was changed from " + netfreaks.getActiveProfilePlan().getOutput() + " to " + membershipName + ".\n");
         netfreaks.membership(membershipName);
-        String smthn = netfreaks.getActiveProfilePlan().getOutput();
-        System.out.println("Membership plan was changed from " + netfreaks.getActiveProfilePlan().getOutput() + " to " + membershipName + ".");
-
     }
 
     private static void processLogout(Netfreaks netfreaks) {

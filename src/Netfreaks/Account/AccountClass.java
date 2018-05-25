@@ -2,13 +2,13 @@ package Netfreaks.Account;
 
 import Netfreaks.Account.Profile.Profile;
 import Netfreaks.Account.Profile.ProfileClass;
-
+import static Netfreaks.Account.PlanType.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-abstract class AbstractAccountClass implements Account {
+public class AccountClass implements Account {
 
     private SortedMap<String,Profile> profiles;
     private String name;
@@ -18,15 +18,18 @@ abstract class AbstractAccountClass implements Account {
     private List<String> devices;
     private String currentDevice;
 
-    AbstractAccountClass(String email, String name, String password, String device) {
+    private int maxProfiles;
+    private int maxDevices;
+
+    public AccountClass(String email, String name, String password, String device) {
         profiles = new TreeMap<>();
-        profiles.put(name, new ProfileClass(name));
         this.name = name;
         this.email = email;
         this.password = password;
         devices = new ArrayList<>();
         devices.add(device);
         currentDevice = device;
+        setPlanType(BASIC);
     }
 
     public void disconnect(){
@@ -66,7 +69,9 @@ abstract class AbstractAccountClass implements Account {
     }
 
     @Override
-    public abstract boolean isDeviceListFull();
+    public boolean isDeviceListFull(){
+        return !(devices.size() < maxDevices);
+    }
 
     @Override
     public String getActiveDevice() {
@@ -100,8 +105,19 @@ abstract class AbstractAccountClass implements Account {
     }
 
     @Override
-    public void changeProfileTo(String profileName) {
+    public void selectProfile(String profileName) {
         activeProfile = profileName;
     }
 
+    public void setPlanType(PlanType type){
+        maxProfiles = type.getMaxNProfiles();
+        maxDevices = type.getMaxNDevices();
+    }
+
+    public PlanType getPlanType(){
+        for (PlanType type: PlanType.values())
+            if(type.getMaxNDevices() == maxDevices)
+                return type;
+        return null;
+    }
 }

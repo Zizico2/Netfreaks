@@ -30,7 +30,13 @@ public interface Account {
 
     int getNProfiles();
 
-    void changeProfileTo(String profileName);
+    void selectProfile(String profileName);
+
+    void setPlanType(PlanType type);
+
+    PlanType getPlanType();
 
     String getName();
+
+
 }
