@@ -11,4 +11,8 @@ public interface Product {
     String getGenre();
 
     String[] getCast();
+
+    void rate(String accountName, int rate);
+
+    int getRate(String name);
 }

@@ -1,5 +1,8 @@
 package Netfreaks.Product;
 
+import java.util.HashMap;
+import java.util.Map;
+
 abstract class AbstractProductClass implements Product {
 
     private String title;
@@ -9,6 +12,8 @@ abstract class AbstractProductClass implements Product {
     private String[] cast;
     private int nCast;
 
+    Map<String, Integer> rates;
+
     AbstractProductClass(String title, int yearOfRelease, String ageRestriction, String genre, String[] cast, int nCast) {
         this.title = title;
         this.yearOfRelease = yearOfRelease;
@@ -16,6 +21,7 @@ abstract class AbstractProductClass implements Product {
         this.genre = genre;
         this.cast = cast;
         this.nCast = nCast;
+        rates = new HashMap<>();
     }
 
     public String getTitle() {
@@ -37,4 +43,16 @@ abstract class AbstractProductClass implements Product {
     public String[] getCast(){
         return cast;
     }
+
+    @Override
+    public void rate(String profileName, int rate) {
+       rates.put(profileName,rate);
+    }
+
+    @Override
+    public int getRate(String profileName){
+        return rates.get(profileName);
+    }
+
+
 }

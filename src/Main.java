@@ -2,6 +2,8 @@ import Exceptions.*;
 import Netfreaks.*;
 import Netfreaks.Product.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.SortedMap;
 

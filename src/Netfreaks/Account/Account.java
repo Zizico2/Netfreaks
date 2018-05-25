@@ -1,5 +1,7 @@
 package Netfreaks.Account;
 
+import Netfreaks.Product.Product;
+
 public interface Account {
 
     boolean NORMAL = true;
@@ -8,7 +10,7 @@ public interface Account {
 
     void logout();
 
-    String getActiveProfile();
+    String getCurrentProfile();
 
     String getPassword();
 
@@ -38,5 +40,9 @@ public interface Account {
 
     String getName();
 
+    void watch(String productName);
 
+    void rate(Product product);
+
+    String toString();
 }

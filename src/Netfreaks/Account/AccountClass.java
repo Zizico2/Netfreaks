@@ -2,24 +2,25 @@ package Netfreaks.Account;
 
 import Netfreaks.Account.Profile.Profile;
 import Netfreaks.Account.Profile.ProfileClass;
+import Netfreaks.Product.Product;
+
 import static Netfreaks.Account.PlanType.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+
 public class AccountClass implements Account {
 
     private SortedMap<String,Profile> profiles;
     private String name;
-    private String activeProfile;
+    private String currentProfile;
     private String email;
     private String password;
     private List<String> devices;
     private String currentDevice;
-
-    private int maxProfiles;
-    private int maxDevices;
+    private PlanType type;
 
     public AccountClass(String email, String name, String password, String device) {
         profiles = new TreeMap<>();
@@ -30,6 +31,15 @@ public class AccountClass implements Account {
         devices.add(device);
         currentDevice = device;
         setPlanType(BASIC);
+    }
+
+    public void watch(String productName){
+       profiles.get(currentProfile).watch(productName);
+    }
+
+    @Override
+    public void rate(Product product){
+        profiles.get(currentProfile).rate(product);
     }
 
     public void disconnect(){
@@ -56,11 +66,11 @@ public class AccountClass implements Account {
 
     public void logout(){
         currentDevice = "";
-        activeProfile = "";
+        currentProfile = "";
     }
 
-    public String getActiveProfile(){
-        return activeProfile;
+    public String getCurrentProfile(){
+        return currentProfile;
     }
 
     @Override
@@ -70,7 +80,7 @@ public class AccountClass implements Account {
 
     @Override
     public boolean isDeviceListFull(){
-        return !(devices.size() < maxDevices);
+        return !(devices.size() < type.getMaxNDevices());
     }
 
     @Override
@@ -106,18 +116,29 @@ public class AccountClass implements Account {
 
     @Override
     public void selectProfile(String profileName) {
-        activeProfile = profileName;
+        currentProfile = profileName;
     }
 
     public void setPlanType(PlanType type){
-        maxProfiles = type.getMaxNProfiles();
-        maxDevices = type.getMaxNDevices();
+       this.type = type;
     }
 
     public PlanType getPlanType(){
-        for (PlanType type: PlanType.values())
-            if(type.getMaxNDevices() == maxDevices)
-                return type;
-        return null;
+        return type;
+    }
+
+    @Override
+    public String toString(){
+       String msg = name + ":\n" +
+                    type.getOutput() + "(";
+       for(String device : devices)
+           msg += device + "; ";
+        msg = msg.substring(0,msg.lastIndexOf("; ")) + ").\n";
+        if(profiles.isEmpty())
+            msg += "No profiles defined.\n";
+        else
+            for(Profile profile: profiles.values())
+                msg += "Profile: " + profile.toString();
+        return msg;
     }
 }
