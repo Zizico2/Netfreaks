@@ -14,6 +14,5 @@ public class ProfileClass implements Profile {
     public ProfileClass(String name) {
         age = 18;
         this.name = name;
-
     }
 }

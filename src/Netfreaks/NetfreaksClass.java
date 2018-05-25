@@ -1,10 +1,12 @@
 package Netfreaks;
 
+import Netfreaks.Account.AccountClass;
 import Netfreaks.Account.Account;
-import Netfreaks.Account.BasicClass;
-import Netfreaks.Product.Film;
+import Netfreaks.Account.PlanType;
+import Netfreaks.Account.Tags.Basic;
+import Netfreaks.Account.Tags.Premium;
+import Netfreaks.Account.Tags.Standard;
 import Netfreaks.Product.Product;
-import Netfreaks.Product.Series;
 
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -23,40 +25,17 @@ public class NetfreaksClass implements Netfreaks {
     }
 
     @Override
-    public String upload(Product[] products) {
-        for (Product product:products) {
+    public SortedMap<String, Product> upload(Product[] products) {
+        for (Product product:products)
             this.products.put(product.getTitle(),product);
-        }
 
-        String msg = "";
-        String separator = "; ";
-        for (Product product:this.products.values()) {
-            String title = product.getTitle();
-            String genre = product.getGenre();
-            String[] cast = product.getCast();
-            int ageRestriction = product.getAgeRestriction();
-            int yearOfRelease = product.getYearOfRelease();
-            msg += title + separator ;
-            if(product instanceof Film) {
-                Film film = (Film) product;
-                msg += film.getDirector() + separator +  film.getDuration() + separator;
-            }
-            else{
-                Series series = (Series) product;
-                msg += series.getCreatorName() + separator +  series.getNSeasons() + separator + series.getNEpisodesPerSeason() + separator;
-            }
-            msg += ageRestriction + "+" + separator + yearOfRelease + separator + genre + separator;
-                for(int i = 0; i < 3 && i < cast.length; i++)
-                    msg += cast[i] + separator;
-            msg = msg.substring(0,msg.lastIndexOf(separator)) + "." + "\n";
-        }
-        return msg;
+        return this.products;
     }
 
 
     @Override
     public void register(String name, String email, String password, String device) {
-        accounts.put(email, new BasicClass(email, name, password, device));
+        accounts.put(email, new AccountClass(email, name, password, device));
         login(email, device);
 
 
@@ -84,17 +63,17 @@ public class NetfreaksClass implements Netfreaks {
 
     @Override
     public void membership(String planName) {
-
+        accounts.get(currentAccount).setPlanType(PlanType.valueOf(planName.toUpperCase()));
     }
 
     @Override
-    public void profile(String profileName, boolean normal, int ageRestriction) {
-
+    public void profile(String profileName, boolean type, int ageRestriction) {
+            accounts.get(currentAccount).addProfile(profileName,type,ageRestriction);
     }
 
     @Override
     public void select(String profileName) {
-
+        accounts.get(currentAccount).selectProfile(profileName);
     }
 
     @Override
@@ -170,5 +149,62 @@ public class NetfreaksClass implements Netfreaks {
     @Override
     public void registerDevice(String email, String device) {
         accounts.get(email).registerDevice(device);
+    }
+
+    @Override
+    public PlanType getActiveProfilePlan() {
+        return accounts.get(currentAccount).getPlanType();
+    }
+
+    @Override
+    public boolean SameMembership(String membershipName) {
+        return accounts.get(currentAccount).getPlanType().equals(PlanType.valueOf(membershipName.toUpperCase()));
+    }
+
+    @Override
+    public boolean isDowngradePossible(String membershipName) {
+
+        PlanType type = PlanType.valueOf(membershipName.toUpperCase());
+        Account account = accounts.get(currentAccount);
+
+        return account.getNDevices() <= type.getMaxNDevices() &&account.getNProfiles() <= type.getMaxNProfiles();
+
+    }
+
+    @Override
+    public boolean isItDowngrade(String membershipName) {
+        PlanType type = PlanType.valueOf(membershipName.toUpperCase());
+        if(type.equals(PlanType.BASIC))
+            return true;
+        if(type.equals(PlanType.PREMIUM))
+            return false;
+        return !accounts.get(currentAccount).getPlanType().equals(PlanType.BASIC);
+    }
+
+    @Override
+    public boolean isSameProfile(String profileName) {
+        return accounts.get(currentAccount).hasProfile(profileName);
+    }
+
+    @Override
+    public boolean profileNumberExceeded() {
+        Account account = accounts.get(currentAccount);
+        switch(account.getPlanType()){
+             case BASIC:
+                 return account.getNProfiles() == PlanType.BASIC.getMaxNProfiles();
+
+             default:
+                return account.getNProfiles() == PlanType.PREMIUM.getMaxNProfiles();
+         }
+    }
+
+    @Override
+    public boolean hasProfile(String profile) {
+        return accounts.get(currentAccount).hasProfile(profile);
+    }
+
+    @Override
+    public String getActiveAccountName() {
+        return accounts.get(currentAccount).getName();
     }
 }

@@ -1,10 +1,13 @@
 package Netfreaks;
 
+import Netfreaks.Account.PlanType;
 import Netfreaks.Product.Product;
+
+import java.util.SortedMap;
 
 public interface Netfreaks {
 
-    String upload(Product[] products);
+    SortedMap<String, Product> upload(Product[] products);
 
     void register(String name, String email, String password, String device );
 
@@ -50,4 +53,21 @@ public interface Netfreaks {
     boolean needToRegisterDevice(String email, String device);
 
     void registerDevice(String email, String device);
+
+    PlanType getActiveProfilePlan();
+
+    boolean SameMembership(String membershipName);
+
+    boolean isDowngradePossible(String membershipName);
+
+    boolean isItDowngrade(String membershipName);
+
+    boolean isSameProfile(String profileName);
+
+    boolean profileNumberExceeded();
+
+    boolean hasProfile(String profile);
+
+    String getActiveAccountName();
+
 }

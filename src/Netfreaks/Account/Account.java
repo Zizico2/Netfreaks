@@ -1,8 +1,8 @@
 package Netfreaks.Account;
 
-import java.util.Arrays;
-
 public interface Account {
+
+    boolean NORMAL = true;
 
     void disconnect();
 
@@ -21,4 +21,22 @@ public interface Account {
     boolean needToRegisterDevice(String device);
 
     void registerDevice(String device);
+
+    int getNDevices();
+
+    void addProfile(String profileName, boolean type, int ageRestriction);
+
+    boolean hasProfile(String profileName);
+
+    int getNProfiles();
+
+    void selectProfile(String profileName);
+
+    void setPlanType(PlanType type);
+
+    PlanType getPlanType();
+
+    String getName();
+
+
 }
