@@ -131,7 +131,7 @@ public class AccountClass implements Account {
     @Override
     public String toString(){
        String msg = name + ":\n" +
-                    type.getOutput() + "(";
+                    type.getOutput() + " (";
        for(String device : devices)
            msg += device + "; ";
         msg = msg.substring(0,msg.lastIndexOf("; ")) + ").\n";
@@ -146,5 +146,10 @@ public class AccountClass implements Account {
     @Override
     public int getCurrentProfileAge() {
         return profiles.get(currentProfile).getAge();
+    }
+
+    @Override
+    public boolean isInHistory(String productName) {
+        return profiles.get(currentProfile).isInHistory(productName);
     }
 }

@@ -54,5 +54,10 @@ abstract class AbstractProductClass implements Product {
         return rates.get(profileName);
     }
 
+    @Override
+    public boolean isRatedBy(String currentProfile) {
+        return rates.containsKey(currentProfile);
+    }
+
 
 }

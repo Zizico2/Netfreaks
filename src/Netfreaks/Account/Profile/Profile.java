@@ -12,4 +12,6 @@ public interface Profile {
     String toString();
 
     int getAge();
+
+    boolean isInHistory(String productName);
 }

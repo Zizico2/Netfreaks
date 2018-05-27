@@ -80,7 +80,7 @@ public class NetfreaksClass implements Netfreaks {
     @Override
     public void rate(String productName, int rate) {
         Product product = products.get(productName);
-        product.rate(currentAccount,rate);
+        product.rate(accounts.get(currentAccount).getCurrentProfile(),rate);
         accounts.get(currentAccount).rate(product);
     }
 
@@ -219,5 +219,15 @@ public class NetfreaksClass implements Netfreaks {
     @Override
     public boolean isPEGICompatible(String productName) {
         return accounts.get(currentAccount).getCurrentProfileAge() >= products.get(productName).getPEGI();
+    }
+
+    @Override
+    public boolean isInRecentHistory(String productName) {
+       return accounts.get(currentAccount).isInHistory(productName);
+    }
+
+    @Override
+    public boolean isProductRated(String productName) {
+        return products.get(productName).isRatedBy(accounts.get(currentAccount).getCurrentProfile());
     }
 }

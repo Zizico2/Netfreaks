@@ -47,4 +47,6 @@ public interface Account {
     String toString();
 
     int getCurrentProfileAge();
+
+    boolean isInHistory(String productName);
 }

@@ -146,7 +146,18 @@ public class Main {
     }
 
     private static void processInfoAccount(Netfreaks netfreaks) {
+        try {
+            infoAccount(netfreaks);
+        } catch(NoAccountLoggedInException e){
+            System.out.println("No client is logged in.\n");
+        }
+    }
 
+    private static void infoAccount(Netfreaks netfreaks) throws NoAccountLoggedInException{
+        if(!netfreaks.isAClientLoggedIn())
+            throw new NoAccountLoggedInException();
+
+        System.out.println(netfreaks.infoaccount());
     }
 
     private static void processRate(Scanner in, Netfreaks netfreaks) {
@@ -172,8 +183,24 @@ public class Main {
         }
     }
 
-    private static void rate(String productName, int rate, Netfreaks netfreaks) {
+    private static void rate(String productName, int rate, Netfreaks netfreaks) throws NoAccountLoggedInException,
+                                                                                       NoProfileSelectedException,
+                                                                                       InexistantProductException,
+                                                                                       IncompatiblePEGIException
+    {
+        if(!netfreaks.isAClientLoggedIn())
+            throw new NoAccountLoggedInException();
+        if(!netfreaks.isThereProfileSelected())
+            throw new NoProfileSelectedException();
+        if(!netfreaks.isThereAProductNamed(productName))
+            throw new InexistantProductException();
+        if(!netfreaks.isInRecentHistory(productName))
+            throw new NotInRecentHistoryException();
+        if(netfreaks.isProductRated(productName))
+            throw new ProductAlreadyRatedException();
 
+        netfreaks.rate(productName,rate);
+        System.out.println("Thank you for rating " + productName + ".\n");
     }
 
     private static void processWatch(Scanner in, Netfreaks netfreaks) {
@@ -194,7 +221,11 @@ public class Main {
         }
     }
 
-    private static void watch(String productName, Netfreaks netfreaks) throws NoAccountLoggedInException,NoProfileSelectedException,InexistantProductException,IncompatiblePEGIException{
+    private static void watch(String productName, Netfreaks netfreaks) throws NoAccountLoggedInException,
+                                                                              NoProfileSelectedException,
+                                                                              InexistantProductException,
+                                                                              IncompatiblePEGIException
+    {
 
         if(!netfreaks.isAClientLoggedIn())
             throw new NoAccountLoggedInException();

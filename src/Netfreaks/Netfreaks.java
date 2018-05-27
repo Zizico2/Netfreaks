@@ -75,4 +75,8 @@ public interface Netfreaks {
     boolean isThereAProductNamed(String productName);
 
     boolean isPEGICompatible(String productName);
+
+    boolean isInRecentHistory(String productName);
+
+    boolean isProductRated(String productName);
 }

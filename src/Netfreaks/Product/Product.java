@@ -15,4 +15,6 @@ public interface Product {
     void rate(String accountName, int rate);
 
     int getRate(String name);
+
+    boolean isRatedBy(String currentProfile);
 }
