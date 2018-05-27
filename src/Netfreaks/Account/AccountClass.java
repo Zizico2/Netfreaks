@@ -31,6 +31,7 @@ public class AccountClass implements Account {
         devices.add(device);
         currentDevice = device;
         setPlanType(BASIC);
+        currentProfile = "";
     }
 
     public void watch(String productName){
@@ -140,5 +141,10 @@ public class AccountClass implements Account {
             for(Profile profile: profiles.values())
                 msg += "Profile: " + profile.toString();
         return msg;
+    }
+
+    @Override
+    public int getCurrentProfileAge() {
+        return profiles.get(currentProfile).getAge();
     }
 }

@@ -6,7 +6,7 @@ public interface Product {
 
     int getYearOfRelease();
 
-    int getAgeRestriction();
+    int getPEGI();
 
     String getGenre();
 

@@ -205,4 +205,19 @@ public class NetfreaksClass implements Netfreaks {
     public String getActiveAccountName() {
         return accounts.get(currentAccount).getName();
     }
+
+    @Override
+    public boolean isThereProfileSelected() {
+        return !accounts.get(currentAccount).getCurrentProfile().equals("");
+    }
+
+    @Override
+    public boolean isThereAProductNamed(String productName) {
+        return products.containsKey(productName);
+    }
+
+    @Override
+    public boolean isPEGICompatible(String productName) {
+        return accounts.get(currentAccount).getCurrentProfileAge() >= products.get(productName).getPEGI();
+    }
 }

@@ -45,4 +45,6 @@ public interface Account {
     void rate(Product product);
 
     String toString();
+
+    int getCurrentProfileAge();
 }

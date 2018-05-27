@@ -51,5 +51,10 @@ public class ProfileClass implements Profile {
         return msg;
     }
 
+    @Override
+    public int getAge() {
+        return age;
+    }
+
 
 }

@@ -10,4 +10,6 @@ public interface Profile {
     void rate(Product product);
 
     String toString();
+
+    int getAge();
 }

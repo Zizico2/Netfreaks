@@ -2,8 +2,6 @@ import Exceptions.*;
 import Netfreaks.*;
 import Netfreaks.Product.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 import java.util.SortedMap;
 
@@ -152,11 +150,63 @@ public class Main {
     }
 
     private static void processRate(Scanner in, Netfreaks netfreaks) {
+        String productName = in.nextLine();
+        int rate = in.nextInt();
+        in.nextLine();
+        try{
+            rate(productName,rate,netfreaks);
+        } catch(NoAccountLoggedInException e){
+            System.out.println("No client is logged in.\n");
+        }
+        catch(NoProfileSelectedException e){
+            System.out.println("No profile is selected.\n");
+        }
+        catch(InexistantProductException e){
+            System.out.println("Show does not exist.\n");
+        }
+        catch(NotInRecentHistoryException e){
+            System.out.println("Can only rate recently seen shows.\n");
+        }
+        catch(ProductAlreadyRatedException e){
+            System.out.println("Show already rated.\n");
+        }
+    }
+
+    private static void rate(String productName, int rate, Netfreaks netfreaks) {
 
     }
 
     private static void processWatch(Scanner in, Netfreaks netfreaks) {
+        String productName = in.nextLine();
+        try{
+            watch(productName,netfreaks);
+        } catch(NoAccountLoggedInException e){
+            System.out.println("No client is logged in.\n");
+        }
+        catch(NoProfileSelectedException e){
+            System.out.println("No profile is selected.\n");
+        }
+        catch(InexistantProductException e){
+            System.out.println("Show does not exist.\n");
+        }
+        catch(IncompatiblePEGIException e){
+            System.out.println("Show not available.\n");
+        }
+    }
 
+    private static void watch(String productName, Netfreaks netfreaks) throws NoAccountLoggedInException,NoProfileSelectedException,InexistantProductException,IncompatiblePEGIException{
+
+        if(!netfreaks.isAClientLoggedIn())
+            throw new NoAccountLoggedInException();
+        if(!netfreaks.isThereProfileSelected())
+            throw new NoProfileSelectedException();
+        if(!netfreaks.isThereAProductNamed(productName))
+            throw new InexistantProductException();
+        if(!netfreaks.isPEGICompatible(productName))
+            throw new IncompatiblePEGIException();
+
+        netfreaks.watch(productName);
+        System.out.println("Loading " + productName + "...\n");
     }
 
     private static void processSelect(Scanner in, Netfreaks netfreaks) {
@@ -358,7 +408,7 @@ public class Main {
             String title = product.getTitle();
             String genre = product.getGenre();
             String[] cast = product.getCast();
-            int ageRestriction = product.getAgeRestriction();
+            int ageRestriction = product.getPEGI();
             int yearOfRelease = product.getYearOfRelease();
             msg += title + separator ;
             if(product instanceof Film) {

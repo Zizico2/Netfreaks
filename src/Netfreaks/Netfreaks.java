@@ -70,4 +70,9 @@ public interface Netfreaks {
 
     String getActiveAccountName();
 
+    boolean isThereProfileSelected();
+
+    boolean isThereAProductNamed(String productName);
+
+    boolean isPEGICompatible(String productName);
 }
