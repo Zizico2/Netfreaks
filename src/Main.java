@@ -2,8 +2,7 @@ import Exceptions.*;
 import Netfreaks.*;
 import Netfreaks.Product.*;
 
-import java.util.Scanner;
-import java.util.SortedMap;
+import java.util.*;
 
 public class Main {
 
@@ -94,15 +93,15 @@ public class Main {
                         break;
 
                     case SELECT:
-                        processSelect(in,netfreaks);
+                        processSelect(in, netfreaks);
                         break;
 
                     case WATCH:
-                        processWatch(in,netfreaks);
+                        processWatch(in, netfreaks);
                         break;
 
                     case RATE:
-                        processRate(in,netfreaks);
+                        processRate(in, netfreaks);
                         break;
 
                     case INFOACCOUNT:
@@ -110,15 +109,15 @@ public class Main {
                         break;
 
                     case SEARCHBYGENRE:
-                        processSearchByGenre(netfreaks);
+                        processSearchByGenre(in, netfreaks);
                         break;
 
                     case SEARCHBYNAME:
-                        processSearchByName(netfreaks);
+                        processSearchByName(in, netfreaks);
                         break;
 
                     case SEARCHBYRATE:
-                        processSearchByRate(netfreaks);
+                        processSearchByRate(in, netfreaks);
                         break;
 
                         case EXIT:
@@ -133,16 +132,58 @@ public class Main {
             } while (!cmd.equals(Command.EXIT));
     }
 
-    private static void processSearchByRate(Netfreaks netfreaks) {
+    private static void processSearchByRate(Scanner in, Netfreaks netfreaks) {
 
     }
 
-    private static void processSearchByName(Netfreaks netfreaks) {
-
+    private static void processSearchByName(Scanner in, Netfreaks netfreaks) {
+        String name = in.nextLine();
+        try{
+            searchByName(name,netfreaks);
+        } catch(NoAccountLoggedInException e){
+            System.out.println("No client is logged in.\n");
+        }
+        catch(NoProfileSelectedException e) {
+            System.out.println("No profile is selected.\n");
+        }
+        catch(ShowNotFoundException e){
+            System.out.println("No show found.\n");
+        }
     }
 
-    private static void processSearchByGenre(Netfreaks netfreaks) {
+    private static void searchByName(String name, Netfreaks netfreaks) {
+        if(!netfreaks.isAClientLoggedIn())
+            throw new NoAccountLoggedInException();
+        if(!netfreaks.isThereProfileSelected())
+            throw new NoProfileSelectedException();
+        if(!netfreaks.hasDude(name))
+            throw new ShowNotFoundException();
+        System.out.println(getShowByShowOutput(netfreaks.searchByName(name),Double.POSITIVE_INFINITY));
+    }
 
+    private static void processSearchByGenre(Scanner in, Netfreaks netfreaks) {
+        String genre = in.nextLine();
+        try{
+            searchByGenre(genre,netfreaks);
+        } catch(NoAccountLoggedInException e){
+            System.out.println("No client is logged in.\n");
+        }
+        catch(NoProfileSelectedException e) {
+            System.out.println("No profile is selected.\n");
+        }
+        catch(ShowNotFoundException e){
+            System.out.println("No show found.\n");
+        }
+    }
+
+    private static void searchByGenre(String genre, Netfreaks netfreaks) throws NoAccountLoggedInException,NoProfileSelectedException, ShowNotFoundException {
+        if(!netfreaks.isAClientLoggedIn())
+            throw new NoAccountLoggedInException();
+        if(!netfreaks.isThereProfileSelected())
+            throw new NoProfileSelectedException();
+        if(!netfreaks.hasGenre(genre))
+            throw new ShowNotFoundException();
+        System.out.println(getShowByShowOutput(netfreaks.searchByGenre(genre).values(),Double.POSITIVE_INFINITY));
     }
 
     private static void processInfoAccount(Netfreaks netfreaks) {
@@ -429,13 +470,13 @@ public class Main {
         SortedMap<String, Product> IteratableProducts = netfreaks.upload(products);
 
 
-        System.out.println(Message.UPLOAD_SUCCESS.msg + getUploadOutput(IteratableProducts));
+        System.out.println(Message.UPLOAD_SUCCESS.msg + getShowByShowOutput(IteratableProducts.values(),3));
     }
 
-    private static String getUploadOutput(SortedMap<String, Product> IteratableProducts) {
+    private static String getShowByShowOutput(Collection<Product> IteratableProducts,double nCast) {
         String msg = "";
         String separator = "; ";
-        for (Product product:IteratableProducts.values()) {
+        for (Product product:IteratableProducts) {
             String title = product.getTitle();
             String genre = product.getGenre();
             String[] cast = product.getCast();
@@ -451,12 +492,17 @@ public class Main {
                 msg += iteratableSeries.getCreatorName() + separator +  iteratableSeries.getNSeasons() + separator + iteratableSeries.getNEpisodesPerSeason() + separator;
             }
             msg += ageRestriction + "+" + separator + yearOfRelease + separator + genre + separator;
-            for(int i = 0; i < 3 && i < cast.length; i++)
-                msg += cast[i] + separator;
+            msg +=getCastOutput(msg,separator,cast,nCast);
             msg = msg.substring(0,msg.lastIndexOf(separator)) + "." + "\n";
         }
         return msg;
     }
+    private static String getCastOutput(String msg,String separator, String[] cast, double nCast){
+        for(int i = 0; i < nCast && i < cast.length; i++)
+            msg += cast[i] + separator;
+        return msg;
+    }
+
 
     private static Product[] getUploadInput(Scanner in) {
         int nMovies = in.nextInt();

@@ -4,6 +4,7 @@ import Netfreaks.Account.PlanType;
 import Netfreaks.Product.Product;
 
 import java.util.SortedMap;
+import java.util.SortedSet;
 
 public interface Netfreaks {
 
@@ -29,9 +30,9 @@ public interface Netfreaks {
 
     String infoaccount();
 
-    String searchByGenre(String genreName);
+    SortedMap<String,Product> searchByGenre(String genreName);
 
-    String searchByName(String participantsName);
+    SortedSet<Product> searchByName(String participantsName);
 
     String searchByRate(int rate);
 
@@ -79,4 +80,8 @@ public interface Netfreaks {
     boolean isInRecentHistory(String productName);
 
     boolean isProductRated(String productName);
+
+    boolean hasGenre(String genre);
+
+    boolean hasDude(String name);
 }

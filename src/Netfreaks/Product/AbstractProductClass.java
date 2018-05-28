@@ -3,7 +3,7 @@ package Netfreaks.Product;
 import java.util.HashMap;
 import java.util.Map;
 
-abstract class AbstractProductClass implements Product {
+abstract class AbstractProductClass implements Product{
 
     private String title;
     private int yearOfRelease;

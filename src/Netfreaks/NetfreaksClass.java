@@ -1,31 +1,46 @@
 package Netfreaks;
 
+import Comparators.ChronoComparator;
 import Netfreaks.Account.AccountClass;
 import Netfreaks.Account.Account;
 import Netfreaks.Account.PlanType;
 import Netfreaks.Product.Product;
-import java.util.SortedMap;
-import java.util.TreeMap;
+
+import java.util.*;
 
 public class NetfreaksClass implements Netfreaks {
 
-    private SortedMap<String,Product> products;
+    private SortedMap<String,Product> productsByName;
     private SortedMap<String,Account> accounts;
     private String currentAccount;
-
+    private Map<String,List<String>> productsByGenre;
+    private Map<String,SortedSet<Product>> productsByDude;
 
     public NetfreaksClass(){
-        products = new TreeMap<>();
+        productsByName = new TreeMap<>();
         accounts = new TreeMap<>();
+        productsByGenre = new HashMap<>();
+        productsByDude = new HashMap<>();
         currentAccount = "";
     }
 
     @Override
     public SortedMap<String, Product> upload(Product[] products) {
-        for (Product product:products)
-            this.products.put(product.getTitle(),product);
+        for (Product product:products) {
+            String title = product.getTitle();
+            String genre = product.getGenre();
+            productsByName.put(title, product);
+            if(!productsByGenre.containsKey(genre))
+                productsByGenre.put(product.getGenre(),new ArrayList<>());
+            productsByGenre.get(genre).add(title);
 
-        return this.products;
+            for(String name: product.getCast()) {
+                if (!productsByDude.containsKey(name))
+                    productsByDude.put(name, new TreeSet<>(new ChronoComparator()));
+                productsByDude.get(name).add(product);
+            }
+        }
+        return productsByName;
     }
 
 
@@ -79,7 +94,7 @@ public class NetfreaksClass implements Netfreaks {
 
     @Override
     public void rate(String productName, int rate) {
-        Product product = products.get(productName);
+        Product product = productsByName.get(productName);
         product.rate(accounts.get(currentAccount).getCurrentProfile(),rate);
         accounts.get(currentAccount).rate(product);
     }
@@ -90,13 +105,17 @@ public class NetfreaksClass implements Netfreaks {
     }
 
     @Override
-    public String searchByGenre(String genreName) {
-        return null;
+    public SortedMap<String, Product> searchByGenre(String genreName) {
+        SortedMap<String,Product> result = new TreeMap<>();
+        for(String title: productsByGenre.get(genreName))
+            result.put(title,productsByName.get(title));
+        return result;
     }
 
     @Override
-    public String searchByName(String participantsName) {
-        return null;
+    public SortedSet<Product> searchByName(String participantsName) {
+        return productsByDude.get(participantsName);
+
     }
 
     @Override
@@ -213,12 +232,12 @@ public class NetfreaksClass implements Netfreaks {
 
     @Override
     public boolean isThereAProductNamed(String productName) {
-        return products.containsKey(productName);
+        return productsByName.containsKey(productName);
     }
 
     @Override
     public boolean isPEGICompatible(String productName) {
-        return accounts.get(currentAccount).getCurrentProfileAge() >= products.get(productName).getPEGI();
+        return accounts.get(currentAccount).getCurrentProfileAge() >= productsByName.get(productName).getPEGI();
     }
 
     @Override
@@ -228,6 +247,18 @@ public class NetfreaksClass implements Netfreaks {
 
     @Override
     public boolean isProductRated(String productName) {
-        return products.get(productName).isRatedBy(accounts.get(currentAccount).getCurrentProfile());
+        return productsByName.get(productName).isRatedBy(accounts.get(currentAccount).getCurrentProfile());
     }
+
+    @Override
+    public boolean hasGenre(String genre) {
+        return productsByGenre.containsKey(genre);
+    }
+
+    @Override
+    public boolean hasDude(String name) {
+        return false;
+    }
+
+
 }
