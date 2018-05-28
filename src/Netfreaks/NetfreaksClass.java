@@ -3,11 +3,7 @@ package Netfreaks;
 import Netfreaks.Account.AccountClass;
 import Netfreaks.Account.Account;
 import Netfreaks.Account.PlanType;
-import Netfreaks.Account.Tags.Basic;
-import Netfreaks.Account.Tags.Premium;
-import Netfreaks.Account.Tags.Standard;
 import Netfreaks.Product.Product;
-
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -77,18 +73,20 @@ public class NetfreaksClass implements Netfreaks {
     }
 
     @Override
-    public void watch(String title) {
-
+    public void watch(String productName) {
+        accounts.get(currentAccount).watch(productName);
     }
 
     @Override
-    public void rate(String title, int rating) {
-
+    public void rate(String productName, int rate) {
+        Product product = products.get(productName);
+        product.rate(accounts.get(currentAccount).getCurrentProfile(),rate);
+        accounts.get(currentAccount).rate(product);
     }
 
     @Override
     public String infoaccount() {
-        return null;
+        return accounts.get(currentAccount).toString();
     }
 
     @Override
@@ -118,7 +116,7 @@ public class NetfreaksClass implements Netfreaks {
 
     @Override
     public String getActiveProfile() {
-        return accounts.get(currentAccount).getActiveProfile();
+        return accounts.get(currentAccount).getCurrentProfile();
     }
 
     public String getActiveDevice(){
@@ -167,7 +165,7 @@ public class NetfreaksClass implements Netfreaks {
         PlanType type = PlanType.valueOf(membershipName.toUpperCase());
         Account account = accounts.get(currentAccount);
 
-        return account.getNDevices() <= type.getMaxNDevices() &&account.getNProfiles() <= type.getMaxNProfiles();
+        return account.getNDevices() <= type.getMaxNDevices() && account.getNProfiles() <= type.getMaxNProfiles();
 
     }
 
@@ -206,5 +204,30 @@ public class NetfreaksClass implements Netfreaks {
     @Override
     public String getActiveAccountName() {
         return accounts.get(currentAccount).getName();
+    }
+
+    @Override
+    public boolean isThereProfileSelected() {
+        return !accounts.get(currentAccount).getCurrentProfile().equals("");
+    }
+
+    @Override
+    public boolean isThereAProductNamed(String productName) {
+        return products.containsKey(productName);
+    }
+
+    @Override
+    public boolean isPEGICompatible(String productName) {
+        return accounts.get(currentAccount).getCurrentProfileAge() >= products.get(productName).getPEGI();
+    }
+
+    @Override
+    public boolean isInRecentHistory(String productName) {
+       return accounts.get(currentAccount).isInHistory(productName);
+    }
+
+    @Override
+    public boolean isProductRated(String productName) {
+        return products.get(productName).isRatedBy(accounts.get(currentAccount).getCurrentProfile());
     }
 }

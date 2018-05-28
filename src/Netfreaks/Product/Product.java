@@ -6,9 +6,15 @@ public interface Product {
 
     int getYearOfRelease();
 
-    int getAgeRestriction();
+    int getPEGI();
 
     String getGenre();
 
     String[] getCast();
+
+    void rate(String accountName, int rate);
+
+    int getRate(String name);
+
+    boolean isRatedBy(String currentProfile);
 }
