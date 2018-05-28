@@ -34,6 +34,11 @@ public class NetfreaksClass implements Netfreaks {
                 productsByGenre.put(product.getGenre(),new ArrayList<>());
             productsByGenre.get(genre).add(title);
 
+            String masterName = product.getMasterName();
+            if(!productsByDude.containsKey(masterName))
+                productsByDude.put(masterName, new TreeSet<>(new ChronoComparator()));
+            productsByDude.get(masterName).add(product);
+
             for(String name: product.getCast()) {
                 if (!productsByDude.containsKey(name))
                     productsByDude.put(name, new TreeSet<>(new ChronoComparator()));
@@ -257,7 +262,7 @@ public class NetfreaksClass implements Netfreaks {
 
     @Override
     public boolean hasDude(String name) {
-        return false;
+        return productsByDude.containsKey(name);
     }
 
 

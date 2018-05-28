@@ -468,8 +468,6 @@ public class Main {
     private static void processUpload(Scanner in, Netfreaks netfreaks) {
         Product[] products = getUploadInput(in);
         SortedMap<String, Product> IteratableProducts = netfreaks.upload(products);
-
-
         System.out.println(Message.UPLOAD_SUCCESS.msg + getShowByShowOutput(IteratableProducts.values(),3));
     }
 
@@ -484,15 +482,13 @@ public class Main {
             int yearOfRelease = product.getYearOfRelease();
             msg += title + separator ;
             if(product instanceof Film) {
-                Film film = (Film) product;
-                msg += film.getDirector() + separator +  film.getDuration() + separator;
+                msg += product.getMasterName() + separator +  ((Film)product).getDuration() + separator;
             }
             else{
-                Series iteratableSeries = (Series) product;
-                msg += iteratableSeries.getCreatorName() + separator +  iteratableSeries.getNSeasons() + separator + iteratableSeries.getNEpisodesPerSeason() + separator;
+                msg += product.getMasterName() + separator +  ((Series)product).getNSeasons() + separator + ((Series)product).getNEpisodesPerSeason() + separator;
             }
             msg += ageRestriction + "+" + separator + yearOfRelease + separator + genre + separator;
-            msg +=getCastOutput(msg,separator,cast,nCast);
+            msg = getCastOutput(msg,separator,cast,nCast);
             msg = msg.substring(0,msg.lastIndexOf(separator)) + "." + "\n";
         }
         return msg;
@@ -520,11 +516,12 @@ public class Main {
             String genre  = in.nextLine();
             int nCast = in.nextInt();
             in.nextLine();
-            String[] cast = new String[nCast];
+            String[] cast = new String[nCast+1];
             int castCounter = 0;
-            while(castCounter < nCast)
+            cast[castCounter++] = directorName;
+            while(castCounter < nCast + 1)
                 cast[castCounter++] = in.nextLine();
-            movies[movieCounter++] = new FilmClass(title,directorName,duration,ageRestriction,yearOfRelease,genre,cast,nCast);
+            movies[movieCounter++] = new FilmClass(title,duration,ageRestriction,yearOfRelease,genre,cast);
         }
         int nSeries = in.nextInt();
         in.nextLine();
@@ -543,11 +540,12 @@ public class Main {
             String genre  = in.nextLine();
             int nCast = in.nextInt();
             in.nextLine();
-            String[] cast = new String[nCast];
+            String[] cast = new String[nCast +1];
             int castCounter = 0;
-            while(castCounter < nCast)
+            cast[castCounter++] = creatorName;
+            while(castCounter < nCast + 1)
                 cast[castCounter++] = in.nextLine();
-            series[seriesCounter++] = new SeriesClass(title,creatorName,nSeasons,nEpisodesPerSeason,ageRestriction,yearOfRelease,genre,cast,nCast);
+            series[seriesCounter++] = new SeriesClass(title,nSeasons,nEpisodesPerSeason,ageRestriction,yearOfRelease,genre,cast);
         }
         Product[] products = new Product[nMovies + nSeries];
         System.arraycopy(movies,0,products,0,nMovies);

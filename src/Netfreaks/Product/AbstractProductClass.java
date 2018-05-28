@@ -10,17 +10,18 @@ abstract class AbstractProductClass implements Product{
     private int PEGI;
     private String genre;
     private String[] cast;
-    private int nCast;
-
+    private String masterName;
     Map<String, Integer> rates;
 
-    AbstractProductClass(String title, int yearOfRelease, String PEGI, String genre, String[] cast, int nCast) {
+    AbstractProductClass(String title, int yearOfRelease, String PEGI, String genre, String[] cast) {
         this.title = title;
         this.yearOfRelease = yearOfRelease;
         this.PEGI = Integer.parseInt(PEGI.replace("+",""));
         this.genre = genre;
-        this.cast = cast;
-        this.nCast = nCast;
+        masterName = cast[0];
+        String[] temp = new String[cast.length-1];
+        System.arraycopy(cast,1,temp,0,temp.length);
+        this.cast = temp;
         rates = new HashMap<>();
     }
 
@@ -44,6 +45,10 @@ abstract class AbstractProductClass implements Product{
         return cast;
     }
 
+    public String getMasterName(){
+        return masterName;
+    }
+
     @Override
     public void rate(String profileName, int rate) {
        rates.put(profileName,rate);
@@ -58,6 +63,4 @@ abstract class AbstractProductClass implements Product{
     public boolean isRatedBy(String currentProfile) {
         return rates.containsKey(currentProfile);
     }
-
-
 }
