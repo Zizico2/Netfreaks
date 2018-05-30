@@ -456,11 +456,11 @@ public class Main {
         try{
             login(email, password, device, netfreaks);
         } catch (AlreadyLoggedInException e){
-            System.out.println(Message.ALREADY_LOGGEDIN);
+            System.out.println(Message.ALREADY_LOGGEDIN.msg);
         } catch (NetfreaksAppOccupiedException e){
             System.out.println(Message.SOMEONE_IS_LOGGEDIN.msg);
         } catch (InexistantAccountException e){
-            System.out.println(Message.INEXISTANT_ACCOUNT);
+            System.out.println(Message.INEXISTANT_ACCOUNT.msg);
         } catch (WrongPasswordException e){
             System.out.println(Message.WRONG_PASSWORD.msg);
         } catch (DeviceNumberExceededException e){

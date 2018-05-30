@@ -147,11 +147,12 @@ public class NetfreaksClass implements Netfreaks {
         for(int i = MAX_RATE; i >= rate; i--) {
             SortedSet<Product> set = new TreeSet<>(new RatingComparator());
             SortedSet<Product> originalSet  = productsByRate.get(i);
-            if(originalSet != null)
-                for(Product product : productsByRate.get(i))
-                   if(PEGI  >=product.getPEGI())
-                      set.add(product);
-            listOfShowsByRate.add(set);
+            if(originalSet != null) {
+                for (Product product : productsByRate.get(i))
+                    if (PEGI >= product.getPEGI())
+                        set.add(product);
+                listOfShowsByRate.add(set);
+            }
         }
         return listOfShowsByRate;
     }
@@ -295,7 +296,7 @@ public class NetfreaksClass implements Netfreaks {
 
     @Override
     public boolean hasShowsWithRateHigherThan(int rate) {
-        return searchByRate(rate).get(0) != null;
+        return !searchByRate(rate).isEmpty();
     }
 
 

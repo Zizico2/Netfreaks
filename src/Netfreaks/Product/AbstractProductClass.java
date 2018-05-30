@@ -60,10 +60,11 @@ abstract class AbstractProductClass implements Product{
     @Override
     public void rate(String profileName, int rate) {
        rates.put(profileName,rate);
-       averageRating = 0.00f;
+       Float acumulator = 0.0f;
        for(int rating : rates.values())
-           averageRating += rating;
-       averageRating = averageRating / rates.size();
+           acumulator += rating;
+       String stringAverageRating = String.valueOf(acumulator / rates.size());
+       averageRating = Float.parseFloat(stringAverageRating.substring(0,3));
     }
 
     @Override
