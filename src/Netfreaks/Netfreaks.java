@@ -2,7 +2,6 @@ package Netfreaks;
 
 import Netfreaks.Account.Account;
 import Netfreaks.Account.PlanType;
-import Netfreaks.Account.Profile.Profile;
 import Netfreaks.Product.Product;
 
 import java.util.List;

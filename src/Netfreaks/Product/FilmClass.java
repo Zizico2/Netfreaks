@@ -8,7 +8,7 @@ package Netfreaks.Product;
  */
 public class FilmClass extends AbstractProductClass implements Film{
 
-    private int duration;
+    private final int duration;
 
 
     public FilmClass(String title, int duration, String ageRestriction, int yearOfRelease, String genre, String[] cast) {

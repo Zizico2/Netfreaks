@@ -14,8 +14,8 @@ import java.util.*;
  */
 public class Main {
 
+    // Contem as mensagens a serem impressas,
     private enum Message {
-
         NEXT_LINE_CHAR("\n"),
         UPLOAD_SUCCESS("Database was updated:" + NEXT_LINE_CHAR.msg),
         SAME_EMAIL("There is another account with email "),
@@ -55,6 +55,7 @@ public class Main {
         }
     }
 
+    // Contem os comandos.
     private enum Command {
         UPLOAD(),
         REGISTER(),
@@ -79,6 +80,7 @@ public class Main {
     /**
      *
      * Metodo main.
+     *
      */
     public static void main(String[] args) {
         Netfreaks netfreaks = new NetfreaksClass();
@@ -87,10 +89,10 @@ public class Main {
     }
 
     /**
-     * Retorna um comando especificado pelo utilizador
+     * Retorna um comando especificado pelo utilizador.
      *
-     * @param in scanner a ser usado para receber informacoes do utilizador
-     * @return Commmand
+     * @param in scanner a ser usado para receber informacoes do utilizador.
+     * @return Commmand.
      */
     private static Command getCommand(Scanner in) {
 
@@ -102,8 +104,8 @@ public class Main {
     /**
      * Executa um comando especificado pelo utilizador.
      *
-     * @param in scanner a ser usado para receber informacoes do utilizador
-     * @param netfreaks aplicacao "Netflix"
+     * @param in scanner a ser usado para receber informacoes do utilizador.
+     * @param netfreaks aplicacao "Netflix".
      */
     private static void executeCommand(Scanner in, Netfreaks netfreaks) {
         Command cmd;
@@ -179,6 +181,12 @@ public class Main {
             } while (!cmd.equals(Command.EXIT));
     }
 
+    /**
+     * Lista todos os filmes e series com uma media de avaliacao acima de um valor dado pelo utilizador.
+     *
+     * @param in scanner a ser usado para receber informacoes do utilizador-
+     * @param netfreaks aplicacao "Netflix".
+     */
     private static void processSearchByRate(Scanner in, Netfreaks netfreaks) {
         int rate = in.nextInt();
         in.nextLine();
@@ -195,6 +203,12 @@ public class Main {
         }
     }
 
+    /**
+     * Lista todos os filmes e series com uma media de avaliacao acima de um valor dado pelo utilizador.
+     *
+     * @param rate avaliacao dada pelo utilizador.
+     * @param netfreaks aplicacao "Netflix".
+     */
     private static void searchByRate(int rate, Netfreaks netfreaks) throws NoAccountLoggedInException,NoProfileSelectedException, ShowNotFoundException {
         if(!netfreaks.isAClientLoggedIn())
             throw new NoAccountLoggedInException();
@@ -205,10 +219,15 @@ public class Main {
         printSearchByRates(netfreaks.searchByRate(rate));
     }
 
-    private static void printSearchByRates(List<SortedSet<Product>> sortedSets) {
+    /**
+     * Imprime todos os filmes e series que passaram a verificacao.
+     *
+     * @param listOfRatedProducts list de todos os produtos que passam a verificacao do searchByRate, organizados por sets de produtos entre duas avaliacoes inteiras.
+     */
+    private static void printSearchByRates(List<SortedSet<Product>> listOfRatedProducts) {
         String msg = "";
         String separator = "; ";
-        for(SortedSet<Product> sortedSet: sortedSets){
+        for(SortedSet<Product> sortedSet: listOfRatedProducts){
             for(Product product: sortedSet){
                 String title = product.getTitle();
                 String genre = product.getGenre();
@@ -231,6 +250,12 @@ public class Main {
         System.out.println(msg);
     }
 
+    /**
+     * Lista todos os filmes e series que tem participantes com o nome dado pelo utilizador.
+     *
+     * @param in scanner a ser usado para receber informacoes do utilizador.
+     * @param netfreaks aplicacao "Netflix".
+     */
     private static void processSearchByName(Scanner in, Netfreaks netfreaks) {
         String name = in.nextLine();
         try{
@@ -246,6 +271,12 @@ public class Main {
         }
     }
 
+    /**
+     * Imprime todos os filmes e series que passsaram a verificacao.
+     *
+     * @param name nome dado pelo utilizador.
+     * @param netfreaks aplicacao "Netflix".
+     */
     private static void searchByName(String name, Netfreaks netfreaks) throws NoAccountLoggedInException,NoProfileSelectedException, ShowNotFoundException {
         if(!netfreaks.isAClientLoggedIn())
             throw new NoAccountLoggedInException();
@@ -256,6 +287,12 @@ public class Main {
         System.out.println(getShowByShowOutput(netfreaks.searchByName(name),Double.POSITIVE_INFINITY));
     }
 
+    /**
+     * Lista todos os filmes e series com o genero dado pelo utilizador.
+     *
+     * @param in scanner a ser usado para receber informacoes do utilizador.
+     * @param netfreaks aplicacao "Netflix".
+     */
     private static void processSearchByGenre(Scanner in, Netfreaks netfreaks) {
         String genre = in.nextLine();
         try{
@@ -271,6 +308,12 @@ public class Main {
         }
     }
 
+    /**
+     * Imprime todos os filmes e series que passaram a verificacao.
+     *
+     * @param genre genero dada pelo utilizador.
+     * @param netfreaks aplicacao "Netflix".
+     */
     private static void searchByGenre(String genre, Netfreaks netfreaks) throws NoAccountLoggedInException,NoProfileSelectedException, ShowNotFoundException {
         if(!netfreaks.isAClientLoggedIn())
             throw new NoAccountLoggedInException();
@@ -281,6 +324,11 @@ public class Main {
         System.out.println(getShowByShowOutput(netfreaks.searchByGenre(genre).values(),Double.POSITIVE_INFINITY));
     }
 
+    /**
+     * Lista toda a informacao disponivel da conta ativa.
+     *
+     * @param netfreaks aplicacao "Netflix".
+     */
     private static void processInfoAccount(Netfreaks netfreaks) {
         try {
             infoAccount(netfreaks);
@@ -289,12 +337,22 @@ public class Main {
         }
     }
 
+    /**
+     * Metodo pra comecar a imprimir as informacoes.
+     *
+     * @param netfreaks aplicacao "Netflix".
+     */
     private static void infoAccount(Netfreaks netfreaks) throws NoAccountLoggedInException{
         if(!netfreaks.isAClientLoggedIn())
             throw new NoAccountLoggedInException();
         printInfoAccount(netfreaks.infoaccount());
     }
 
+    /**
+     * Inicializa e imprime a informacao geral da conta.
+     *
+     * @param account conta ativa.
+     */
     private static void printInfoAccount(Account account) {
         String msg = account.getName() + ":" + Message.NEXT_LINE_CHAR.msg +
                 account.getPlanType().getOutput() + " (";
@@ -307,6 +365,12 @@ public class Main {
 
     }
 
+    /**
+     * Lista todos os filmes e series que tem participantes com o nome dado pelo utilizador.
+     *
+     * @param profiles Colecao de todos os perfis da conta ativa.
+     * @param msg Mensagem inicial.
+     */
     private static void printProfiles(Collection<Profile> profiles,String msg) {
         if(profiles.isEmpty())
             msg += Message.EMPTY_PROFILE_LIST.msg;
@@ -341,6 +405,12 @@ public class Main {
         System.out.println(msg);
     }
 
+    /**
+     * Adiciona uma avaliacao do perfil ativo da conta ativa ao filme ou serie com nome dado pelo utilizador.
+     *
+     * @param in scanner a ser usado para receber informacoes do utilizador.
+     * @param netfreaks aplicacao "Netflix".
+     */
     private static void processRate(Scanner in, Netfreaks netfreaks) {
         String productName = in.nextLine();
         int rate = in.nextInt();

@@ -14,8 +14,8 @@ import java.util.List;
  */
 public class ProfileClass implements Profile {
 
-    private String name;
-    private int age;
+    private final String name;
+    private final int age;
     private List<String> history;
     private List<Product> ratedProducts;
     public ProfileClass(String name, int age) {
