@@ -16,30 +16,37 @@ public class Main {
 
     private enum Message {
 
-        UPLOAD_SUCCESS("Database was updated:\n"),
+        NEXT_LINE_CHAR("\n"),
+        UPLOAD_SUCCESS("Database was updated:" + NEXT_LINE_CHAR.msg),
         SAME_EMAIL("There is another account with email "),
-        SOMEONE_IS_LOGGEDIN("Another client is logged in.\n"),
-        MAX_DEVICES_REACHED("Not possible to connect more devices.\n"),
-        WRONG_PASSWORD("Wrong password.\n"),
-        INEXISTANT_ACCOUNT("Account does not exist.\n"),
-        ALREADY_LOGGEDIN("Client already logged in.\n"),
-        NO_CLIENT("No client is logged in.\n"),
-        DOWNGRADE_UNAVAILABLE("Cannot downgrade membership plan at the moment.\n"),
-        NO_PROFILE("No profile is selected.\n"),
-        SAME_MEMBERSHIP("No membership plan change.\n"),
-        NO_SHOWS("No show found.\n"),
-        SHOW_NOT_FOUND("Show does not exist.\n"),
-        NOT_IN_HISTORY("Can only rate recently seen shows.\n"),
-        MAX_PROFILES_REACHED("Not possible to add more profiles.\n"),
-        PROFILE_ADDED("New profile added.\n"),
-        SHOW_ALREADY_RATED("Show already rated.\n"),
-        SHOW_UNAVAILABLE("Show not available.\n"),
-        INEXISTATN_PROFILE("Profile does not exist.\n"),
+        SOMEONE_IS_LOGGEDIN("Another client is logged in." + NEXT_LINE_CHAR.msg),
+        MAX_DEVICES_REACHED("Not possible to connect more devices." + NEXT_LINE_CHAR.msg),
+        WRONG_PASSWORD("Wrong password." + NEXT_LINE_CHAR.msg),
+        INEXISTANT_ACCOUNT("Account does not exist." + NEXT_LINE_CHAR.msg),
+        ALREADY_LOGGEDIN("Client already logged in." + NEXT_LINE_CHAR.msg),
+        NO_CLIENT("No client is logged in." + NEXT_LINE_CHAR.msg),
+        DOWNGRADE_UNAVAILABLE("Cannot downgrade membership plan at the moment." + NEXT_LINE_CHAR.msg),
+        NO_PROFILE("No profile is selected." + NEXT_LINE_CHAR.msg),
+        SAME_MEMBERSHIP("No membership plan change." + NEXT_LINE_CHAR.msg),
+        NO_SHOWS("No show found." + NEXT_LINE_CHAR.msg),
+        SHOW_NOT_FOUND("Show does not exist." + NEXT_LINE_CHAR.msg),
+        NOT_IN_HISTORY("Can only rate recently seen shows." + NEXT_LINE_CHAR.msg),
+        MAX_PROFILES_REACHED("Not possible to add more profiles." + NEXT_LINE_CHAR.msg),
+        PROFILE_ADDED("New profile added." + NEXT_LINE_CHAR.msg),
+        SHOW_ALREADY_RATED("Show already rated." + NEXT_LINE_CHAR.msg),
+        SHOW_UNAVAILABLE("Show not available." + NEXT_LINE_CHAR.msg),
+        INEXISTATN_PROFILE("Profile does not exist." + NEXT_LINE_CHAR.msg),
+        EMPTY_HISTORY("Empty list of recently seen shows." + NEXT_LINE_CHAR.msg),
+        EMPTY_PROFILE_LIST("No profiles defined." + NEXT_LINE_CHAR.msg),
         WELCOME("Welcome "),
         THANK_YOU_RATE("Thank you for rating "),
+        LOADING("Loading "),
+        SAME_NAME_PROFILE("There is already a profile "),
+        MEMBERSHIP_CHANGED("Membership plan was changed from "),
+        GOODBYE("Goodbye "),
         CHILDREN("CHILDREN"),
         EXITING("Exiting..."),
-        UNKNOWN("Unknown command.\n");
+        UNKNOWN("Unknown command." + NEXT_LINE_CHAR.msg);
 
         private final String msg;
 
@@ -218,7 +225,7 @@ public class Main {
                 }
                 msg += ageRestriction + "+" + separator + yearOfRelease + separator + genre + separator;
                 msg = getCastOutput(msg,separator,cast,Double.POSITIVE_INFINITY);
-                msg = msg.substring(0,msg.lastIndexOf(separator)) + ". [" + averageRating + "]\n";
+                msg = msg.substring(0,msg.lastIndexOf(separator)) + ". [" + averageRating + "]" + Message.NEXT_LINE_CHAR.msg;
             }
         }
         System.out.println(msg);
@@ -285,18 +292,24 @@ public class Main {
     private static void infoAccount(Netfreaks netfreaks) throws NoAccountLoggedInException{
         if(!netfreaks.isAClientLoggedIn())
             throw new NoAccountLoggedInException();
+        printInfoAccount(netfreaks.infoaccount());
+    }
 
-        Account account = netfreaks.infoaccount();
-        String msg = account.getName() + ":\n" +
+    private static void printInfoAccount(Account account) {
+        String msg = account.getName() + ":" + Message.NEXT_LINE_CHAR.msg +
                 account.getPlanType().getOutput() + " (";
-
+        String separator = "; ";
         for(String device : account.getDevices())
-            msg += device + "; ";
-        msg = msg.substring(0,msg.lastIndexOf("; ")) + ").\n";
+            msg += device + separator;
+        msg = msg.substring(0,msg.lastIndexOf(separator)) + ")." + Message.NEXT_LINE_CHAR.msg;
 
-        Collection<Profile> profiles = account.infoAccount().values();
+        printProfiles(account.infoAccount().values(),msg);
+
+    }
+
+    private static void printProfiles(Collection<Profile> profiles,String msg) {
         if(profiles.isEmpty())
-            msg += "No profiles defined.\n";
+            msg += Message.EMPTY_PROFILE_LIST.msg;
         else
             for(Profile profile: profiles) {
                 msg += "Profile: ";
@@ -304,24 +317,24 @@ public class Main {
                 msg += name;
                 int age = profile.getAge();
                 if (age != 18)
-                    msg +=  " (" + age + ")" + "\n";
+                    msg +=  " (" + age + ")" + Message.NEXT_LINE_CHAR.msg;
                 else
-                    msg += "\n";
+                    msg += Message.NEXT_LINE_CHAR.msg;
 
                 List<String> history = profile.getHistory();
                 if (history.isEmpty())
-                    msg += "Empty list of recently seen shows.\n";
+                    msg += Message.EMPTY_HISTORY.msg;
                 else {
                     List<String> tempHistory = new ArrayList<>(history);
                     Collections.reverse(tempHistory);
                     for (String productName : tempHistory)
                         msg += productName + "; ";
-                    msg = msg.substring(0, msg.lastIndexOf("; ")) + ".\n";
+                    msg = msg.substring(0, msg.lastIndexOf("; ")) + "." + Message.NEXT_LINE_CHAR.msg;
                     List<Product> ratedProducts = profile.getRatedProducst();
                     if (!ratedProducts.isEmpty()) {
                         for (Product product : ratedProducts)
                             msg += product.getTitle() + " (" + product.getRate(name) + "); ";
-                        msg = msg.substring(0, msg.lastIndexOf("; ")) + ".\n";
+                        msg = msg.substring(0, msg.lastIndexOf("; ")) + "." + Message.NEXT_LINE_CHAR.msg;
                     }
                 }
             }
@@ -364,7 +377,7 @@ public class Main {
             throw new ProductAlreadyRatedException();
 
         netfreaks.rate(productName,rate);
-        System.out.println(Message.THANK_YOU_RATE.msg + productName + ".\n");
+        System.out.println(Message.THANK_YOU_RATE.msg + productName + "." + Message.NEXT_LINE_CHAR.msg);
     }
 
     private static void processWatch(Scanner in, Netfreaks netfreaks) {
@@ -396,7 +409,7 @@ public class Main {
             throw new IncompatiblePEGIException();
 
         netfreaks.watch(productName);
-        System.out.println("Loading " + productName + "...\n");
+        System.out.println(Message.LOADING.msg+ productName + "..." + Message.NEXT_LINE_CHAR.msg);
     }
 
     private static void processSelect(Scanner in, Netfreaks netfreaks) {
@@ -417,7 +430,7 @@ public class Main {
         if(!netfreaks.hasProfile(profile))
             throw new InexistantProfileException();
         netfreaks.select(profile);
-        System.out.println(Message.WELCOME.msg + profile + ".\n");
+        System.out.println(Message.WELCOME.msg + profile + "." + Message.NEXT_LINE_CHAR.msg);
     }
 
     private static void processProfile(Scanner in, Netfreaks netfreaks) {
@@ -433,7 +446,7 @@ public class Main {
         } catch(NoAccountLoggedInException e){
             System.out.println(Message.NO_CLIENT.msg);
         } catch(SameProfileNameExceptiopn e){
-            System.out.println("There is already a profile " + profileName + ".\n");
+            System.out.println( Message.SAME_NAME_PROFILE.msg + profileName + "." + Message.NEXT_LINE_CHAR.msg);
         } catch(ProfileNumberExceededException e){
             System.out.println(Message.MAX_PROFILES_REACHED.msg);
         }
@@ -473,7 +486,7 @@ public class Main {
         if(netfreaks.isItDowngrade(membershipName))
             if(!netfreaks.isDowngradePossible(membershipName))
                 throw new DowngradeUnavaliableException();
-        System.out.println("Membership plan was changed from " + netfreaks.getActiveProfilePlan().getOutput() + " to " + membershipName + ".\n");
+        System.out.println(Message.MEMBERSHIP_CHANGED.msg + netfreaks.getActiveProfilePlan().getOutput() + " to " + membershipName + "." + Message.NEXT_LINE_CHAR.msg);
         netfreaks.membership(membershipName);
     }
 
@@ -488,7 +501,7 @@ public class Main {
     private static void logout(Netfreaks netfreaks) {
         if(!netfreaks.isAClientLoggedIn())
             throw new NoAccountLoggedInException();
-        System.out.println("Goodbye " + netfreaks.getActiveAccountName() + " (" + netfreaks.getActiveDevice() + " still connected).\n");
+        System.out.println(Message.GOODBYE.msg + netfreaks.getActiveAccountName() + " (" + netfreaks.getActiveDevice() + " still connected)." + Message.NEXT_LINE_CHAR.msg);
         netfreaks.logout();
     }
 
@@ -503,7 +516,7 @@ public class Main {
     private static void disconnect(Netfreaks netfreaks) {
         if(!netfreaks.isAClientLoggedIn())
             throw new NoAccountLoggedInException();
-        System.out.println("Goodbye " + netfreaks.getActiveAccountName() + " (" + netfreaks.getActiveDevice() + " was disconnected).\n");
+        System.out.println(Message.GOODBYE.msg + netfreaks.getActiveAccountName() + " (" + netfreaks.getActiveDevice() + " was disconnected)." + Message.NEXT_LINE_CHAR.msg);
         netfreaks.disconnect();
     }
 
@@ -544,7 +557,7 @@ public class Main {
         }
 
         netfreaks.login(email, device);
-        System.out.println(Message.WELCOME.msg + netfreaks.getActiveAccountName() + " (" +  device + ").\n");
+        System.out.println(Message.WELCOME.msg + netfreaks.getActiveAccountName() + " (" +  device + ")." + Message.NEXT_LINE_CHAR.msg);
     }
 
     private static void processRegister(Scanner in, Netfreaks netfreaks) {
@@ -558,7 +571,7 @@ public class Main {
         } catch (NetfreaksAppOccupiedException e){
             System.out.println(Message.SOMEONE_IS_LOGGEDIN.msg);
         } catch (SameEmailExceptiopn e){
-            System.out.println(Message.SAME_EMAIL.msg + email + ".\n");
+            System.out.println(Message.SAME_EMAIL.msg + email + "." + Message.NEXT_LINE_CHAR.msg);
         }
     }
 
@@ -569,7 +582,7 @@ public class Main {
             throw new SameEmailExceptiopn();
 
         netfreaks.register(name, email, password, device);
-        System.out.println(Message.WELCOME.msg + name + " (" + device + ").\n");
+        System.out.println(Message.WELCOME.msg + name + " (" + device + ")." + Message.NEXT_LINE_CHAR.msg);
     }
 
     private static void processUpload(Scanner in, Netfreaks netfreaks) {
@@ -596,7 +609,7 @@ public class Main {
             }
             msg += ageRestriction + "+" + separator + yearOfRelease + separator + genre + separator;
             msg = getCastOutput(msg,separator,cast,nCast);
-            msg = msg.substring(0,msg.lastIndexOf(separator)) + "." + "\n";
+            msg = msg.substring(0,msg.lastIndexOf(separator)) + "." + Message.NEXT_LINE_CHAR.msg;
         }
         return msg;
     }
