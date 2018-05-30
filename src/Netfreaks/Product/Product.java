@@ -19,4 +19,6 @@ public interface Product {
     boolean isRatedBy(String currentProfile);
 
     String getMasterName();
+
+    float getAverageRating();
 }
