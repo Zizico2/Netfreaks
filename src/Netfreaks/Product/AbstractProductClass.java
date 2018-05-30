@@ -12,7 +12,7 @@ abstract class AbstractProductClass implements Product{
     private String[] cast;
     private String masterName;
     private Map<String, Integer> rates;
-    private float averageRating;
+    private double averageRating;
 
     AbstractProductClass(String title, int yearOfRelease, String PEGI, String genre, String[] cast) {
         this.title = title;
@@ -63,13 +63,13 @@ abstract class AbstractProductClass implements Product{
        Float acumulator = 0.0f;
        for(int rating : rates.values())
            acumulator += rating;
-       String stringAverageRating = String.valueOf(acumulator / rates.size());
-       averageRating = Float.parseFloat(stringAverageRating.substring(0,3));
+        float averageTemp = Math.round((acumulator/rates.size() * 10));
+        averageRating = averageTemp / 10;
     }
 
     @Override
     public float getAverageRating(){
-        return averageRating;
+        return (float)averageRating;
     }
 
     @Override
