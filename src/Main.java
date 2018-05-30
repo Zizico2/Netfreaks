@@ -1,11 +1,17 @@
 import Exceptions.*;
 import Netfreaks.*;
+import Netfreaks.Account.Account;
 import Netfreaks.Account.PlanType;
+import Netfreaks.Account.Profile.Profile;
 import Netfreaks.Product.*;
-
-import java.awt.geom.Point2D;
 import java.util.*;
 
+/**
+ *
+ * @author Bernardo Borda d'Agua    53648
+ * @author Tiago Guerreiro          53649
+ *
+ */
 public class Main {
 
     private enum Message {
@@ -63,14 +69,22 @@ public class Main {
         }
     }
 
-
+    /**
+     *
+     * Metodo main.
+     */
     public static void main(String[] args) {
         Netfreaks netfreaks = new NetfreaksClass();
         Scanner in = new Scanner(System.in);
         executeCommand(in, netfreaks);
     }
 
-
+    /**
+     * Retorna um comando especificado pelo utilizador
+     *
+     * @param in scanner a ser usado para receber informacoes do utilizador
+     * @return Commmand
+     */
     private static Command getCommand(Scanner in) {
 
         String cmd = in.nextLine();
@@ -78,6 +92,12 @@ public class Main {
         return Command.valueOf(cmd.toUpperCase());
     }
 
+    /**
+     * Executa um comando especificado pelo utilizador.
+     *
+     * @param in scanner a ser usado para receber informacoes do utilizador
+     * @param netfreaks aplicacao "Netflix"
+     */
     private static void executeCommand(Scanner in, Netfreaks netfreaks) {
         Command cmd;
             do {
@@ -266,7 +286,46 @@ public class Main {
         if(!netfreaks.isAClientLoggedIn())
             throw new NoAccountLoggedInException();
 
-        System.out.println(netfreaks.infoaccount());
+        Account account = netfreaks.infoaccount();
+        String msg = account.getName() + ":\n" +
+                account.getPlanType().getOutput() + " (";
+
+        for(String device : account.getDevices())
+            msg += device + "; ";
+        msg = msg.substring(0,msg.lastIndexOf("; ")) + ").\n";
+
+        Collection<Profile> profiles = account.infoAccount().values();
+        if(profiles.isEmpty())
+            msg += "No profiles defined.\n";
+        else
+            for(Profile profile: profiles) {
+                msg += "Profile: ";
+                String name = profile.getName();
+                msg += name;
+                int age = profile.getAge();
+                if (age != 18)
+                    msg +=  " (" + age + ")" + "\n";
+                else
+                    msg += "\n";
+
+                List<String> history = profile.getHistory();
+                if (history.isEmpty())
+                    msg += "Empty list of recently seen shows.\n";
+                else {
+                    List<String> tempHistory = new ArrayList<>(history);
+                    Collections.reverse(tempHistory);
+                    for (String productName : tempHistory)
+                        msg += productName + "; ";
+                    msg = msg.substring(0, msg.lastIndexOf("; ")) + ".\n";
+                    List<Product> ratedProducts = profile.getRatedProducst();
+                    if (!ratedProducts.isEmpty()) {
+                        for (Product product : ratedProducts)
+                            msg += product.getTitle() + " (" + product.getRate(name) + "); ";
+                        msg = msg.substring(0, msg.lastIndexOf("; ")) + ".\n";
+                    }
+                }
+            }
+        System.out.println(msg);
     }
 
     private static void processRate(Scanner in, Netfreaks netfreaks) {

@@ -1,12 +1,20 @@
 package Netfreaks;
 
+import Netfreaks.Account.Account;
 import Netfreaks.Account.PlanType;
+import Netfreaks.Account.Profile.Profile;
 import Netfreaks.Product.Product;
 
 import java.util.List;
 import java.util.SortedMap;
 import java.util.SortedSet;
 
+/**
+ *
+ * @author Bernardo Borda d'Agua    53648
+ * @author Tiago Guerreiro          53649
+ *
+ */
 public interface Netfreaks {
 
     int MAX_RATE = 5;
@@ -30,7 +38,7 @@ public interface Netfreaks {
 
     void rate(String title, int rating);
 
-    String infoaccount();
+    Account infoaccount();
 
     SortedMap<String,Product> searchByGenre(String genreName);
 

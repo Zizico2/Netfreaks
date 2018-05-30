@@ -6,6 +6,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ *
+ * @author Bernardo Borda d'Agua    53648
+ * @author Tiago Guerreiro          53649
+ *
+ */
 public class ProfileClass implements Profile {
 
     private String name;
@@ -28,6 +34,10 @@ public class ProfileClass implements Profile {
         if(!(history.size() < 10))
             history = history.subList(1,MAX_CAPACITY);
         history.add(productName);
+    }
+
+    public String getName(){
+        return name;
     }
 
     @Override
@@ -65,6 +75,16 @@ public class ProfileClass implements Profile {
     @Override
     public boolean isInHistory(String productName) {
         return history.contains(productName);
+    }
+
+    @Override
+    public List<String> getHistory() {
+        return history;
+    }
+
+    @Override
+    public List<Product> getRatedProducst() {
+        return ratedProducts;
     }
 
 

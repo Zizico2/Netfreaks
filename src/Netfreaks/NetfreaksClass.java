@@ -5,10 +5,17 @@ import Comparators.RatingComparator;
 import Netfreaks.Account.AccountClass;
 import Netfreaks.Account.Account;
 import Netfreaks.Account.PlanType;
+import Netfreaks.Account.Profile.Profile;
 import Netfreaks.Product.Product;
 
 import java.util.*;
 
+/**
+ *
+ * @author Bernardo Borda d'Agua    53648
+ * @author Tiago Guerreiro          53649
+ *
+ */
 public class NetfreaksClass implements Netfreaks {
 
     private SortedMap<String,Product> productsByName;
@@ -122,8 +129,8 @@ public class NetfreaksClass implements Netfreaks {
     }
 
     @Override
-    public String infoaccount() {
-        return accounts.get(currentAccount).toString();
+    public Account infoaccount() {
+        return accounts.get(currentAccount);
     }
 
     @Override

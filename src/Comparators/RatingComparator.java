@@ -4,6 +4,12 @@ import Netfreaks.Product.Product;
 
 import java.util.Comparator;
 
+/**
+ *
+ * @author Bernardo Borda d'Agua    53648
+ * @author Tiago Guerreiro          53649
+ *
+ */
 public class RatingComparator implements Comparator<Product> {
 
     @Override
