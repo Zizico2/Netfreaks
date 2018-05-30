@@ -16,16 +16,14 @@ public class AccountClass implements Account {
     private SortedMap<String,Profile> profiles;
     private String name;
     private String currentProfile;
-    private String email;
     private String password;
     private List<String> devices;
     private String currentDevice;
     private PlanType type;
 
-    public AccountClass(String email, String name, String password, String device) {
+    public AccountClass(String name, String password, String device) {
         profiles = new TreeMap<>();
         this.name = name;
-        this.email = email;
         this.password = password;
         devices = new ArrayList<>();
         devices.add(device);
@@ -114,6 +112,7 @@ public class AccountClass implements Account {
     public int getNProfiles() {
         return profiles.size();
     }
+
 
     @Override
     public void selectProfile(String profileName) {

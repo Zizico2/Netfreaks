@@ -3,10 +3,13 @@ package Netfreaks;
 import Netfreaks.Account.PlanType;
 import Netfreaks.Product.Product;
 
+import java.util.List;
 import java.util.SortedMap;
+import java.util.SortedSet;
 
 public interface Netfreaks {
 
+    int MAX_RATE = 5;
     SortedMap<String, Product> upload(Product[] products);
 
     void register(String name, String email, String password, String device );
@@ -29,11 +32,11 @@ public interface Netfreaks {
 
     String infoaccount();
 
-    String searchByGenre(String genreName);
+    SortedMap<String,Product> searchByGenre(String genreName);
 
-    String searchByName(String participantsName);
+    SortedSet<Product> searchByName(String participantsName);
 
-    String searchByRate(int rate);
+    List<SortedSet<Product>> searchByRate(int rate);
 
     boolean isAClientLoggedIn();
 
@@ -48,7 +51,6 @@ public interface Netfreaks {
     boolean isPasswordRight(String email, String password);
 
     boolean deviceNumberExceeded(String email, String device);
-
 
     boolean needToRegisterDevice(String email, String device);
 
@@ -79,4 +81,10 @@ public interface Netfreaks {
     boolean isInRecentHistory(String productName);
 
     boolean isProductRated(String productName);
+
+    boolean hasGenre(String genre);
+
+    boolean hasDude(String name);
+
+    boolean hasShowsWithRateHigherThan(int rate);
 }

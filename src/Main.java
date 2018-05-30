@@ -1,18 +1,37 @@
 import Exceptions.*;
 import Netfreaks.*;
+import Netfreaks.Account.PlanType;
 import Netfreaks.Product.*;
 
-import java.util.Scanner;
-import java.util.SortedMap;
+import java.awt.geom.Point2D;
+import java.util.*;
 
 public class Main {
 
     private enum Message {
 
         UPLOAD_SUCCESS("Database was updated:\n"),
-        DUPLICATE_MESSAGE("Mensagem duplicada."),
-        NO_MESSAGES_WITH_EMAIL("Nao existem mensagens trocadas com esse email."),
-        NO_MESSAGES_WITH_TOPIC(NO_MESSAGES_WITH_EMAIL.msg.replace("email", "assunto")),
+        SAME_EMAIL("There is another account with email "),
+        SOMEONE_IS_LOGGEDIN("Another client is logged in.\n"),
+        MAX_DEVICES_REACHED("Not possible to connect more devices.\n"),
+        WRONG_PASSWORD("Wrong password.\n"),
+        INEXISTANT_ACCOUNT("Account does not exist.\n"),
+        ALREADY_LOGGEDIN("Client already logged in.\n"),
+        NO_CLIENT("No client is logged in.\n"),
+        DOWNGRADE_UNAVAILABLE("Cannot downgrade membership plan at the moment.\n"),
+        NO_PROFILE("No profile is selected.\n"),
+        SAME_MEMBERSHIP("No membership plan change.\n"),
+        NO_SHOWS("No show found.\n"),
+        SHOW_NOT_FOUND("Show does not exist.\n"),
+        NOT_IN_HISTORY("Can only rate recently seen shows.\n"),
+        MAX_PROFILES_REACHED("Not possible to add more profiles.\n"),
+        PROFILE_ADDED("New profile added.\n"),
+        SHOW_ALREADY_RATED("Show already rated.\n"),
+        SHOW_UNAVAILABLE("Show not available.\n"),
+        INEXISTATN_PROFILE("Profile does not exist.\n"),
+        WELCOME("Welcome "),
+        THANK_YOU_RATE("Thank you for rating "),
+        CHILDREN("CHILDREN"),
         EXITING("Exiting..."),
         UNKNOWN("Unknown command.\n");
 
@@ -94,15 +113,15 @@ public class Main {
                         break;
 
                     case SELECT:
-                        processSelect(in,netfreaks);
+                        processSelect(in, netfreaks);
                         break;
 
                     case WATCH:
-                        processWatch(in,netfreaks);
+                        processWatch(in, netfreaks);
                         break;
 
                     case RATE:
-                        processRate(in,netfreaks);
+                        processRate(in, netfreaks);
                         break;
 
                     case INFOACCOUNT:
@@ -110,15 +129,15 @@ public class Main {
                         break;
 
                     case SEARCHBYGENRE:
-                        processSearchByGenre(netfreaks);
+                        processSearchByGenre(in, netfreaks);
                         break;
 
                     case SEARCHBYNAME:
-                        processSearchByName(netfreaks);
+                        processSearchByName(in, netfreaks);
                         break;
 
                     case SEARCHBYRATE:
-                        processSearchByRate(netfreaks);
+                        processSearchByRate(in, netfreaks);
                         break;
 
                         case EXIT:
@@ -133,23 +152,113 @@ public class Main {
             } while (!cmd.equals(Command.EXIT));
     }
 
-    private static void processSearchByRate(Netfreaks netfreaks) {
-
+    private static void processSearchByRate(Scanner in, Netfreaks netfreaks) {
+        int rate = in.nextInt();
+        in.nextLine();
+        try{
+            searchByRate(rate,netfreaks);
+        } catch(NoAccountLoggedInException e){
+            System.out.println(Message.NO_CLIENT.msg);
+        }
+        catch(NoProfileSelectedException e) {
+            System.out.println(Message.NO_PROFILE.msg);
+        }
+        catch(ShowNotFoundException e){
+            System.out.println(Message.NO_SHOWS.msg);
+        }
     }
 
-    private static void processSearchByName(Netfreaks netfreaks) {
-
+    private static void searchByRate(int rate, Netfreaks netfreaks) throws NoAccountLoggedInException,NoProfileSelectedException, ShowNotFoundException {
+        if(!netfreaks.isAClientLoggedIn())
+            throw new NoAccountLoggedInException();
+        if(!netfreaks.isThereProfileSelected())
+            throw new NoProfileSelectedException();
+        if(!netfreaks.hasShowsWithRateHigherThan(rate))
+            throw new ShowNotFoundException();
+        printSearchByRates(netfreaks.searchByRate(rate));
     }
 
-    private static void processSearchByGenre(Netfreaks netfreaks) {
+    private static void printSearchByRates(List<SortedSet<Product>> sortedSets) {
+        String msg = "";
+        String separator = "; ";
+        for(SortedSet<Product> sortedSet: sortedSets){
+            for(Product product: sortedSet){
+                String title = product.getTitle();
+                String genre = product.getGenre();
+                String[] cast = product.getCast();
+                int ageRestriction = product.getPEGI();
+                int yearOfRelease = product.getYearOfRelease();
+                String averageRating = String.valueOf(product.getAverageRating()).substring(0,3);
+                msg += title + separator ;
+                if(product instanceof Film) {
+                    msg += product.getMasterName() + separator +  ((Film)product).getDuration() + separator;
+                }
+                else{
+                    msg += product.getMasterName() + separator +  ((Series)product).getNSeasons() + separator + ((Series)product).getNEpisodesPerSeason() + separator;
+                }
+                msg += ageRestriction + "+" + separator + yearOfRelease + separator + genre + separator;
+                msg = getCastOutput(msg,separator,cast,Double.POSITIVE_INFINITY);
+                msg = msg.substring(0,msg.lastIndexOf(separator)) + ". [" + averageRating + "]\n";
+            }
+        }
+        System.out.println(msg);
+    }
 
+    private static void processSearchByName(Scanner in, Netfreaks netfreaks) {
+        String name = in.nextLine();
+        try{
+            searchByName(name,netfreaks);
+        } catch(NoAccountLoggedInException e){
+            System.out.println(Message.NO_CLIENT.msg);
+        }
+        catch(NoProfileSelectedException e) {
+            System.out.println(Message.NO_PROFILE.msg);
+        }
+        catch(ShowNotFoundException e){
+            System.out.println(Message.NO_SHOWS.msg);
+        }
+    }
+
+    private static void searchByName(String name, Netfreaks netfreaks) throws NoAccountLoggedInException,NoProfileSelectedException, ShowNotFoundException {
+        if(!netfreaks.isAClientLoggedIn())
+            throw new NoAccountLoggedInException();
+        if(!netfreaks.isThereProfileSelected())
+            throw new NoProfileSelectedException();
+        if(!netfreaks.hasDude(name))
+            throw new ShowNotFoundException();
+        System.out.println(getShowByShowOutput(netfreaks.searchByName(name),Double.POSITIVE_INFINITY));
+    }
+
+    private static void processSearchByGenre(Scanner in, Netfreaks netfreaks) {
+        String genre = in.nextLine();
+        try{
+            searchByGenre(genre,netfreaks);
+        } catch(NoAccountLoggedInException e){
+            System.out.println(Message.NO_CLIENT.msg);
+        }
+        catch(NoProfileSelectedException e) {
+            System.out.println(Message.NO_PROFILE.msg);
+        }
+        catch(ShowNotFoundException e){
+            System.out.println(Message.NO_SHOWS.msg);
+        }
+    }
+
+    private static void searchByGenre(String genre, Netfreaks netfreaks) throws NoAccountLoggedInException,NoProfileSelectedException, ShowNotFoundException {
+        if(!netfreaks.isAClientLoggedIn())
+            throw new NoAccountLoggedInException();
+        if(!netfreaks.isThereProfileSelected())
+            throw new NoProfileSelectedException();
+        if(!netfreaks.hasGenre(genre))
+            throw new ShowNotFoundException();
+        System.out.println(getShowByShowOutput(netfreaks.searchByGenre(genre).values(),Double.POSITIVE_INFINITY));
     }
 
     private static void processInfoAccount(Netfreaks netfreaks) {
         try {
             infoAccount(netfreaks);
         } catch(NoAccountLoggedInException e){
-            System.out.println("No client is logged in.\n");
+            System.out.println(Message.NO_CLIENT.msg);
         }
     }
 
@@ -167,27 +276,23 @@ public class Main {
         try{
             rate(productName,rate,netfreaks);
         } catch(NoAccountLoggedInException e){
-            System.out.println("No client is logged in.\n");
+            System.out.println(Message.NO_CLIENT.msg);
         }
         catch(NoProfileSelectedException e){
-            System.out.println("No profile is selected.\n");
+            System.out.println(Message.NO_PROFILE.msg);
         }
         catch(InexistantProductException e){
-            System.out.println("Show does not exist.\n");
+            System.out.println(Message.SHOW_NOT_FOUND.msg);
         }
         catch(NotInRecentHistoryException e){
-            System.out.println("Can only rate recently seen shows.\n");
+            System.out.println(Message.NOT_IN_HISTORY.msg);
         }
         catch(ProductAlreadyRatedException e){
-            System.out.println("Show already rated.\n");
+            System.out.println(Message.SHOW_ALREADY_RATED.msg);
         }
     }
 
-    private static void rate(String productName, int rate, Netfreaks netfreaks) throws NoAccountLoggedInException,
-                                                                                       NoProfileSelectedException,
-                                                                                       InexistantProductException,
-                                                                                       IncompatiblePEGIException
-    {
+    private static void rate(String productName, int rate, Netfreaks netfreaks) throws NoAccountLoggedInException, NoProfileSelectedException, InexistantProductException, IncompatiblePEGIException {
         if(!netfreaks.isAClientLoggedIn())
             throw new NoAccountLoggedInException();
         if(!netfreaks.isThereProfileSelected())
@@ -200,7 +305,7 @@ public class Main {
             throw new ProductAlreadyRatedException();
 
         netfreaks.rate(productName,rate);
-        System.out.println("Thank you for rating " + productName + ".\n");
+        System.out.println(Message.THANK_YOU_RATE.msg + productName + ".\n");
     }
 
     private static void processWatch(Scanner in, Netfreaks netfreaks) {
@@ -208,25 +313,20 @@ public class Main {
         try{
             watch(productName,netfreaks);
         } catch(NoAccountLoggedInException e){
-            System.out.println("No client is logged in.\n");
+            System.out.println(Message.NO_CLIENT.msg);
         }
         catch(NoProfileSelectedException e){
-            System.out.println("No profile is selected.\n");
+            System.out.println(Message.NO_PROFILE.msg);
         }
         catch(InexistantProductException e){
-            System.out.println("Show does not exist.\n");
+            System.out.println(Message.SHOW_NOT_FOUND.msg);
         }
         catch(IncompatiblePEGIException e){
-            System.out.println("Show not available.\n");
+            System.out.println(Message.SHOW_UNAVAILABLE.msg);
         }
     }
 
-    private static void watch(String productName, Netfreaks netfreaks) throws NoAccountLoggedInException,
-                                                                              NoProfileSelectedException,
-                                                                              InexistantProductException,
-                                                                              IncompatiblePEGIException
-    {
-
+    private static void watch(String productName, Netfreaks netfreaks) throws NoAccountLoggedInException, NoProfileSelectedException, InexistantProductException, IncompatiblePEGIException {
         if(!netfreaks.isAClientLoggedIn())
             throw new NoAccountLoggedInException();
         if(!netfreaks.isThereProfileSelected())
@@ -245,10 +345,9 @@ public class Main {
         try{
             select(profile,netfreaks);
         } catch(NoAccountLoggedInException e){
-            System.out.println("No client is logged in.\n");
-        }
-        catch(InexistantProfileException e){
-            System.out.println("Profile does not exist.\n");
+            System.out.println(Message.NO_CLIENT.msg);
+        } catch(InexistantProfileException e){
+            System.out.println(Message.INEXISTATN_PROFILE.msg);
         }
 
     }
@@ -259,27 +358,25 @@ public class Main {
         if(!netfreaks.hasProfile(profile))
             throw new InexistantProfileException();
         netfreaks.select(profile);
-        System.out.println("Welcome " + profile + ".\n");
+        System.out.println(Message.WELCOME.msg + profile + ".\n");
     }
 
     private static void processProfile(Scanner in, Netfreaks netfreaks) {
         int ageRestriction = 18;
         String profileName = in.nextLine();
         String profileType = in.nextLine();
-        if(profileType.equalsIgnoreCase("CHILDREN")) {
+        if(profileType.equalsIgnoreCase(Message.CHILDREN.msg)) {
             ageRestriction = in.nextInt();
             in.nextLine();
         }
         try{
             profile(profileName,profileType,ageRestriction,netfreaks);
         } catch(NoAccountLoggedInException e){
-            System.out.println("No client is logged in.\n");
-        }
-        catch(SameProfileNameExceptiopn e){
+            System.out.println(Message.NO_CLIENT.msg);
+        } catch(SameProfileNameExceptiopn e){
             System.out.println("There is already a profile " + profileName + ".\n");
-        }
-        catch(ProfileNumberExceededException e){
-            System.out.println("Not possible to add more profiles.\n");
+        } catch(ProfileNumberExceededException e){
+            System.out.println(Message.MAX_PROFILES_REACHED.msg);
         }
     }
 
@@ -292,8 +389,8 @@ public class Main {
         if(netfreaks.profileNumberExceeded())
             throw new ProfileNumberExceededException();
 
-        netfreaks.profile(profileName,profileType.equalsIgnoreCase("BASIC"),ageRestriction);
-        System.out.println("New profile added.\n");
+        netfreaks.profile(profileName,profileType.equalsIgnoreCase(PlanType.BASIC.getOutput()),ageRestriction);
+        System.out.println(Message.PROFILE_ADDED.msg);
     }
 
     private static void processMembership(Scanner in, Netfreaks netfreaks) {
@@ -301,13 +398,11 @@ public class Main {
         try{
             membership(membershipName,netfreaks);
         } catch(NoAccountLoggedInException e){
-            System.out.println("No client is logged in.\n");
-        }
-        catch(SameMembershipException e){
-            System.out.println("No membership plan change.\n");
-        }
-        catch(DowngradeUnavaliableException e){
-            System.out.println("Cannot downgrade membership plan at the moment.\n");
+            System.out.println(Message.NO_CLIENT.msg);
+        } catch(SameMembershipException e){
+            System.out.println(Message.SAME_MEMBERSHIP.msg);
+        } catch(DowngradeUnavaliableException e){
+            System.out.println(Message.DOWNGRADE_UNAVAILABLE.msg);
         }
     }
 
@@ -327,7 +422,7 @@ public class Main {
         try{
             logout(netfreaks);
         } catch(NoAccountLoggedInException e){
-            System.out.println("No client is logged in.\n");
+            System.out.println(Message.NO_CLIENT.msg);
         }
     }
 
@@ -342,7 +437,7 @@ public class Main {
         try{
             disconnect(netfreaks);
         } catch(NoAccountLoggedInException e){
-            System.out.println("No client is logged in.\n");
+            System.out.println(Message.NO_CLIENT.msg);
         }
     }
 
@@ -361,21 +456,19 @@ public class Main {
         try{
             login(email, password, device, netfreaks);
         } catch (AlreadyLoggedInException e){
-            System.out.println("Client already logged in.\n");
-        }
-        catch (NetfreaksAppOccupiedException e){
-            System.out.println("Another client is logged in.\n");
+            System.out.println(Message.ALREADY_LOGGEDIN.msg);
+        } catch (NetfreaksAppOccupiedException e){
+            System.out.println(Message.SOMEONE_IS_LOGGEDIN.msg);
         } catch (InexistantAccountException e){
-            System.out.println("Account does not exist.\n");
+            System.out.println(Message.INEXISTANT_ACCOUNT.msg);
         } catch (WrongPasswordException e){
-            System.out.println("Wrong password.\n");
+            System.out.println(Message.WRONG_PASSWORD.msg);
         } catch (DeviceNumberExceededException e){
-            System.out.println("Not possible to connect more devices.\n");
+            System.out.println(Message.MAX_DEVICES_REACHED.msg);
         }
     }
 
     private static void login(String email, String password, String device, Netfreaks netfreaks) throws AlreadyLoggedInException, NetfreaksAppOccupiedException,
-
                                                                                                         InexistantAccountException, WrongPasswordException, DeviceNumberExceededException{
         if(netfreaks.isClientLoggedIn(email))
             throw new AlreadyLoggedInException();
@@ -392,7 +485,7 @@ public class Main {
         }
 
         netfreaks.login(email, device);
-        System.out.println("Welcome " + netfreaks.getActiveAccountName() + " (" +  device + ").\n");
+        System.out.println(Message.WELCOME.msg + netfreaks.getActiveAccountName() + " (" +  device + ").\n");
     }
 
     private static void processRegister(Scanner in, Netfreaks netfreaks) {
@@ -404,11 +497,10 @@ public class Main {
         try{
            register(name, email, password, device, netfreaks);
         } catch (NetfreaksAppOccupiedException e){
-            System.out.println("Another client is logged in.\n");
+            System.out.println(Message.SOMEONE_IS_LOGGEDIN.msg);
         } catch (SameEmailExceptiopn e){
-            System.out.println("There is another account with email " + email + ".\n");
+            System.out.println(Message.SAME_EMAIL.msg + email + ".\n");
         }
-
     }
 
     private static void register(String name, String email, String password, String device, Netfreaks netfreaks) throws NetfreaksAppOccupiedException, SameEmailExceptiopn {
@@ -418,24 +510,19 @@ public class Main {
             throw new SameEmailExceptiopn();
 
         netfreaks.register(name, email, password, device);
-
-        System.out.println("Welcome " + name + " (" + device + ").\n");
-
-
+        System.out.println(Message.WELCOME.msg + name + " (" + device + ").\n");
     }
 
     private static void processUpload(Scanner in, Netfreaks netfreaks) {
         Product[] products = getUploadInput(in);
         SortedMap<String, Product> IteratableProducts = netfreaks.upload(products);
-
-
-        System.out.println(Message.UPLOAD_SUCCESS.msg + getUploadOutput(IteratableProducts));
+        System.out.println(Message.UPLOAD_SUCCESS.msg + getShowByShowOutput(IteratableProducts.values(),3));
     }
 
-    private static String getUploadOutput(SortedMap<String, Product> IteratableProducts) {
+    private static String getShowByShowOutput(Collection<Product> IteratableProducts,double nCast) {
         String msg = "";
         String separator = "; ";
-        for (Product product:IteratableProducts.values()) {
+        for (Product product:IteratableProducts) {
             String title = product.getTitle();
             String genre = product.getGenre();
             String[] cast = product.getCast();
@@ -443,20 +530,23 @@ public class Main {
             int yearOfRelease = product.getYearOfRelease();
             msg += title + separator ;
             if(product instanceof Film) {
-                Film film = (Film) product;
-                msg += film.getDirector() + separator +  film.getDuration() + separator;
+                msg += product.getMasterName() + separator +  ((Film)product).getDuration() + separator;
             }
             else{
-                Series iteratableSeries = (Series) product;
-                msg += iteratableSeries.getCreatorName() + separator +  iteratableSeries.getNSeasons() + separator + iteratableSeries.getNEpisodesPerSeason() + separator;
+                msg += product.getMasterName() + separator +  ((Series)product).getNSeasons() + separator + ((Series)product).getNEpisodesPerSeason() + separator;
             }
             msg += ageRestriction + "+" + separator + yearOfRelease + separator + genre + separator;
-            for(int i = 0; i < 3 && i < cast.length; i++)
-                msg += cast[i] + separator;
+            msg = getCastOutput(msg,separator,cast,nCast);
             msg = msg.substring(0,msg.lastIndexOf(separator)) + "." + "\n";
         }
         return msg;
     }
+    private static String getCastOutput(String msg,String separator, String[] cast, double nCast){
+        for(int i = 0; i < nCast && i < cast.length; i++)
+            msg += cast[i] + separator;
+        return msg;
+    }
+
 
     private static Product[] getUploadInput(Scanner in) {
         int nMovies = in.nextInt();
@@ -474,11 +564,12 @@ public class Main {
             String genre  = in.nextLine();
             int nCast = in.nextInt();
             in.nextLine();
-            String[] cast = new String[nCast];
+            String[] cast = new String[nCast+1];
             int castCounter = 0;
-            while(castCounter < nCast)
+            cast[castCounter++] = directorName;
+            while(castCounter < nCast + 1)
                 cast[castCounter++] = in.nextLine();
-            movies[movieCounter++] = new FilmClass(title,directorName,duration,ageRestriction,yearOfRelease,genre,cast,nCast);
+            movies[movieCounter++] = new FilmClass(title,duration,ageRestriction,yearOfRelease,genre,cast);
         }
         int nSeries = in.nextInt();
         in.nextLine();
@@ -497,11 +588,12 @@ public class Main {
             String genre  = in.nextLine();
             int nCast = in.nextInt();
             in.nextLine();
-            String[] cast = new String[nCast];
+            String[] cast = new String[nCast +1];
             int castCounter = 0;
-            while(castCounter < nCast)
+            cast[castCounter++] = creatorName;
+            while(castCounter < nCast + 1)
                 cast[castCounter++] = in.nextLine();
-            series[seriesCounter++] = new SeriesClass(title,creatorName,nSeasons,nEpisodesPerSeason,ageRestriction,yearOfRelease,genre,cast,nCast);
+            series[seriesCounter++] = new SeriesClass(title,nSeasons,nEpisodesPerSeason,ageRestriction,yearOfRelease,genre,cast);
         }
         Product[] products = new Product[nMovies + nSeries];
         System.arraycopy(movies,0,products,0,nMovies);

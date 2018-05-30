@@ -1,40 +1,64 @@
 package Netfreaks;
 
+import Comparators.ChronoComparator;
+import Comparators.RatingComparator;
 import Netfreaks.Account.AccountClass;
 import Netfreaks.Account.Account;
 import Netfreaks.Account.PlanType;
 import Netfreaks.Product.Product;
-import java.util.SortedMap;
-import java.util.TreeMap;
+
+import java.util.*;
 
 public class NetfreaksClass implements Netfreaks {
 
-    private SortedMap<String,Product> products;
+    private SortedMap<String,Product> productsByName;
     private SortedMap<String,Account> accounts;
     private String currentAccount;
-
+    private Map<String,List<String>> productsByGenre;
+    private Map<String,SortedSet<Product>> productsByDude;
+    private SortedMap<Integer,SortedSet<Product>> productsByRate;
 
     public NetfreaksClass(){
-        products = new TreeMap<>();
+        productsByName = new TreeMap<>();
         accounts = new TreeMap<>();
+        productsByGenre = new HashMap<>();
+        productsByDude = new HashMap<>();
+        productsByRate = new TreeMap<>();
         currentAccount = "";
     }
 
     @Override
     public SortedMap<String, Product> upload(Product[] products) {
-        for (Product product:products)
-            this.products.put(product.getTitle(),product);
+        SortedSet<Product> unratedProducts = new TreeSet<>(new RatingComparator());
+        for (Product product:products) {
+            String title = product.getTitle();
+            String genre = product.getGenre();
+            productsByName.put(title, product);
+            if(!productsByGenre.containsKey(genre))
+                productsByGenre.put(product.getGenre(),new ArrayList<>());
+            productsByGenre.get(genre).add(title);
 
-        return this.products;
+            String masterName = product.getMasterName();
+            if(!productsByDude.containsKey(masterName))
+                productsByDude.put(masterName, new TreeSet<>(new ChronoComparator()));
+            productsByDude.get(masterName).add(product);
+
+            for(String name: product.getCast()) {
+                if (!productsByDude.containsKey(name))
+                    productsByDude.put(name, new TreeSet<>(new ChronoComparator()));
+                productsByDude.get(name).add(product);
+            }
+            unratedProducts.add(product);
+        }
+        productsByRate.put(0,unratedProducts);
+        return productsByName;
     }
 
 
     @Override
     public void register(String name, String email, String password, String device) {
-        accounts.put(email, new AccountClass(email, name, password, device));
+        accounts.put(email, new AccountClass(name, password, device));
         login(email, device);
-
-
     }
 
     @Override
@@ -79,9 +103,22 @@ public class NetfreaksClass implements Netfreaks {
 
     @Override
     public void rate(String productName, int rate) {
-        Product product = products.get(productName);
+        Product product = productsByName.get(productName);
+        int oldRating = (int)Math.floor(product.getAverageRating());
         product.rate(accounts.get(currentAccount).getCurrentProfile(),rate);
         accounts.get(currentAccount).rate(product);
+        int newRating = (int) Math.floor(product.getAverageRating());
+
+        if(newRating !=  oldRating){
+            SortedSet<Product> Set = productsByRate.get(oldRating);
+            Set.remove(product);
+            Set = productsByRate.get(newRating);
+            if(Set == null)
+                Set = new TreeSet<>(new RatingComparator());
+            Set.add(product);
+            productsByRate.remove(newRating);
+            productsByRate.put(newRating,Set);
+        }
     }
 
     @Override
@@ -90,18 +127,34 @@ public class NetfreaksClass implements Netfreaks {
     }
 
     @Override
-    public String searchByGenre(String genreName) {
-        return null;
+    public SortedMap<String, Product> searchByGenre(String genreName) {
+        SortedMap<String,Product> result = new TreeMap<>();
+        for(String title: productsByGenre.get(genreName))
+            result.put(title,productsByName.get(title));
+        return result;
     }
 
     @Override
-    public String searchByName(String participantsName) {
-        return null;
+    public SortedSet<Product> searchByName(String participantsName) {
+        return productsByDude.get(participantsName);
+
     }
 
     @Override
-    public String searchByRate(int rate) {
-        return null;
+    public List<SortedSet<Product>> searchByRate(int rate) {
+        List<SortedSet<Product>> listOfShowsByRate = new ArrayList<>();
+        int PEGI = accounts.get(currentAccount).getCurrentProfileAge();
+        for(int i = MAX_RATE; i >= rate; i--) {
+            SortedSet<Product> set = new TreeSet<>(new RatingComparator());
+            SortedSet<Product> originalSet  = productsByRate.get(i);
+            if(originalSet != null) {
+                for (Product product : productsByRate.get(i))
+                    if (PEGI >= product.getPEGI())
+                        set.add(product);
+                listOfShowsByRate.add(set);
+            }
+        }
+        return listOfShowsByRate;
     }
 
     @Override
@@ -213,12 +266,12 @@ public class NetfreaksClass implements Netfreaks {
 
     @Override
     public boolean isThereAProductNamed(String productName) {
-        return products.containsKey(productName);
+        return productsByName.containsKey(productName);
     }
 
     @Override
     public boolean isPEGICompatible(String productName) {
-        return accounts.get(currentAccount).getCurrentProfileAge() >= products.get(productName).getPEGI();
+        return accounts.get(currentAccount).getCurrentProfileAge() >= productsByName.get(productName).getPEGI();
     }
 
     @Override
@@ -228,6 +281,23 @@ public class NetfreaksClass implements Netfreaks {
 
     @Override
     public boolean isProductRated(String productName) {
-        return products.get(productName).isRatedBy(accounts.get(currentAccount).getCurrentProfile());
+        return productsByName.get(productName).isRatedBy(accounts.get(currentAccount).getCurrentProfile());
     }
+
+    @Override
+    public boolean hasGenre(String genre) {
+        return productsByGenre.containsKey(genre);
+    }
+
+    @Override
+    public boolean hasDude(String name) {
+        return productsByDude.containsKey(name);
+    }
+
+    @Override
+    public boolean hasShowsWithRateHigherThan(int rate) {
+        return !searchByRate(rate).isEmpty();
+    }
+
+
 }
