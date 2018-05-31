@@ -25,7 +25,7 @@ public class ProfileClass implements Profile {
         this.name = name;
         history = new ArrayList<>(MAX_CAPACITY);
         ratedProducts =  new ArrayList<>();
-        assert age >= 5;
+        assert age >= 5 && age < 18;
     }
 
     // Construtor Normal.
