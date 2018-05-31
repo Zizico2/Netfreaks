@@ -17,7 +17,7 @@ public class ProfileClass implements Profile {
     private final String name;
     private final int age;
     private List<String> history;
-    private List<Product> ratedProducts;
+    private final List<Product> ratedProducts;
 
     // Construtor para Crianca.
     public ProfileClass(String name, int age) {

@@ -1,9 +1,10 @@
 import Exceptions.*;
-import Netfreaks.*;
 import Netfreaks.Account.Account;
-import Netfreaks.Account.PlanType;
 import Netfreaks.Account.Profile.Profile;
+import Netfreaks.Netfreaks;
+import Netfreaks.NetfreaksClass;
 import Netfreaks.Product.*;
+
 import java.util.*;
 
 /**
@@ -745,7 +746,7 @@ public class Main {
         if(!netfreaks.isPasswordRight(email,password))
             throw new WrongPasswordException();
         if (netfreaks.needToRegisterDevice(email, device)) {
-            if (netfreaks.deviceNumberExceeded(email, device))
+            if (netfreaks.deviceNumberExceeded(email))
                 throw new DeviceNumberExceededException();
             netfreaks.registerDevice(email, device);
         }

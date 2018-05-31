@@ -14,8 +14,6 @@ import java.util.SortedMap;
  */
 public interface Account {
 
-    boolean NORMAL = true;
-
     /**
      * Remove o dispositivo atual da lista de dispositivos associados a conta.
      *

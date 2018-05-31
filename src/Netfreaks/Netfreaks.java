@@ -3,6 +3,7 @@ package Netfreaks;
 import Netfreaks.Account.Account;
 import Netfreaks.Account.PlanType;
 import Netfreaks.Product.Product;
+
 import java.util.List;
 import java.util.SortedMap;
 import java.util.SortedSet;
@@ -151,13 +152,6 @@ public interface Netfreaks {
      *
      * @return
      */
-    String getActiveProfile();
-
-    /**
-     *
-     *
-     * @return
-     */
     String getActiveDevice();
 
     /**
@@ -181,10 +175,9 @@ public interface Netfreaks {
      *
      *
      * @param email
-     * @param device
      * @return
      */
-    boolean deviceNumberExceeded(String email, String device);
+    boolean deviceNumberExceeded(String email);
 
     /**
      *
