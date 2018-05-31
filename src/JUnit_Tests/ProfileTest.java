@@ -1,10 +1,13 @@
-package Netfreaks.Account.Profile;
+package JUnit_Tests;
 
+import Netfreaks.Account.Profile.Profile;
+import Netfreaks.Account.Profile.ProfileClass;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class ProfileTest {
 
