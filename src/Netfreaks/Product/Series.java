@@ -11,7 +11,7 @@ package Netfreaks.Product;
 public interface Series {
 
     /**
-     * Devolve o numero de temporardas.
+     * Devolve o numero de temporadas.
      *
      * @return nSeasons.
      */

@@ -17,7 +17,7 @@ public class ProfileClass implements Profile {
     private final String name;
     private final int age;
     private List<String> history;
-    private List<Product> ratedProducts;
+    private final List<Product> ratedProducts;
 
     // Construtor para Crianca.
     public ProfileClass(String name, int age) {
@@ -25,11 +25,14 @@ public class ProfileClass implements Profile {
         this.name = name;
         history = new ArrayList<>(MAX_CAPACITY);
         ratedProducts =  new ArrayList<>();
+        assert age >= 5 && age < 18;
     }
 
     // Construtor Normal.
     public ProfileClass(String name) {
-        age = 18;
+        history = new ArrayList<>(MAX_CAPACITY);
+        ratedProducts =  new ArrayList<>();
+        age = (int)Double.POSITIVE_INFINITY;
         this.name = name;
     }
 

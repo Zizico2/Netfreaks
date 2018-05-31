@@ -1,9 +1,10 @@
 import Exceptions.*;
-import Netfreaks.*;
 import Netfreaks.Account.Account;
-import Netfreaks.Account.PlanType;
 import Netfreaks.Account.Profile.Profile;
+import Netfreaks.Netfreaks;
+import Netfreaks.NetfreaksClass;
 import Netfreaks.Product.*;
+
 import java.util.*;
 
 /**
@@ -387,7 +388,7 @@ public class Main {
                 String name = profile.getName();
                 msg += name;
                 int age = profile.getAge();
-                if (age != 18)
+                if (age != (int)Double.POSITIVE_INFINITY)
                     msg +=  " (" + age + ")" + Message.NEXT_LINE_CHAR.msg;
                 else
                     msg += Message.NEXT_LINE_CHAR.msg;
@@ -597,7 +598,10 @@ public class Main {
         if(netfreaks.profileNumberExceeded())
             throw new ProfileNumberExceededException();
 
-        netfreaks.profile(profileName,profileType.equalsIgnoreCase(PlanType.BASIC.getOutput()),ageRestriction);
+        if (profileType.equalsIgnoreCase(Message.CHILDREN.msg))
+            netfreaks.profile(profileName,ageRestriction);
+        else
+            netfreaks.profile(profileName);
         System.out.println(Message.PROFILE_ADDED.msg);
     }
 
@@ -742,7 +746,7 @@ public class Main {
         if(!netfreaks.isPasswordRight(email,password))
             throw new WrongPasswordException();
         if (netfreaks.needToRegisterDevice(email, device)) {
-            if (netfreaks.deviceNumberExceeded(email, device))
+            if (netfreaks.deviceNumberExceeded(email))
                 throw new DeviceNumberExceededException();
             netfreaks.registerDevice(email, device);
         }

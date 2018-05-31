@@ -4,11 +4,12 @@ import Netfreaks.Account.Profile.Profile;
 import Netfreaks.Account.Profile.ProfileClass;
 import Netfreaks.Product.Product;
 
-import static Netfreaks.Account.PlanType.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
+
+import static Netfreaks.Account.PlanType.BASIC;
 
 /**
  *
@@ -21,11 +22,11 @@ import java.util.TreeMap;
 public class AccountClass implements Account {
 
     // Variaveis.
-    private SortedMap<String,Profile> profiles;
-    private String name;
+    private final SortedMap<String,Profile> profiles;
+    private final String name;
     private String currentProfile;
-    private String password;
-    private List<String> devices;
+    private final String password;
+    private final List<String> devices;
     private String currentDevice;
     private PlanType type;
 
@@ -113,17 +114,12 @@ public class AccountClass implements Account {
     }
 
     @Override
-    public void addProfile(String profileName, boolean type, int ageRestriction) {
-        Profile profile;
-        if(type == NORMAL) {
-            profile = new ProfileClass(profileName);
-            int age  = profile.getAge();
-            assert age != ageRestriction;
-        }
-        else {
-            profile = new ProfileClass(profileName, ageRestriction);
-        }
-        profiles.put(profileName,profile);
+    public void addProfile(String profileName, int ageRestriction) {
+        profiles.put(profileName,new ProfileClass(profileName, ageRestriction));
+    }
+
+    public void addProfile(String profileName) {
+        profiles.put(profileName,new ProfileClass(profileName));
     }
 
     @Override

@@ -2,8 +2,8 @@ package Netfreaks;
 
 import Comparators.ChronoComparator;
 import Comparators.RatingComparator;
-import Netfreaks.Account.AccountClass;
 import Netfreaks.Account.Account;
+import Netfreaks.Account.AccountClass;
 import Netfreaks.Account.PlanType;
 import Netfreaks.Product.Product;
 
@@ -20,12 +20,12 @@ import java.util.*;
 public class NetfreaksClass implements Netfreaks {
 
     // Variaveis.
-    private SortedMap<String,Product> productsByName;
-    private SortedMap<String,Account> accounts;
+    private final SortedMap<String,Product> productsByName;
+    private final SortedMap<String,Account> accounts;
     private String currentAccount;
-    private Map<String,List<String>> productsByGenre;
-    private Map<String,SortedSet<Product>> productsByDude;
-    private SortedMap<Integer,SortedSet<Product>> productsByRate;
+    private final Map<String,List<String>> productsByGenre;
+    private final Map<String,SortedSet<Product>> productsByDude;
+    private final SortedMap<Integer,SortedSet<Product>> productsByRate;
 
     // Construtor.
     public NetfreaksClass(){
@@ -97,8 +97,12 @@ public class NetfreaksClass implements Netfreaks {
     }
 
     @Override
-    public void profile(String profileName, boolean type, int ageRestriction) {
-            accounts.get(currentAccount).addProfile(profileName,type,ageRestriction);
+    public void profile(String profileName) {
+            accounts.get(currentAccount).addProfile(profileName);
+    }
+
+    public void profile(String profileName, int ageRestriction) {
+        accounts.get(currentAccount).addProfile(profileName, ageRestriction);
     }
 
     @Override
@@ -177,11 +181,6 @@ public class NetfreaksClass implements Netfreaks {
         return accounts.get(email) != null;
     }
 
-    @Override
-    public String getActiveProfile() {
-        return accounts.get(currentAccount).getCurrentProfile();
-    }
-
     public String getActiveDevice(){
         return accounts.get(currentAccount).getActiveDevice();
     }
@@ -197,7 +196,7 @@ public class NetfreaksClass implements Netfreaks {
     }
 
     @Override
-    public boolean deviceNumberExceeded(String email, String device) {
+    public boolean deviceNumberExceeded(String email) {
         return accounts.get(email).isDeviceListFull();
     }
 
