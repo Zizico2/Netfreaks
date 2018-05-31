@@ -3,7 +3,6 @@ package Netfreaks.Account.Profile;
 import Netfreaks.Product.Product;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -18,6 +17,7 @@ public class ProfileClass implements Profile {
     private final int age;
     private List<String> history;
     private List<Product> ratedProducts;
+
     public ProfileClass(String name, int age) {
         this.age = age;
         this.name = name;
@@ -45,27 +45,6 @@ public class ProfileClass implements Profile {
         ratedProducts.add(product);
     }
 
-    public String toString(){
-        String msg = name + "\n";
-        if(age != 18)
-            msg = msg.replace("\n"," (" + age + ")\n");
-
-        if(history.isEmpty())
-            msg += "Empty list of recently seen shows.\n";
-        else{
-            List<String> tempHistory = new ArrayList<>(history);
-            Collections.reverse(tempHistory);
-            for(String productName: tempHistory)
-                msg += productName + "; ";
-            msg = msg.substring(0,msg.lastIndexOf("; ")) + ".\n";
-            if(!ratedProducts.isEmpty()) {
-                for (Product product : ratedProducts)
-                    msg += product.getTitle() + " (" + product.getRate(name) + "); ";
-                msg = msg.substring(0,msg.lastIndexOf("; ")) + ".\n";
-            }
-        }
-        return msg;
-    }
 
     @Override
     public int getAge() {

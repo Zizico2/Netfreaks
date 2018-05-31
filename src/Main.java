@@ -91,7 +91,7 @@ public class Main {
     /**
      * Retorna um comando especificado pelo utilizador.
      *
-     * @param in scanner a ser usado para receber informacoes do utilizador.
+     * @param in - Scanner a ser usado para receber informacoes do utilizador.
      * @return Commmand.
      */
     private static Command getCommand(Scanner in) {
@@ -104,8 +104,8 @@ public class Main {
     /**
      * Executa um comando especificado pelo utilizador.
      *
-     * @param in scanner a ser usado para receber informacoes do utilizador.
-     * @param netfreaks aplicacao "Netflix".
+     * @param in - Scanner a ser usado para receber informacoes do utilizador.
+     * @param netfreaks - aplicacao "Netflix".
      */
     private static void executeCommand(Scanner in, Netfreaks netfreaks) {
         Command cmd;
@@ -182,10 +182,10 @@ public class Main {
     }
 
     /**
-     * Lista todos os filmes e series com uma media de avaliacao acima de um valor dado pelo utilizador.
+     * Processa o Comando SearchByRate.
      *
-     * @param in scanner a ser usado para receber informacoes do utilizador-
-     * @param netfreaks aplicacao "Netflix".
+     * @param in - Scanner a ser usado para receber informacoes do utilizador.
+     * @param netfreaks - aplicacao "Netflix".
      */
     private static void processSearchByRate(Scanner in, Netfreaks netfreaks) {
         int rate = in.nextInt();
@@ -204,10 +204,13 @@ public class Main {
     }
 
     /**
-     * Lista todos os filmes e series com uma media de avaliacao acima de um valor dado pelo utilizador.
+     * Processo de verificacao de erros e ,se passou a verificacao, a execucao do comando.
      *
      * @param rate avaliacao dada pelo utilizador.
-     * @param netfreaks aplicacao "Netflix".
+     * @param netfreaks - aplicacao "Netflix".
+     * @throws NoAccountLoggedInException - Nao existe uma conta ativa.
+     * @throws NoProfileSelectedException - Nao existe um perfil ativo na conta atual.
+     * @throws ShowNotFoundException - Nenhum filme ou serie foi encontrada com o criterio dado.
      */
     private static void searchByRate(int rate, Netfreaks netfreaks) throws NoAccountLoggedInException,NoProfileSelectedException, ShowNotFoundException {
         if(!netfreaks.isAClientLoggedIn())
@@ -251,10 +254,10 @@ public class Main {
     }
 
     /**
-     * Lista todos os filmes e series que tem participantes com o nome dado pelo utilizador.
+     * Processa o Comando SearchByName.
      *
-     * @param in scanner a ser usado para receber informacoes do utilizador.
-     * @param netfreaks aplicacao "Netflix".
+     * @param in - Scanner a ser usado para receber informacoes do utilizador.
+     * @param netfreaks - aplicacao "Netflix".
      */
     private static void processSearchByName(Scanner in, Netfreaks netfreaks) {
         String name = in.nextLine();
@@ -272,10 +275,13 @@ public class Main {
     }
 
     /**
-     * Imprime todos os filmes e series que passsaram a verificacao.
+     * Processo de verificacao de erros e ,se passou a verificacao, a execucao do comando.
      *
      * @param name nome dado pelo utilizador.
-     * @param netfreaks aplicacao "Netflix".
+     * @param netfreaks - aplicacao "Netflix".
+     * @throws NoAccountLoggedInException - Nao existe uma conta ativa.
+     * @throws NoProfileSelectedException - Nao existe um perfil ativo na conta atual.
+     * @throws ShowNotFoundException - Nenhum filme ou serie foi encontrada com o criterio dado.
      */
     private static void searchByName(String name, Netfreaks netfreaks) throws NoAccountLoggedInException,NoProfileSelectedException, ShowNotFoundException {
         if(!netfreaks.isAClientLoggedIn())
@@ -288,10 +294,10 @@ public class Main {
     }
 
     /**
-     * Lista todos os filmes e series com o genero dado pelo utilizador.
+     * Processa o Comando SearchByGenre.
      *
-     * @param in scanner a ser usado para receber informacoes do utilizador.
-     * @param netfreaks aplicacao "Netflix".
+     * @param in - Scanner a ser usado para receber informacoes do utilizador.
+     * @param netfreaks - aplicacao "Netflix".
      */
     private static void processSearchByGenre(Scanner in, Netfreaks netfreaks) {
         String genre = in.nextLine();
@@ -309,10 +315,10 @@ public class Main {
     }
 
     /**
-     * Imprime todos os filmes e series que passaram a verificacao.
+     * Processo de verificacao de erros e ,se passou a verificacao, a execucao do comando.
      *
      * @param genre genero dada pelo utilizador.
-     * @param netfreaks aplicacao "Netflix".
+     * @param netfreaks - aplicacao "Netflix".
      */
     private static void searchByGenre(String genre, Netfreaks netfreaks) throws NoAccountLoggedInException,NoProfileSelectedException, ShowNotFoundException {
         if(!netfreaks.isAClientLoggedIn())
@@ -325,9 +331,9 @@ public class Main {
     }
 
     /**
-     * Lista toda a informacao disponivel da conta ativa.
+     * Processa o Comando InfoAccount.
      *
-     * @param netfreaks aplicacao "Netflix".
+     * @param netfreaks - aplicacao "Netflix".
      */
     private static void processInfoAccount(Netfreaks netfreaks) {
         try {
@@ -338,9 +344,10 @@ public class Main {
     }
 
     /**
-     * Metodo pra comecar a imprimir as informacoes.
+     * Processo de verificacao de erros e ,se passou a verificacao, a execucao do comando.
      *
-     * @param netfreaks aplicacao "Netflix".
+     * @param netfreaks - aplicacao "Netflix".
+     * @throws NoAccountLoggedInException - Nao existe uma conta ativa.
      */
     private static void infoAccount(Netfreaks netfreaks) throws NoAccountLoggedInException{
         if(!netfreaks.isAClientLoggedIn())
@@ -406,10 +413,10 @@ public class Main {
     }
 
     /**
-     * Adiciona uma avaliacao do perfil ativo da conta ativa ao filme ou serie com nome dado pelo utilizador.
+     * Processa o Comando Rate.
      *
-     * @param in scanner a ser usado para receber informacoes do utilizador.
-     * @param netfreaks aplicacao "Netflix".
+     * @param in - Scanner a ser usado para receber informacoes do utilizador.
+     * @param netfreaks - aplicacao "Netflix".
      */
     private static void processRate(Scanner in, Netfreaks netfreaks) {
         String productName = in.nextLine();
@@ -434,6 +441,17 @@ public class Main {
         }
     }
 
+    /**
+     * Processo de verificacao de erros e ,se passou a verificacao, a execucao do comando.
+     *
+     * @param productName Nome do filme ou seria a avaliar.
+     * @param netfreaks - aplicacao "Netflix".
+     * @param  rate Avaliacao a dar.
+     * @throws NoAccountLoggedInException - Nao existe uma conta ativa.
+     * @throws NoProfileSelectedException - Nao existe um perfil ativo na conta atual.
+     * @throws InexistantProductException - Nao existe uma conta as informacoes dadas.
+     * @throws IncompatiblePEGIException - Classificacao etaria do perfil demasiado baixa.
+     */
     private static void rate(String productName, int rate, Netfreaks netfreaks) throws NoAccountLoggedInException, NoProfileSelectedException, InexistantProductException, IncompatiblePEGIException {
         if(!netfreaks.isAClientLoggedIn())
             throw new NoAccountLoggedInException();
@@ -450,6 +468,12 @@ public class Main {
         System.out.println(Message.THANK_YOU_RATE.msg + productName + "." + Message.NEXT_LINE_CHAR.msg);
     }
 
+    /**
+     * Processa o Comando Watch.
+     *
+     * @param in - Scanner a ser usado para receber informacoes do utilizador.
+     * @param netfreaks - aplicacao "Netflix".
+     */
     private static void processWatch(Scanner in, Netfreaks netfreaks) {
         String productName = in.nextLine();
         try{
@@ -468,6 +492,16 @@ public class Main {
         }
     }
 
+    /**
+     * Processo de verificacao de erros e ,se passou a verificacao, a execucao do comando.
+     *
+     * @param productName - Nome do filme ou serie.
+     * @param netfreaks - aplicacao "Netflix".
+     * @throws NoAccountLoggedInException - Nao existe uma conta ativa.
+     * @throws NoProfileSelectedException - Nao existe um perfil ativo na conta atual.
+     * @throws InexistantProductException - Nao existe uma conta as informacoes dadas.
+     * @throws IncompatiblePEGIException - Classificacao etaria do perfil demasiado baixa.
+     */
     private static void watch(String productName, Netfreaks netfreaks) throws NoAccountLoggedInException, NoProfileSelectedException, InexistantProductException, IncompatiblePEGIException {
         if(!netfreaks.isAClientLoggedIn())
             throw new NoAccountLoggedInException();
@@ -482,6 +516,12 @@ public class Main {
         System.out.println(Message.LOADING.msg+ productName + "..." + Message.NEXT_LINE_CHAR.msg);
     }
 
+    /**
+     * Processa o Comando Select.
+     *
+     * @param in - Scanner a ser usado para receber informacoes do utilizador.
+     * @param netfreaks - aplicacao "Netflix".
+     */
     private static void processSelect(Scanner in, Netfreaks netfreaks) {
         String profile = in.nextLine();
         try{
@@ -494,6 +534,14 @@ public class Main {
 
     }
 
+    /**
+     * Processo de verificacao de erros e ,se passou a verificacao, a execucao do comando.
+     *
+     * @param profile - Nome do perfil.
+     * @param netfreaks - aplicacao "Netflix".
+     * @throws NoAccountLoggedInException - Nao existe uma conta ativa.
+     * @throws InexistantProfileException - Nao existe uma conta as informacoes dadas.
+     */
     private static void select(String profile, Netfreaks netfreaks) throws NoAccountLoggedInException,InexistantProfileException{
         if(!netfreaks.isAClientLoggedIn())
             throw new NoAccountLoggedInException();
@@ -503,6 +551,12 @@ public class Main {
         System.out.println(Message.WELCOME.msg + profile + "." + Message.NEXT_LINE_CHAR.msg);
     }
 
+    /**
+     * Processa o Comando Profile.
+     *
+     * @param in - Scanner a ser usado para receber informacoes do utilizador.
+     * @param netfreaks - aplicacao "Netflix".
+     */
     private static void processProfile(Scanner in, Netfreaks netfreaks) {
         int ageRestriction = 18;
         String profileName = in.nextLine();
@@ -522,6 +576,18 @@ public class Main {
         }
     }
 
+
+    /**
+     * Processo de verificacao de erros e ,se passou a verificacao, a execucao do comando.
+     *
+     * @param profileName - Nome do perfil.
+     * @param profileType - Nome do tipo de perfil.
+     * @param ageRestriction - Classificicacao etaria do perfil.
+     * @param netfreaks - aplicacao "Netflix".
+     * @throws NoAccountLoggedInException - Nao existe uma conta ativa.
+     * @throws SameProfileNameExceptiopn - Existe um perfil na conta atual com o nome dado.
+     * @throws ProfileNumberExceededException - Numero maximo de perfis autorizados foi excedido.
+     */
     private static void profile(String profileName, String profileType, int ageRestriction, Netfreaks netfreaks) throws NoAccountLoggedInException, SameProfileNameExceptiopn, ProfileNumberExceededException{
 
         if(!netfreaks.isAClientLoggedIn())
@@ -535,6 +601,12 @@ public class Main {
         System.out.println(Message.PROFILE_ADDED.msg);
     }
 
+    /**
+     * Processa o Comando Membership.
+     *
+     * @param in - Scanner a ser usado para receber informacoes do utilizador.
+     * @param netfreaks - aplicacao "Netflix".
+     */
     private static void processMembership(Scanner in, Netfreaks netfreaks) {
         String membershipName = in.nextLine();
         try{
@@ -548,6 +620,15 @@ public class Main {
         }
     }
 
+    /**
+     * Processo de verificacao de erros e ,se passou a verificacao, a execucao do comando.
+     *
+     * @param membershipName - Nome do Plano.
+     * @param netfreaks - aplicacao "Netflix".
+     * @throws NoAccountLoggedInException - Nao existe uma conta ativa.
+     * @throws SameMembershipException - O plano atual e igual ao novo plano.
+     * @throws DowngradeUnavaliableException - Mudanca de plano reduzido nao disponivel.
+     */
     private static void membership(String membershipName, Netfreaks netfreaks) throws NoAccountLoggedInException,SameMembershipException,DowngradeUnavaliableException{
         if(!netfreaks.isAClientLoggedIn())
             throw new NoAccountLoggedInException();
@@ -560,6 +641,11 @@ public class Main {
         netfreaks.membership(membershipName);
     }
 
+    /**
+     * Processa o Comando Logout.
+     *
+     * @param netfreaks - aplicacao "Netflix".
+     */
     private static void processLogout(Netfreaks netfreaks) {
         try{
             logout(netfreaks);
@@ -568,13 +654,24 @@ public class Main {
         }
     }
 
-    private static void logout(Netfreaks netfreaks) {
+    /**
+     * Processo de verificacao de erros e ,se passou a verificacao, a execucao do comando.
+     *
+     * @param netfreaks aplicacao "Netflix".
+     * @throws NoAccountLoggedInException - Nao existe uma conta ativa.
+     */
+    private static void logout(Netfreaks netfreaks) throws NoAccountLoggedInException {
         if(!netfreaks.isAClientLoggedIn())
             throw new NoAccountLoggedInException();
         System.out.println(Message.GOODBYE.msg + netfreaks.getActiveAccountName() + " (" + netfreaks.getActiveDevice() + " still connected)." + Message.NEXT_LINE_CHAR.msg);
         netfreaks.logout();
     }
 
+    /**
+     * Processa o Comando Disconnect.
+     *
+     * @param netfreaks - aplicacao "Netflix".
+     */
     private static void processDisconnect(Netfreaks netfreaks) {
         try{
             disconnect(netfreaks);
@@ -583,13 +680,25 @@ public class Main {
         }
     }
 
-    private static void disconnect(Netfreaks netfreaks) {
+    /**
+     * Processo de verificacao de erros e ,se passou a verificacao, a execucao do comando.
+     *
+     * @param netfreaks - aplicacao "Netflix".
+     * @throws NoAccountLoggedInException - Nao existe uma conta ativa.
+     */
+    private static void disconnect(Netfreaks netfreaks) throws NoAccountLoggedInException {
         if(!netfreaks.isAClientLoggedIn())
             throw new NoAccountLoggedInException();
         System.out.println(Message.GOODBYE.msg + netfreaks.getActiveAccountName() + " (" + netfreaks.getActiveDevice() + " was disconnected)." + Message.NEXT_LINE_CHAR.msg);
         netfreaks.disconnect();
     }
 
+    /**
+     * Processa o Comando Login.
+     *
+     * @param in - Scanner a ser usado para receber informacoes do utilizador.
+     * @param netfreaks - aplicacao "Netflix".
+     */
     private static void processLogin(Scanner in, Netfreaks netfreaks) {
         String email = in.nextLine();
         String password = in.nextLine();
@@ -610,8 +719,20 @@ public class Main {
         }
     }
 
-    private static void login(String email, String password, String device, Netfreaks netfreaks) throws AlreadyLoggedInException, NetfreaksAppOccupiedException,
-                                                                                                        InexistantAccountException, WrongPasswordException, DeviceNumberExceededException{
+    /**
+     * Processo de verificacao de erros e ,se passou a verificacao, a execucao do comando.
+     *
+     * @param email - Email da conta.
+     * @param password - Password da conta.
+     * @param device - Nome do dispositivo.
+     * @param netfreaks - aplicacao "Netflix".
+     * @throws AlreadyLoggedInException - A conta ativa e a conta a fazer login e a mesma.
+     * @throws NetfreaksAppOccupiedException - Neste momento, ha uma conta ativa
+     * @throws InexistantAccountException - Nao existe uma conta as informacoes dadas.
+     * @throws WrongPasswordException - Password errada.
+     * @throws DeviceNumberExceededException - O numero maximo de dispositivos autorizados foi excedido.
+     */
+    private static void login(String email, String password, String device, Netfreaks netfreaks) throws AlreadyLoggedInException, NetfreaksAppOccupiedException, InexistantAccountException, WrongPasswordException, DeviceNumberExceededException{
         if(netfreaks.isClientLoggedIn(email))
             throw new AlreadyLoggedInException();
         if(netfreaks.isAClientLoggedIn())
@@ -630,6 +751,12 @@ public class Main {
         System.out.println(Message.WELCOME.msg + netfreaks.getActiveAccountName() + " (" +  device + ")." + Message.NEXT_LINE_CHAR.msg);
     }
 
+    /**
+     * Processa o Comando Register.
+     *
+     * @param in - Scanner a ser usado para receber informacoes do utilizador.
+     * @param netfreaks - aplicacao "Netflix".
+     */
     private static void processRegister(Scanner in, Netfreaks netfreaks) {
         String name = in.nextLine();
         String email = in.nextLine();
@@ -645,6 +772,17 @@ public class Main {
         }
     }
 
+    /**
+     * Processo de verificacao de erros e ,se passou a verificacao, a execucao do comando.
+     *
+     * @param name - Nome da Conta.
+     * @param email - Email (Identificador) da Conta.
+     * @param password - Password Da Conta.
+     * @param device - Nome do
+     * @param netfreaks - aplicacao "Netflix".
+     * @throws NetfreaksAppOccupiedException - Neste momento, ha uma conta ativa
+     * @throws SameEmailExceptiopn - Ja existe uma conta com esse email
+     */
     private static void register(String name, String email, String password, String device, Netfreaks netfreaks) throws NetfreaksAppOccupiedException, SameEmailExceptiopn {
         if(netfreaks.isAClientLoggedIn())
             throw new NetfreaksAppOccupiedException();
@@ -655,14 +793,27 @@ public class Main {
         System.out.println(Message.WELCOME.msg + name + " (" + device + ")." + Message.NEXT_LINE_CHAR.msg);
     }
 
+    /**
+     * Processa o Comando Upload.
+     *
+     * @param in - Scanner a ser usado para receber informacoes do utilizador.
+     * @param netfreaks - aplicacao "Netflix".
+     */
     private static void processUpload(Scanner in, Netfreaks netfreaks) {
         Product[] products = getUploadInput(in);
         SortedMap<String, Product> IteratableProducts = netfreaks.upload(products);
         System.out.println(Message.UPLOAD_SUCCESS.msg + getShowByShowOutput(IteratableProducts.values(),3));
     }
 
+    /**
+     * Escreve as informacoes de todos os produtos dados por argumento.
+     *
+     * @param IteratableProducts - Colecao de todos os produtos a escrever como output.
+     * @param nCast - numero de participantes num filme ou serie a escrever como output, Mais infinito pra imprimir todos os participantes.
+     * @return String output
+     */
     private static String getShowByShowOutput(Collection<Product> IteratableProducts,double nCast) {
-        String msg = "";
+        String output = "";
         String separator = "; ";
         for (Product product:IteratableProducts) {
             String title = product.getTitle();
@@ -670,26 +821,41 @@ public class Main {
             String[] cast = product.getCast();
             int ageRestriction = product.getPEGI();
             int yearOfRelease = product.getYearOfRelease();
-            msg += title + separator ;
+            output += title + separator ;
             if(product instanceof Film) {
-                msg += product.getMasterName() + separator +  ((Film)product).getDuration() + separator;
+                output += product.getMasterName() + separator +  ((Film)product).getDuration() + separator;
             }
             else{
-                msg += product.getMasterName() + separator +  ((Series)product).getNSeasons() + separator + ((Series)product).getNEpisodesPerSeason() + separator;
+                output += product.getMasterName() + separator +  ((Series)product).getNSeasons() + separator + ((Series)product).getNEpisodesPerSeason() + separator;
             }
-            msg += ageRestriction + "+" + separator + yearOfRelease + separator + genre + separator;
-            msg = getCastOutput(msg,separator,cast,nCast);
-            msg = msg.substring(0,msg.lastIndexOf(separator)) + "." + Message.NEXT_LINE_CHAR.msg;
+            output += ageRestriction + "+" + separator + yearOfRelease + separator + genre + separator;
+            output = getCastOutput(output,separator,cast,nCast);
+            output = output.substring(0,output.lastIndexOf(separator)) + "." + Message.NEXT_LINE_CHAR.msg;
         }
-        return msg;
+        return output;
     }
-    private static String getCastOutput(String msg,String separator, String[] cast, double nCast){
+
+    /**
+     * Escreve todos os nomes dos participantes dado como argumento.
+     *
+     * @param output - Output atual.
+     * @param separator - Separador de informacoes.
+     * @param cast - vetor de nomes dos participantes.
+     * @param nCast - numero de participantes a escrever, mais infinito pra imprimir todos.
+     * @return String output
+     */
+    private static String getCastOutput(String output, String separator, String[] cast, double nCast){
         for(int i = 0; i < nCast && i < cast.length; i++)
-            msg += cast[i] + separator;
-        return msg;
+            output += cast[i] + separator;
+        return output;
     }
 
-
+    /**
+     * Processa o input e transforma o em vetor de Produtos (Filmes e Series).
+     *
+     * @param in - Scanner a ser usado para receber informacoes do utilizador.
+     * @return Vetor de Produtos(Filmes e Series).
+     */
     private static Product[] getUploadInput(Scanner in) {
         int nMovies = in.nextInt();
         in.nextLine();

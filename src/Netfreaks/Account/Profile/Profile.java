@@ -11,13 +11,12 @@ import java.util.List;
  *
  */
 public interface Profile {
+
     int MAX_CAPACITY = 10;
 
     void watch(String productName);
 
     void rate(Product product);
-
-    String toString();
 
     int getAge();
 
@@ -28,5 +27,4 @@ public interface Profile {
     List<String> getHistory();
 
     List<Product> getRatedProducst();
-
 }

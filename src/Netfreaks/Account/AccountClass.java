@@ -105,11 +105,14 @@ public class AccountClass implements Account {
     @Override
     public void addProfile(String profileName, boolean type, int ageRestriction) {
         Profile profile;
-        if(type == NORMAL)
+        if(type == NORMAL) {
             profile = new ProfileClass(profileName);
-        else
-            profile = new ProfileClass(profileName,ageRestriction);
-
+            int age  = profile.getAge();
+            assert age != ageRestriction;
+        }
+        else {
+            profile = new ProfileClass(profileName, ageRestriction);
+        }
         profiles.put(profileName,profile);
     }
 
