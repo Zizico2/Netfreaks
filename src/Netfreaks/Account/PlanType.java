@@ -1,5 +1,11 @@
 package Netfreaks.Account;
 
+/**
+ *
+ * @author Bernardo Borda d'Agua    53648
+ * @author Tiago Guerreiro          53649
+ *
+ */
 public enum PlanType {
     BASIC(2,"Basic", 1),
     STANDARD(5,"Standard", 2),

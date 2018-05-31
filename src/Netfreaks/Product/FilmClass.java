@@ -1,8 +1,14 @@
 package Netfreaks.Product;
 
+/**
+ *
+ * @author Bernardo Borda d'Agua    53648
+ * @author Tiago Guerreiro          53649
+ *
+ */
 public class FilmClass extends AbstractProductClass implements Film{
 
-    private int duration;
+    private final int duration;
 
 
     public FilmClass(String title, int duration, String ageRestriction, int yearOfRelease, String genre, String[] cast) {

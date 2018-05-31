@@ -10,7 +10,12 @@ import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-
+/**
+ *
+ * @author Bernardo Borda d'Agua    53648
+ * @author Tiago Guerreiro          53649
+ *
+ */
 public class AccountClass implements Account {
 
     private SortedMap<String,Profile> profiles;
@@ -93,13 +98,21 @@ public class AccountClass implements Account {
     }
 
     @Override
+    public List<String> getDevices() {
+        return devices;
+    }
+
+    @Override
     public void addProfile(String profileName, boolean type, int ageRestriction) {
         Profile profile;
-        if(type == NORMAL)
+        if(type == NORMAL) {
             profile = new ProfileClass(profileName);
-        else
-            profile = new ProfileClass(profileName,ageRestriction);
-
+            int age  = profile.getAge();
+            assert age != ageRestriction;
+        }
+        else {
+            profile = new ProfileClass(profileName, ageRestriction);
+        }
         profiles.put(profileName,profile);
     }
 
@@ -128,18 +141,8 @@ public class AccountClass implements Account {
     }
 
     @Override
-    public String toString(){
-       String msg = name + ":\n" +
-                    type.getOutput() + " (";
-       for(String device : devices)
-           msg += device + "; ";
-        msg = msg.substring(0,msg.lastIndexOf("; ")) + ").\n";
-        if(profiles.isEmpty())
-            msg += "No profiles defined.\n";
-        else
-            for(Profile profile: profiles.values())
-                msg += "Profile: " + profile.toString();
-        return msg;
+    public SortedMap<String, Profile> infoAccount(){
+        return profiles;
     }
 
     @Override

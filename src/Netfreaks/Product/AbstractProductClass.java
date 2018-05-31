@@ -3,16 +3,22 @@ package Netfreaks.Product;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ *
+ * @author Bernardo Borda d'Agua    53648
+ * @author Tiago Guerreiro          53649
+ *
+ */
 abstract class AbstractProductClass implements Product{
 
-    private String title;
-    private int yearOfRelease;
-    private int PEGI;
-    private String genre;
-    private String[] cast;
-    private String masterName;
-    private Map<String, Integer> rates;
-    private double averageRating;
+    private final String title;
+    private final int yearOfRelease;
+    private final int PEGI;
+    private final String genre;
+    private final String[] cast;
+    private final String masterName;
+    private final Map<String, Integer> rates;
+    private float averageRating;
 
     AbstractProductClass(String title, int yearOfRelease, String PEGI, String genre, String[] cast) {
         this.title = title;
@@ -69,7 +75,7 @@ abstract class AbstractProductClass implements Product{
 
     @Override
     public float getAverageRating(){
-        return (float)averageRating;
+        return averageRating;
     }
 
     @Override

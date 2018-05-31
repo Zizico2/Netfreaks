@@ -1,7 +1,17 @@
 package Netfreaks.Account;
 
+import Netfreaks.Account.Profile.Profile;
 import Netfreaks.Product.Product;
 
+import java.util.List;
+import java.util.SortedMap;
+
+/**
+ *
+ * @author Bernardo Borda d'Agua    53648
+ * @author Tiago Guerreiro          53649
+ *
+ */
 public interface Account {
 
     boolean NORMAL = true;
@@ -26,6 +36,8 @@ public interface Account {
 
     int getNDevices();
 
+    List<String> getDevices();
+
     void addProfile(String profileName, boolean type, int ageRestriction);
 
     boolean hasProfile(String profileName);
@@ -44,7 +56,7 @@ public interface Account {
 
     void rate(Product product);
 
-    String toString();
+    SortedMap<String,Profile> infoAccount();
 
     int getCurrentProfileAge();
 
