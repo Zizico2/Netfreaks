@@ -30,7 +30,9 @@ public class ProfileClass implements Profile {
 
     // Construtor Normal.
     public ProfileClass(String name) {
-        age = 18;
+        history = new ArrayList<>(MAX_CAPACITY);
+        ratedProducts =  new ArrayList<>();
+        age = (int)Double.POSITIVE_INFINITY;
         this.name = name;
     }
 

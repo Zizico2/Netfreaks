@@ -387,7 +387,7 @@ public class Main {
                 String name = profile.getName();
                 msg += name;
                 int age = profile.getAge();
-                if (age != 18)
+                if (age != (int)Double.POSITIVE_INFINITY)
                     msg +=  " (" + age + ")" + Message.NEXT_LINE_CHAR.msg;
                 else
                     msg += Message.NEXT_LINE_CHAR.msg;
@@ -597,7 +597,10 @@ public class Main {
         if(netfreaks.profileNumberExceeded())
             throw new ProfileNumberExceededException();
 
-        netfreaks.profile(profileName,profileType.equalsIgnoreCase(PlanType.BASIC.getOutput()),ageRestriction);
+        if (profileType.equalsIgnoreCase(Message.CHILDREN.msg))
+            netfreaks.profile(profileName,ageRestriction);
+        else
+            netfreaks.profile(profileName);
         System.out.println(Message.PROFILE_ADDED.msg);
     }
 

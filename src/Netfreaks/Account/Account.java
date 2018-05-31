@@ -97,13 +97,19 @@ public interface Account {
     List<String> getDevices();
 
     /**
-     * Adiciona um novo perfil.
+     * Adiciona um novo perfil criança.
      *
      * @param profileName - Nome do perfil.
-     * @param type - true se for normal,false se for children.
      * @param ageRestriction - Classificacao etaria.
      */
-    void addProfile(String profileName, boolean type, int ageRestriction);
+    void addProfile(String profileName, int ageRestriction);
+
+    /**
+     * Adiciona um novo perfil normal.
+     *
+     * @param profileName - Nome do perfil.
+     */
+    void addProfile(String profileName);
 
     /**
      * Verifica se existe um perfil com o nome dado por argumento.

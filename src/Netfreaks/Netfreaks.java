@@ -68,10 +68,16 @@ public interface Netfreaks {
      *
      *
      * @param profileName
-     * @param normal
+     */
+    void profile(String profileName);
+
+    /**
+     *
+     *
+     * @param profileName
      * @param ageRestriction
      */
-    void profile(String profileName, boolean normal, int ageRestriction);
+    void profile(String profileName, int ageRestriction);
 
     /**
      *

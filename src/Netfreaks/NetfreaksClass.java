@@ -97,8 +97,12 @@ public class NetfreaksClass implements Netfreaks {
     }
 
     @Override
-    public void profile(String profileName, boolean type, int ageRestriction) {
-            accounts.get(currentAccount).addProfile(profileName,type,ageRestriction);
+    public void profile(String profileName) {
+            accounts.get(currentAccount).addProfile(profileName);
+    }
+
+    public void profile(String profileName, int ageRestriction) {
+        accounts.get(currentAccount).addProfile(profileName, ageRestriction);
     }
 
     @Override
