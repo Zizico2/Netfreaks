@@ -14,9 +14,12 @@ import java.util.*;
  * @author Bernardo Borda d'Agua    53648
  * @author Tiago Guerreiro          53649
  *
+ *
+ * Representa a nossa aplicacao topo.
  */
 public class NetfreaksClass implements Netfreaks {
 
+    // Variaveis.
     private SortedMap<String,Product> productsByName;
     private SortedMap<String,Account> accounts;
     private String currentAccount;
@@ -24,6 +27,7 @@ public class NetfreaksClass implements Netfreaks {
     private Map<String,SortedSet<Product>> productsByDude;
     private SortedMap<Integer,SortedSet<Product>> productsByRate;
 
+    // Construtor.
     public NetfreaksClass(){
         productsByName = new TreeMap<>();
         accounts = new TreeMap<>();
@@ -189,7 +193,7 @@ public class NetfreaksClass implements Netfreaks {
 
     @Override
     public boolean isPasswordRight(String email, String password) {
-        return accounts.get(email).getPassword().equals(password);
+        return accounts.get(email).isCorrectPassword(password);
     }
 
     @Override

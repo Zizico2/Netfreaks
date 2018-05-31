@@ -8,9 +8,12 @@ import java.util.Map;
  * @author Bernardo Borda d'Agua    53648
  * @author Tiago Guerreiro          53649
  *
+ *
+ * Representa um Produto geral.
  */
 abstract class AbstractProductClass implements Product{
 
+    // Variaveis.
     private final String title;
     private final int yearOfRelease;
     private final int PEGI;
@@ -20,6 +23,7 @@ abstract class AbstractProductClass implements Product{
     private final Map<String, Integer> rates;
     private float averageRating;
 
+    // Construtor da SuperClass.
     AbstractProductClass(String title, int yearOfRelease, String PEGI, String genre, String[] cast) {
         this.title = title;
         this.yearOfRelease = yearOfRelease;
