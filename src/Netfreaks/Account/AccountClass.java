@@ -15,9 +15,12 @@ import java.util.TreeMap;
  * @author Bernardo Borda d'Agua    53648
  * @author Tiago Guerreiro          53649
  *
+ *
+ * Representa um Conta.
  */
 public class AccountClass implements Account {
 
+    // Variaveis.
     private SortedMap<String,Profile> profiles;
     private String name;
     private String currentProfile;
@@ -26,6 +29,7 @@ public class AccountClass implements Account {
     private String currentDevice;
     private PlanType type;
 
+    // Construtor.
     public AccountClass(String name, String password, String device) {
         profiles = new TreeMap<>();
         this.name = name;
@@ -37,6 +41,7 @@ public class AccountClass implements Account {
         currentProfile = "";
     }
 
+    @Override
     public void watch(String productName){
        profiles.get(currentProfile).watch(productName);
     }
@@ -46,14 +51,17 @@ public class AccountClass implements Account {
         profiles.get(currentProfile).rate(product);
     }
 
+    @Override
     public void disconnect(){
         devices.remove(currentDevice);
     }
 
+    @Override
     public String getName(){
         return name;
     }
 
+    @Override
     public void login(String device){
         currentDevice = device;
     }
@@ -68,18 +76,20 @@ public class AccountClass implements Account {
         devices.add(device);
     }
 
+    @Override
     public void logout(){
         currentDevice = "";
         currentProfile = "";
     }
 
+    @Override
     public String getCurrentProfile(){
         return currentProfile;
     }
 
     @Override
-    public String getPassword() {
-        return password;
+    public boolean isCorrectPassword(String password) {
+        return this.password.equals(password);
     }
 
     @Override
@@ -132,10 +142,12 @@ public class AccountClass implements Account {
         currentProfile = profileName;
     }
 
+    @Override
     public void setPlanType(PlanType type){
        this.type = type;
     }
 
+    @Override
     public PlanType getPlanType(){
         return type;
     }

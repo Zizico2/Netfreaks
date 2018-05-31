@@ -13,11 +13,13 @@ import java.util.List;
  */
 public class ProfileClass implements Profile {
 
+    // Variaveis
     private final String name;
     private final int age;
     private List<String> history;
     private List<Product> ratedProducts;
 
+    // Construtor para Crianca.
     public ProfileClass(String name, int age) {
         this.age = age;
         this.name = name;
@@ -25,17 +27,20 @@ public class ProfileClass implements Profile {
         ratedProducts =  new ArrayList<>();
     }
 
+    // Construtor Normal.
     public ProfileClass(String name) {
         age = 18;
         this.name = name;
     }
 
+    @Override
     public void watch(String productName){
         if(!(history.size() < 10))
             history = history.subList(1,MAX_CAPACITY);
         history.add(productName);
     }
 
+    @Override
     public String getName(){
         return name;
     }
@@ -65,6 +70,4 @@ public class ProfileClass implements Profile {
     public List<Product> getRatedProducst() {
         return ratedProducts;
     }
-
-
 }
