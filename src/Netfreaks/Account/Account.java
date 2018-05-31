@@ -95,7 +95,7 @@ public interface Account {
     List<String> getDevices();
 
     /**
-     * Adiciona um novo perfil criança.
+     * Adiciona um novo perfil crianca.
      *
      * @param profileName - Nome do perfil.
      * @param ageRestriction - Classificacao etaria.

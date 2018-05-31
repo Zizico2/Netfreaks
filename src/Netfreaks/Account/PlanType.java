@@ -10,6 +10,7 @@ package Netfreaks.Account;
  */
 public enum PlanType {
     BASIC(2,"Basic", 1),
+    STANDARD(5,"Standard",2),
     PREMIUM(5,"Premium", 4);
 
     private final int maxNProfiles;
