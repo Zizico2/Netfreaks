@@ -8,7 +8,7 @@ package Exceptions;
  */
 public class DowngradeUnavaliableException extends RuntimeException{
 
-    private static final String MESSAGE = "Cannot downgrade membership plan at the moment.";
+    private static final String MESSAGE = "Cannot downgrade membership plan at the moment.\n";
     public DowngradeUnavaliableException() {
         super(MESSAGE);
     }

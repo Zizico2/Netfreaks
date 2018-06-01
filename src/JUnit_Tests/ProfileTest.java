@@ -6,8 +6,11 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
-
 /**
+ *
+ * @author Bernardo Borda d'Agua    53648
+ * @author Tiago Guerreiro          53649
+ *
  *
  * Class que testa a lista de recentemente vistos da classe profile.
  *
