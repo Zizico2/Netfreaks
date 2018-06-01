@@ -1,5 +1,3 @@
-package JUnit_Tests;
-
 import Netfreaks.Account.Profile.Profile;
 import Netfreaks.Account.Profile.ProfileClass;
 import org.junit.jupiter.api.Test;
@@ -16,6 +14,11 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
  */
 class ProfileTest {
 
+    /**
+     * Testa se os produtos sao corretamente adicionados ao historico e se
+     * o produto mais antigo e removido quando o historico esta cheio.
+     *
+     */
     @Test
     void watch() {
         Profile testProfile = new ProfileClass("testName");
@@ -30,6 +33,12 @@ class ProfileTest {
         }
     }
 
+
+    /**
+     * Verifica se o funcionamento do metodo isInHistory()
+     *
+     *
+     */
     @Test
     void isInHistory() {
         Profile testProfile = new ProfileClass("testName");
@@ -41,6 +50,12 @@ class ProfileTest {
         }
     }
 
+
+    /**
+     *
+     * Verifica se a ordem da List devolvida pelo getHistory() esta na ordem correta.
+     *
+     */
     @Test
     void getHistory() {
         String testName = "testName";

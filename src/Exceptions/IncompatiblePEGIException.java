@@ -7,7 +7,8 @@ package Exceptions;
  *
  */
 public class IncompatiblePEGIException extends RuntimeException{
+    private static final String MESSAGE = "Show not available.\n";
     public IncompatiblePEGIException() {
-        super();
+        super(MESSAGE);
     }
 }

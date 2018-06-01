@@ -7,7 +7,8 @@ package Exceptions;
  *
  */
 public class AlreadyLoggedInException extends RuntimeException{
+    private static final String MESSAGE = "Client already logged in.\n";
     public AlreadyLoggedInException() {
-        super();
+        super(MESSAGE);
     }
 }

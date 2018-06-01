@@ -7,7 +7,8 @@ package Exceptions;
  *
  */
 public class NetfreaksAppOccupiedException extends RuntimeException{
+    private static final String MESSAGE = "Another client is logged in.\n";
     public NetfreaksAppOccupiedException() {
-        super();
+        super(MESSAGE);
     }
 }

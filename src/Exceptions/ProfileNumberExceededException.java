@@ -7,7 +7,8 @@ package Exceptions;
  *
  */
 public class ProfileNumberExceededException extends RuntimeException{
+    private static final String MESSAGE ="Not possible to add more profiles.\n";
     public ProfileNumberExceededException() {
-        super();
+        super(MESSAGE);
     }
 }

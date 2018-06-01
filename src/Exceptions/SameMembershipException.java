@@ -7,8 +7,8 @@ package Exceptions;
  *
  */
 public class SameMembershipException extends RuntimeException {
-
+    private static final String MESSAGE = "No membership plan change.\n";
     public SameMembershipException() {
-        super();
+        super(MESSAGE);
     }
 }

@@ -19,30 +19,12 @@ public class Main {
     private enum Message {
         NEXT_LINE_CHAR("\n"),
         UPLOAD_SUCCESS("Database was updated:" + NEXT_LINE_CHAR.msg),
-        SAME_EMAIL("There is another account with email "),
-        SOMEONE_IS_LOGGEDIN("Another client is logged in." + NEXT_LINE_CHAR.msg),
-        MAX_DEVICES_REACHED("Not possible to connect more devices." + NEXT_LINE_CHAR.msg),
-        WRONG_PASSWORD("Wrong password." + NEXT_LINE_CHAR.msg),
-        INEXISTANT_ACCOUNT("Account does not exist." + NEXT_LINE_CHAR.msg),
-        ALREADY_LOGGEDIN("Client already logged in." + NEXT_LINE_CHAR.msg),
-        NO_CLIENT("No client is logged in." + NEXT_LINE_CHAR.msg),
-        DOWNGRADE_UNAVAILABLE("Cannot downgrade membership plan at the moment." + NEXT_LINE_CHAR.msg),
-        NO_PROFILE("No profile is selected." + NEXT_LINE_CHAR.msg),
-        SAME_MEMBERSHIP("No membership plan change." + NEXT_LINE_CHAR.msg),
-        NO_SHOWS("No show found." + NEXT_LINE_CHAR.msg),
-        SHOW_NOT_FOUND("Show does not exist." + NEXT_LINE_CHAR.msg),
-        NOT_IN_HISTORY("Can only rate recently seen shows." + NEXT_LINE_CHAR.msg),
-        MAX_PROFILES_REACHED("Not possible to add more profiles." + NEXT_LINE_CHAR.msg),
         PROFILE_ADDED("New profile added." + NEXT_LINE_CHAR.msg),
-        SHOW_ALREADY_RATED("Show already rated." + NEXT_LINE_CHAR.msg),
-        SHOW_UNAVAILABLE("Show not available." + NEXT_LINE_CHAR.msg),
-        INEXISTATN_PROFILE("Profile does not exist." + NEXT_LINE_CHAR.msg),
         EMPTY_HISTORY("Empty list of recently seen shows." + NEXT_LINE_CHAR.msg),
         EMPTY_PROFILE_LIST("No profiles defined." + NEXT_LINE_CHAR.msg),
         WELCOME("Welcome "),
         THANK_YOU_RATE("Thank you for rating "),
         LOADING("Loading "),
-        SAME_NAME_PROFILE("There is already a profile "),
         MEMBERSHIP_CHANGED("Membership plan was changed from "),
         GOODBYE("Goodbye "),
         CHILDREN("CHILDREN"),
@@ -193,14 +175,8 @@ public class Main {
         in.nextLine();
         try{
             searchByRate(rate,netfreaks);
-        } catch(NoAccountLoggedInException e){
-            System.out.println(Message.NO_CLIENT.msg);
-        }
-        catch(NoProfileSelectedException e) {
-            System.out.println(Message.NO_PROFILE.msg);
-        }
-        catch(ShowNotFoundException e){
-            System.out.println(Message.NO_SHOWS.msg);
+        } catch(NoAccountLoggedInException | NoProfileSelectedException | ProductNotFoundException e){
+            System.out.println(e.getMessage());
         }
     }
 
@@ -211,15 +187,15 @@ public class Main {
      * @param netfreaks - aplicacao "Netflix".
      * @throws NoAccountLoggedInException - Nao existe uma conta ativa.
      * @throws NoProfileSelectedException - Nao existe um perfil ativo na conta atual.
-     * @throws ShowNotFoundException - Nenhum filme ou serie foi encontrada com o criterio dado.
+     * @throws ProductNotFoundException - Nenhum filme ou serie foi encontrada com o criterio dado.
      */
-    private static void searchByRate(int rate, Netfreaks netfreaks) throws NoAccountLoggedInException,NoProfileSelectedException, ShowNotFoundException {
+    private static void searchByRate(int rate, Netfreaks netfreaks) throws NoAccountLoggedInException,NoProfileSelectedException, ProductNotFoundException {
         if(!netfreaks.isAClientLoggedIn())
             throw new NoAccountLoggedInException();
         if(!netfreaks.isThereProfileSelected())
             throw new NoProfileSelectedException();
         if(!netfreaks.hasShowsWithRateHigherThan(rate))
-            throw new ShowNotFoundException();
+            throw new ProductNotFoundException();
         printSearchByRates(netfreaks.searchByRate(rate));
     }
 
@@ -264,14 +240,8 @@ public class Main {
         String name = in.nextLine();
         try{
             searchByName(name,netfreaks);
-        } catch(NoAccountLoggedInException e){
-            System.out.println(Message.NO_CLIENT.msg);
-        }
-        catch(NoProfileSelectedException e) {
-            System.out.println(Message.NO_PROFILE.msg);
-        }
-        catch(ShowNotFoundException e){
-            System.out.println(Message.NO_SHOWS.msg);
+        } catch(NoAccountLoggedInException | ProductNotFoundException | NoProfileSelectedException e){
+            System.out.println(e.getMessage());
         }
     }
 
@@ -282,15 +252,15 @@ public class Main {
      * @param netfreaks - aplicacao "Netflix".
      * @throws NoAccountLoggedInException - Nao existe uma conta ativa.
      * @throws NoProfileSelectedException - Nao existe um perfil ativo na conta atual.
-     * @throws ShowNotFoundException - Nenhum filme ou serie foi encontrada com o criterio dado.
+     * @throws ProductNotFoundException - Nenhum filme ou serie foi encontrada com o criterio dado.
      */
-    private static void searchByName(String name, Netfreaks netfreaks) throws NoAccountLoggedInException,NoProfileSelectedException, ShowNotFoundException {
+    private static void searchByName(String name, Netfreaks netfreaks) throws NoAccountLoggedInException,NoProfileSelectedException, ProductNotFoundException {
         if(!netfreaks.isAClientLoggedIn())
             throw new NoAccountLoggedInException();
         if(!netfreaks.isThereProfileSelected())
             throw new NoProfileSelectedException();
         if(!netfreaks.hasDude(name))
-            throw new ShowNotFoundException();
+            throw new ProductNotFoundException();
         System.out.println(getShowByShowOutput(netfreaks.searchByName(name),Double.POSITIVE_INFINITY));
     }
 
@@ -304,14 +274,8 @@ public class Main {
         String genre = in.nextLine();
         try{
             searchByGenre(genre,netfreaks);
-        } catch(NoAccountLoggedInException e){
-            System.out.println(Message.NO_CLIENT.msg);
-        }
-        catch(NoProfileSelectedException e) {
-            System.out.println(Message.NO_PROFILE.msg);
-        }
-        catch(ShowNotFoundException e){
-            System.out.println(Message.NO_SHOWS.msg);
+        } catch(NoAccountLoggedInException | NoProfileSelectedException | ProductNotFoundException e){
+            System.out.println(e.getMessage());
         }
     }
 
@@ -321,13 +285,13 @@ public class Main {
      * @param genre genero dada pelo utilizador.
      * @param netfreaks - aplicacao "Netflix".
      */
-    private static void searchByGenre(String genre, Netfreaks netfreaks) throws NoAccountLoggedInException,NoProfileSelectedException, ShowNotFoundException {
+    private static void searchByGenre(String genre, Netfreaks netfreaks) throws NoAccountLoggedInException,NoProfileSelectedException, ProductNotFoundException {
         if(!netfreaks.isAClientLoggedIn())
             throw new NoAccountLoggedInException();
         if(!netfreaks.isThereProfileSelected())
             throw new NoProfileSelectedException();
         if(!netfreaks.hasGenre(genre))
-            throw new ShowNotFoundException();
+            throw new ProductNotFoundException();
         System.out.println(getShowByShowOutput(netfreaks.searchByGenre(genre).values(),Double.POSITIVE_INFINITY));
     }
 
@@ -340,7 +304,7 @@ public class Main {
         try {
             infoAccount(netfreaks);
         } catch(NoAccountLoggedInException e){
-            System.out.println(Message.NO_CLIENT.msg);
+            System.out.println(e.getMessage());
         }
     }
 
@@ -425,20 +389,8 @@ public class Main {
         in.nextLine();
         try{
             rate(productName,rate,netfreaks);
-        } catch(NoAccountLoggedInException e){
-            System.out.println(Message.NO_CLIENT.msg);
-        }
-        catch(NoProfileSelectedException e){
-            System.out.println(Message.NO_PROFILE.msg);
-        }
-        catch(InexistantProductException e){
-            System.out.println(Message.SHOW_NOT_FOUND.msg);
-        }
-        catch(NotInRecentHistoryException e){
-            System.out.println(Message.NOT_IN_HISTORY.msg);
-        }
-        catch(ProductAlreadyRatedException e){
-            System.out.println(Message.SHOW_ALREADY_RATED.msg);
+        } catch(NoAccountLoggedInException | ProductAlreadyRatedException | NotInRecentHistoryException | InexistantProductException | NoProfileSelectedException e){
+            System.out.println(e.getMessage());
         }
     }
 
@@ -451,9 +403,14 @@ public class Main {
      * @throws NoAccountLoggedInException - Nao existe uma conta ativa.
      * @throws NoProfileSelectedException - Nao existe um perfil ativo na conta atual.
      * @throws InexistantProductException - Nao existe uma conta as informacoes dadas.
-     * @throws IncompatiblePEGIException - Classificacao etaria do perfil demasiado baixa.
+     * @throws NotInRecentHistoryException - Este produto nao pertence ao historico.
+     * @throws ProductAlreadyRatedException - Este produto ja foi avaliado pelo perfil atual.
      */
-    private static void rate(String productName, int rate, Netfreaks netfreaks) throws NoAccountLoggedInException, NoProfileSelectedException, InexistantProductException, IncompatiblePEGIException {
+    private static void rate(String productName, int rate, Netfreaks netfreaks) throws NoAccountLoggedInException,
+                                                                                       NoProfileSelectedException,
+                                                                                       InexistantProductException,
+                                                                                       NotInRecentHistoryException,
+                                                                                       ProductAlreadyRatedException {
         if(!netfreaks.isAClientLoggedIn())
             throw new NoAccountLoggedInException();
         if(!netfreaks.isThereProfileSelected())
@@ -479,17 +436,8 @@ public class Main {
         String productName = in.nextLine();
         try{
             watch(productName,netfreaks);
-        } catch(NoAccountLoggedInException e){
-            System.out.println(Message.NO_CLIENT.msg);
-        }
-        catch(NoProfileSelectedException e){
-            System.out.println(Message.NO_PROFILE.msg);
-        }
-        catch(InexistantProductException e){
-            System.out.println(Message.SHOW_NOT_FOUND.msg);
-        }
-        catch(IncompatiblePEGIException e){
-            System.out.println(Message.SHOW_UNAVAILABLE.msg);
+        } catch(NoAccountLoggedInException | IncompatiblePEGIException | InexistantProductException | NoProfileSelectedException e){
+            System.out.println(e.getMessage());
         }
     }
 
@@ -527,10 +475,8 @@ public class Main {
         String profile = in.nextLine();
         try{
             select(profile,netfreaks);
-        } catch(NoAccountLoggedInException e){
-            System.out.println(Message.NO_CLIENT.msg);
-        } catch(InexistantProfileException e){
-            System.out.println(Message.INEXISTATN_PROFILE.msg);
+        } catch(NoAccountLoggedInException | InexistantProfileException e){
+            System.out.println(e.getMessage());
         }
 
     }
@@ -568,12 +514,10 @@ public class Main {
         }
         try{
             profile(profileName,profileType,ageRestriction,netfreaks);
-        } catch(NoAccountLoggedInException e){
-            System.out.println(Message.NO_CLIENT.msg);
-        } catch(SameProfileNameExceptiopn e){
-            System.out.println( Message.SAME_NAME_PROFILE.msg + profileName + "." + Message.NEXT_LINE_CHAR.msg);
-        } catch(ProfileNumberExceededException e){
-            System.out.println(Message.MAX_PROFILES_REACHED.msg);
+        } catch(NoAccountLoggedInException | ProfileNumberExceededException e){
+            System.out.println(e.getMessage());
+        } catch(SameProfileNameException e){
+            System.out.println( e.getMessage() + profileName + "." + Message.NEXT_LINE_CHAR.msg);
         }
     }
 
@@ -586,15 +530,15 @@ public class Main {
      * @param ageRestriction - Classificicacao etaria do perfil.
      * @param netfreaks - aplicacao "Netflix".
      * @throws NoAccountLoggedInException - Nao existe uma conta ativa.
-     * @throws SameProfileNameExceptiopn - Existe um perfil na conta atual com o nome dado.
+     * @throws SameProfileNameException - Existe um perfil na conta atual com o nome dado.
      * @throws ProfileNumberExceededException - Numero maximo de perfis autorizados foi excedido.
      */
-    private static void profile(String profileName, String profileType, int ageRestriction, Netfreaks netfreaks) throws NoAccountLoggedInException, SameProfileNameExceptiopn, ProfileNumberExceededException{
+    private static void profile(String profileName, String profileType, int ageRestriction, Netfreaks netfreaks) throws NoAccountLoggedInException, SameProfileNameException, ProfileNumberExceededException{
 
         if(!netfreaks.isAClientLoggedIn())
             throw new NoAccountLoggedInException();
         if(netfreaks.isSameProfile(profileName))
-            throw new SameProfileNameExceptiopn();
+            throw new SameProfileNameException();
         if(netfreaks.profileNumberExceeded())
             throw new ProfileNumberExceededException();
 
@@ -615,12 +559,8 @@ public class Main {
         String membershipName = in.nextLine();
         try{
             membership(membershipName,netfreaks);
-        } catch(NoAccountLoggedInException e){
-            System.out.println(Message.NO_CLIENT.msg);
-        } catch(SameMembershipException e){
-            System.out.println(Message.SAME_MEMBERSHIP.msg);
-        } catch(DowngradeUnavaliableException e){
-            System.out.println(Message.DOWNGRADE_UNAVAILABLE.msg);
+        } catch(NoAccountLoggedInException | SameMembershipException | DowngradeUnavaliableException e){
+            System.out.println(e.getMessage());
         }
     }
 
@@ -654,7 +594,7 @@ public class Main {
         try{
             logout(netfreaks);
         } catch(NoAccountLoggedInException e){
-            System.out.println(Message.NO_CLIENT.msg);
+            System.out.println(e.getMessage());
         }
     }
 
@@ -680,7 +620,7 @@ public class Main {
         try{
             disconnect(netfreaks);
         } catch(NoAccountLoggedInException e){
-            System.out.println(Message.NO_CLIENT.msg);
+            System.out.println(e.getMessage());
         }
     }
 
@@ -710,16 +650,8 @@ public class Main {
 
         try{
             login(email, password, device, netfreaks);
-        } catch (AlreadyLoggedInException e){
-            System.out.println(Message.ALREADY_LOGGEDIN.msg);
-        } catch (NetfreaksAppOccupiedException e){
-            System.out.println(Message.SOMEONE_IS_LOGGEDIN.msg);
-        } catch (InexistantAccountException e){
-            System.out.println(Message.INEXISTANT_ACCOUNT.msg);
-        } catch (WrongPasswordException e){
-            System.out.println(Message.WRONG_PASSWORD.msg);
-        } catch (DeviceNumberExceededException e){
-            System.out.println(Message.MAX_DEVICES_REACHED.msg);
+        } catch (AlreadyLoggedInException | NetfreaksAppOccupiedException | DeviceNumberExceededException | WrongPasswordException | InexistantAccountException e){
+            System.out.println(e.getMessage());
         }
     }
 
@@ -770,9 +702,9 @@ public class Main {
         try{
            register(name, email, password, device, netfreaks);
         } catch (NetfreaksAppOccupiedException e){
-            System.out.println(Message.SOMEONE_IS_LOGGEDIN.msg);
-        } catch (SameEmailExceptiopn e){
-            System.out.println(Message.SAME_EMAIL.msg + email + "." + Message.NEXT_LINE_CHAR.msg);
+            System.out.println(e.getMessage());
+        } catch (SameEmailException e){
+            System.out.println(e.getMessage() + email + "." + Message.NEXT_LINE_CHAR.msg);
         }
     }
 
@@ -785,13 +717,13 @@ public class Main {
      * @param device - Nome do
      * @param netfreaks - aplicacao "Netflix".
      * @throws NetfreaksAppOccupiedException - Neste momento, ha uma conta ativa
-     * @throws SameEmailExceptiopn - Ja existe uma conta com esse email
+     * @throws SameEmailException - Ja existe uma conta com esse email
      */
-    private static void register(String name, String email, String password, String device, Netfreaks netfreaks) throws NetfreaksAppOccupiedException, SameEmailExceptiopn {
+    private static void register(String name, String email, String password, String device, Netfreaks netfreaks) throws NetfreaksAppOccupiedException, SameEmailException {
         if(netfreaks.isAClientLoggedIn())
             throw new NetfreaksAppOccupiedException();
         else if (netfreaks.isEmailUsed(email))
-            throw new SameEmailExceptiopn();
+            throw new SameEmailException();
 
         netfreaks.register(name, email, password, device);
         System.out.println(Message.WELCOME.msg + name + " (" + device + ")." + Message.NEXT_LINE_CHAR.msg);

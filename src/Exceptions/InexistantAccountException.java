@@ -7,8 +7,8 @@ package Exceptions;
  *
  */
 public class InexistantAccountException extends RuntimeException {
-
+    private static final String MESSAGE = "Account does not exist.\n";
     public InexistantAccountException() {
-        super();
+        super(MESSAGE);
     }
 }

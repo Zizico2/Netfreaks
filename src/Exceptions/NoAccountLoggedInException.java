@@ -7,7 +7,8 @@ package Exceptions;
  *
  */
 public class NoAccountLoggedInException extends RuntimeException{
+    private static final String MESSAGE = "No client is logged in.\n";
     public NoAccountLoggedInException() {
-        super();
+        super(MESSAGE);
     }
 }

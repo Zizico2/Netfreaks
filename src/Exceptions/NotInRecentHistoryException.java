@@ -7,7 +7,8 @@ package Exceptions;
  *
  */
 public class NotInRecentHistoryException extends RuntimeException{
+    private static final String MESSAGE = "Can only rate recently seen shows.\n";
     public NotInRecentHistoryException() {
-        super();
+        super(MESSAGE);
     }
 }

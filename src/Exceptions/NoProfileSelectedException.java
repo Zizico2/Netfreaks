@@ -7,7 +7,8 @@ package Exceptions;
  *
  */
 public class NoProfileSelectedException extends RuntimeException{
+    private static final String MESSAGE = "No profile is selected.";
     public NoProfileSelectedException() {
-        super();
+        super(MESSAGE);
     }
 }

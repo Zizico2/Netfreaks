@@ -8,7 +8,8 @@ package Exceptions;
  */
 public class DeviceNumberExceededException  extends RuntimeException{
 
+    private static final String MESSAGE = "Not possible to connect more devices.\n";
     public DeviceNumberExceededException() {
-        super();
+        super(MESSAGE);
     }
 }

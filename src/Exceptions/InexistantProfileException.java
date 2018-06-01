@@ -7,7 +7,8 @@ package Exceptions;
  *
  */
 public class InexistantProfileException extends RuntimeException{
+    private static final String MESSAGE = "Profile does not exist.\n";
     public InexistantProfileException() {
-        super();
+        super(MESSAGE);
     }
 }

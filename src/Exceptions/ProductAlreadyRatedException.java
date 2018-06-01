@@ -7,7 +7,8 @@ package Exceptions;
  *
  */
 public class ProductAlreadyRatedException extends RuntimeException{
+    private static final String MESSAGE = "Show already rated.\n";
     public ProductAlreadyRatedException() {
-        super();
+        super(MESSAGE);
     }
 }

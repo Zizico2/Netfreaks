@@ -7,7 +7,8 @@ package Exceptions;
  *
  */
 public class InexistantProductException extends RuntimeException{
+    private static final String MESSAGE = "Show does not exist.\n";
     public InexistantProductException() {
-        super();
+        super(MESSAGE);
     }
 }
