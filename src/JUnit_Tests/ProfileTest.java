@@ -9,6 +9,11 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
+/**
+ *
+ * Class que testa a lista de recentemente vistos da classe profile.
+ *
+ */
 class ProfileTest {
 
     @Test
@@ -17,11 +22,11 @@ class ProfileTest {
         for(int i = 0; i <= 11; i++){
             int size = testProfile.getHistory().size();
             testProfile.watch("testName" + i);
-            int diference = testProfile.getHistory().size() - size;
+            int difference = testProfile.getHistory().size() - size;
             if (size < 10)
-                assert diference == 1;
+                assert difference == 1;
             else
-                assert diference == 0;
+                assert difference == 0;
         }
     }
 

@@ -805,21 +805,21 @@ public class Main {
      */
     private static void processUpload(Scanner in, Netfreaks netfreaks) {
         Product[] products = getUploadInput(in);
-        SortedMap<String, Product> IteratableProducts = netfreaks.upload(products);
-        System.out.println(Message.UPLOAD_SUCCESS.msg + getShowByShowOutput(IteratableProducts.values(),3));
+        SortedMap<String, Product> IterableProducts = netfreaks.upload(products);
+        System.out.println(Message.UPLOAD_SUCCESS.msg + getShowByShowOutput(IterableProducts.values(),3));
     }
 
     /**
      * Escreve as informacoes de todos os produtos dados por argumento.
      *
-     * @param IteratableProducts - Colecao de todos os produtos a escrever como output.
+     * @param IterableProducts - Colecao de todos os produtos a escrever como output.
      * @param nCast - numero de participantes num filme ou serie a escrever como output, Mais infinito pra imprimir todos os participantes.
      * @return String output
      */
-    private static String getShowByShowOutput(Collection<Product> IteratableProducts,double nCast) {
+    private static String getShowByShowOutput(Collection<Product> IterableProducts,double nCast) {
         String output = "";
         String separator = "; ";
-        for (Product product:IteratableProducts) {
+        for (Product product:IterableProducts) {
             String title = product.getTitle();
             String genre = product.getGenre();
             String[] cast = product.getCast();
